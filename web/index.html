@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Housing Horizon</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%230c1018'/%3E%3Cpath d='M3 12h10M4 9l3-4 2 2 3-5' fill='none' stroke='%236d8cff' stroke-width='1.4'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#classify">Skip to the forecast</a>
+  <header class="top">
+    <div>
+      <p class="mark">Housing Horizon</p>
+      <h1>Read one whānau, then see the call.</h1>
+    </div>
+    <div class="seed-wrap">
+      <label class="seed" id="seed-line" for="seed-pick">
+        <span class="seed-readout">Seed <b id="seed-value">42</b></span>
+        <input id="seed-pick" type="range" min="0" max="100" step="1" value="42" aria-label="Seed for training and testing">
+        <span class="seed-scale"><span>0</span><span>100</span></span>
+      </label>
+      <p id="seed-status" class="seed-status" role="status"></p>
+    </div>
+  </header>
+  <nav class="jump" aria-label="Sections">
+    <a href="#classify">1 Load</a>
+    <a href="#result">2 The call</a>
+    <a href="#score">3 Score</a>
+    <a href="#dictionary">4 Inputs</a>
+  </nav>
+
+  <section class="flow-wrap" aria-label="How a forecast is made">
+    <ol class="flow" id="tft-flow">
+      <li><b>1 Input</b><span id="flow-input">50 fields over 12 months. Static, observed, and known future.</span></li>
+      <li><b>2 Weigh</b><span id="flow-weights">Variable selection gives each input a weight.</span></li>
+      <li><b>3 Sequence</b><span>An LSTM reads the year, then writes the next year.</span></li>
+      <li><b>4 Attend</b><span id="flow-attend">Attention chooses which months matter.</span></li>
+      <li><b>5 Tier</b><span id="flow-out">Five probabilities. The call is the largest.</span></li>
+    </ol>
+  </section>
+
+  <div class="workspace">
+    <div class="col">
+      <section id="classify" class="sheet">
+        <h2>Load a whānau</h2>
+        <p class="note">Excel, CSV, or JSON. One row is one month. A held-out example is already loaded.</p>
+        <div class="examples" id="example-row"></div>
+        <label class="drop" id="drop">
+          <input id="file" type="file" accept=".json,.csv,.xlsx,application/json,text/csv">
+          <span>Drop a file, or choose one</span>
+        </label>
+        <label class="file-label" for="json">Pasted table</label>
+        <textarea id="json" spellcheck="false"></textarea>
+        <div class="actions">
+          <button type="button" id="run">Forecast</button>
+          <button type="button" id="download-year" class="quiet">Download JSON</button>
+        </div>
+        <p id="form-error" class="error" role="alert"></p>
+      </section>
+
+      <section id="drivers" class="sheet">
+        <h2>What was weighed</h2>
+        <div id="drivers-body"></div>
+      </section>
+
+      <section id="dictionary" class="sheet">
+        <h2>The 50 inputs</h2>
+        <p class="note" id="dict-note"></p>
+        <div class="legend" id="domain-legend"></div>
+        <div id="dict-body"></div>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="sheet" aria-labelledby="family-title">
+        <h2 id="family-title">The call</h2>
+        <div id="result" aria-live="polite"></div>
+      </section>
+
+      <section id="score" class="sheet">
+        <h2>Score on the held-out whānau</h2>
+        <div id="score-body"><p>Loading…</p></div>
+        <h3>Confusion matrix</h3>
+        <p class="note">Rows are the tier in the data. Columns are the forecast.</p>
+        <div id="matrix-body"></div>
+      </section>
+
+      <section id="tiers" class="sheet">
+        <h2>Five tiers</h2>
+        <p class="note">Assigned from the workbook: without shelter or uninhabitable housing is severe; temporary accommodation, sharing a dwelling, or an emergency stay is unstable; social housing is subsidised unless costs reach half of income; a housed whānau is at risk at 30% of income, any arrears, or two people per bedroom. Otherwise the tier is stable.</p>
+        <ol class="ladder">
+          <li data-tier="1"><h3>1 Severely deprived</h3><p>Without shelter, or housing that is uninhabitable.</p></li>
+          <li data-tier="2"><h3>2 Unstable / transitional</h3><p>Temporary accommodation, sharing someone else’s dwelling, or an emergency stay.</p></li>
+          <li data-tier="3"><h3>3 At risk</h3><p>Housed, with high housing costs, arrears, or crowding.</p></li>
+          <li data-tier="4"><h3>4 Subsidised / assisted</h3><p>Social housing whose cost stays under half of income.</p></li>
+          <li data-tier="5"><h3>5 Stable / market secure</h3><p>Housed, with sustainable cost, no arrears, and no crowding.</p></li>
+        </ol>
+      </section>
+    </div>
+    <section class="sheet" id="cohort">
+      <h2>Browse the 200 test whānau</h2>
+      <div id="cohort-body"></div>
+    </section>
+  </div>
+  <footer>
+    <p>The transformer follows Lim, Arık, Loeff and Pfister (2021): variable selection, an LSTM encoder–decoder, and attention. The head is five classes. This page does not decide who is homeless or who should receive support.</p>
+  </footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

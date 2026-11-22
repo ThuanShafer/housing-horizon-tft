@@ -1,0 +1,2308 @@
+{
+  "task": "Five-tier housing stability, Temporal Fusion Transformer",
+  "panel": "Attached workbook tft_synthetic_panel_for_500_whanau.xlsx, 500 wh\u0101nau, January 2019\u2013December 2023.",
+  "seed": 72,
+  "inner_seed": 73,
+  "families": {
+    "fit": 240,
+    "validation": 60,
+    "train_pool": 300,
+    "test": 200
+  },
+  "headline_origin": {
+    "time_idx": 48,
+    "label": "2022-12",
+    "history": "2022-01\u20132022-12",
+    "forecast_through": "2023-12"
+  },
+  "parameters": 490322,
+  "config": {
+    "d_model": 32,
+    "d_hidden": 48,
+    "n_heads": 4,
+    "dropout": 0.1,
+    "encoder_len": 12,
+    "decoder_len": 12
+  },
+  "class_counts_fit_windows": [
+    26,
+    1947,
+    39177,
+    8658,
+    65632
+  ],
+  "best_val_macro_f1_h6": 0.6411510219390135,
+  "epochs_ran": 8,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.34290717963699824,
+      "val_loss": 0.20369947290903814,
+      "val_macro_f1_h6": 0.6355736786472691
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.1629244161887212,
+      "val_loss": 0.12726330790702287,
+      "val_macro_f1_h6": 0.6322588871139528
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.12367849952734268,
+      "val_loss": 0.10954627861847749,
+      "val_macro_f1_h6": 0.6411510219390135
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.10165857065905322,
+      "val_loss": 0.10790497864688839,
+      "val_macro_f1_h6": 0.6072076447728335
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.08995759025350347,
+      "val_loss": 0.10638181351058118,
+      "val_macro_f1_h6": 0.6191643639450322
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.08161245611336854,
+      "val_loss": 0.10878808225194612,
+      "val_macro_f1_h6": 0.5894069734479022
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.07017269845347146,
+      "val_loss": 0.09747856812434154,
+      "val_macro_f1_h6": 0.6016509679632527
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.06563235316593367,
+      "val_loss": 0.11004067096892778,
+      "val_macro_f1_h6": 0.5810410885586293
+    }
+  ],
+  "test_origin": {
+    "now": {
+      "n": 200,
+      "accuracy": 0.94,
+      "macro_f1": 0.7658257132898705,
+      "precision": [
+        0.0,
+        1.0,
+        0.8441558441558441,
+        1.0,
+        1.0
+      ],
+      "recall": [
+        0.0,
+        1.0,
+        1.0,
+        0.9285714285714286,
+        0.905982905982906
+      ],
+      "f1": [
+        0.0,
+        1.0,
+        0.9154929577464789,
+        0.962962962962963,
+        0.9506726457399104
+      ],
+      "support": [
+        0,
+        4,
+        65,
+        14,
+        117
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          4,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          65,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          13,
+          0
+        ],
+        [
+          0,
+          0,
+          11,
+          0,
+          106
+        ]
+      ],
+      "labels": [
+        "Severely Deprived (Acute Homelessness)",
+        "Unstable / Transitional",
+        "At Risk (Housing Insecure)",
+        "Subsidised / Assisted Stability",
+        "Stable / Market Secure"
+      ]
+    },
+    "h3": {
+      "n": 200,
+      "accuracy": 0.795,
+      "macro_f1": 0.5759380578853196,
+      "precision": [
+        0.0,
+        0.3,
+        0.8082191780821918,
+        0.8571428571428571,
+        0.8252427184466019
+      ],
+      "recall": [
+        0.0,
+        0.42857142857142855,
+        0.7283950617283951,
+        1.0,
+        0.85
+      ],
+      "f1": [
+        0.0,
+        0.3529411764705882,
+        0.7662337662337663,
+        0.923076923076923,
+        0.8374384236453202
+      ],
+      "support": [
+        0,
+        7,
+        81,
+        12,
+        100
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          3,
+          0,
+          2,
+          2
+        ],
+        [
+          0,
+          6,
+          59,
+          0,
+          16
+        ],
+        [
+          0,
+          0,
+          0,
+          12,
+          0
+        ],
+        [
+          0,
+          1,
+          14,
+          0,
+          85
+        ]
+      ],
+      "labels": [
+        "Severely Deprived (Acute Homelessness)",
+        "Unstable / Transitional",
+        "At Risk (Housing Insecure)",
+        "Subsidised / Assisted Stability",
+        "Stable / Market Secure"
+      ]
+    },
+    "h6": {
+      "n": 200,
+      "accuracy": 0.745,
+      "macro_f1": 0.564496421734511,
+      "precision": [
+        0.0,
+        0.3,
+        0.7435897435897436,
+        0.9285714285714286,
+        0.7653061224489796
+      ],
+      "recall": [
+        0.0,
+        0.5,
+        0.6744186046511628,
+        1.0,
+        0.7894736842105263
+      ],
+      "f1": [
+        0.0,
+        0.37499999999999994,
+        0.7073170731707318,
+        0.962962962962963,
+        0.7772020725388602
+      ],
+      "support": [
+        0,
+        6,
+        86,
+        13,
+        95
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          3,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          6,
+          58,
+          0,
+          22
+        ],
+        [
+          0,
+          0,
+          0,
+          13,
+          0
+        ],
+        [
+          0,
+          1,
+          19,
+          0,
+          75
+        ]
+      ],
+      "labels": [
+        "Severely Deprived (Acute Homelessness)",
+        "Unstable / Transitional",
+        "At Risk (Housing Insecure)",
+        "Subsidised / Assisted Stability",
+        "Stable / Market Secure"
+      ]
+    },
+    "h12": {
+      "n": 200,
+      "accuracy": 0.73,
+      "macro_f1": 0.49020816338862205,
+      "precision": [
+        0.0,
+        0.0,
+        0.7362637362637363,
+        1.0,
+        0.7386363636363636
+      ],
+      "recall": [
+        0.0,
+        0.0,
+        0.6979166666666666,
+        1.0,
+        0.7303370786516854
+      ],
+      "f1": [
+        0.0,
+        0.0,
+        0.716577540106952,
+        1.0,
+        0.7344632768361583
+      ],
+      "support": [
+        0,
+        1,
+        96,
+        14,
+        89
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          67,
+          0,
+          23
+        ],
+        [
+          0,
+          0,
+          0,
+          14,
+          0
+        ],
+        [
+          0,
+          1,
+          23,
+          0,
+          65
+        ]
+      ],
+      "labels": [
+        "Severely Deprived (Acute Homelessness)",
+        "Unstable / Transitional",
+        "At Risk (Housing Insecure)",
+        "Subsidised / Assisted Stability",
+        "Stable / Market Secure"
+      ]
+    }
+  },
+  "test_all_windows_macro_f1": {
+    "h3": 0.6424971947203748,
+    "h6": 0.6026947852855622,
+    "h12": 0.5592999989333542
+  },
+  "baselines_h6": {
+    "majority": {
+      "n": 200,
+      "accuracy": 0.475,
+      "macro_f1": 0.1288135593220339,
+      "precision": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.475
+      ],
+      "recall": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "f1": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.6440677966101694
+      ],
+      "support": [
+        0,
+        6,
+        86,
+        13,
+        95
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          6
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          86
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          13
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          95
+        ]
+      ],
+      "labels": [
+        "Severely Deprived (Acute Homelessness)",
+        "Unstable / Transitional",
+        "At Risk (Housing Insecure)",
+        "Subsidised / Assisted Stability",
+        "Stable / Market Secure"
+      ]
+    },
+    "persistence": {
+      "n": 200,
+      "accuracy": 0.795,
+      "macro_f1": 0.5869746993025764,
+      "precision": [
+        0.0,
+        0.5,
+        0.8615384615384616,
+        0.9285714285714286,
+        0.7521367521367521
+      ],
+      "recall": [
+        0.0,
+        0.3333333333333333,
+        0.6511627906976745,
+        1.0,
+        0.9263157894736842
+      ],
+      "f1": [
+        0.0,
+        0.4,
+        0.7417218543046358,
+        0.962962962962963,
+        0.8301886792452831
+      ],
+      "support": [
+        0,
+        6,
+        86,
+        13,
+        95
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          3,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          56,
+          0,
+          29
+        ],
+        [
+          0,
+          0,
+          0,
+          13,
+          0
+        ],
+        [
+          0,
+          1,
+          6,
+          0,
+          88
+        ]
+      ],
+      "labels": [
+        "Severely Deprived (Acute Homelessness)",
+        "Unstable / Transitional",
+        "At Risk (Housing Insecure)",
+        "Subsidised / Assisted Stability",
+        "Stable / Market Secure"
+      ]
+    },
+    "last_month_linear": {
+      "n": 200,
+      "accuracy": 0.71,
+      "macro_f1": 0.5837362637362637,
+      "precision": [
+        0.0,
+        0.75,
+        0.6458333333333334,
+        0.9230769230769231,
+        0.7471264367816092
+      ],
+      "recall": [
+        0.0,
+        0.5,
+        0.7209302325581395,
+        0.9230769230769231,
+        0.6842105263157895
+      ],
+      "f1": [
+        0.0,
+        0.6,
+        0.6813186813186812,
+        0.9230769230769231,
+        0.7142857142857142
+      ],
+      "support": [
+        0,
+        6,
+        86,
+        13,
+        95
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          3,
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          62,
+          1,
+          22
+        ],
+        [
+          0,
+          0,
+          1,
+          12,
+          0
+        ],
+        [
+          0,
+          0,
+          30,
+          0,
+          65
+        ]
+      ],
+      "labels": [
+        "Severely Deprived (Acute Homelessness)",
+        "Unstable / Transitional",
+        "At Risk (Housing Insecure)",
+        "Subsidised / Assisted Stability",
+        "Stable / Market Secure"
+      ]
+    },
+    "last_month_plus_deltas_linear": {
+      "n": 200,
+      "accuracy": 0.76,
+      "macro_f1": 0.5863358147229114,
+      "precision": [
+        0.0,
+        1.0,
+        0.69,
+        0.9230769230769231,
+        0.8117647058823529
+      ],
+      "recall": [
+        0.0,
+        0.3333333333333333,
+        0.8023255813953488,
+        0.9230769230769231,
+        0.7263157894736842
+      ],
+      "f1": [
+        0.0,
+        0.5,
+        0.7419354838709676,
+        0.9230769230769231,
+        0.7666666666666667
+      ],
+      "support": [
+        0,
+        6,
+        86,
+        13,
+        95
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          4,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          69,
+          1,
+          16
+        ],
+        [
+          0,
+          0,
+          1,
+          12,
+          0
+        ],
+        [
+          0,
+          0,
+          26,
+          0,
+          69
+        ]
+      ],
+      "labels": [
+        "Severely Deprived (Acute Homelessness)",
+        "Unstable / Transitional",
+        "At Risk (Housing Insecure)",
+        "Subsidised / Assisted Stability",
+        "Stable / Market Secure"
+      ]
+    }
+  },
+  "ablation_h6": {
+    "note": "Gambling share set to 0, justice event set to 0, and prior justice history set to no at evaluation. The model was not retrained.",
+    "full": {
+      "n": 200,
+      "accuracy": 0.745,
+      "macro_f1": 0.564496421734511,
+      "precision": [
+        0.0,
+        0.3,
+        0.7435897435897436,
+        0.9285714285714286,
+        0.7653061224489796
+      ],
+      "recall": [
+        0.0,
+        0.5,
+        0.6744186046511628,
+        1.0,
+        0.7894736842105263
+      ],
+      "f1": [
+        0.0,
+        0.37499999999999994,
+        0.7073170731707318,
+        0.962962962962963,
+        0.7772020725388602
+      ],
+      "support": [
+        0,
+        6,
+        86,
+        13,
+        95
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          3,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          6,
+          58,
+          0,
+          22
+        ],
+        [
+          0,
+          0,
+          0,
+          13,
+          0
+        ],
+        [
+          0,
+          1,
+          19,
+          0,
+          75
+        ]
+      ],
+      "labels": [
+        "Severely Deprived (Acute Homelessness)",
+        "Unstable / Transitional",
+        "At Risk (Housing Insecure)",
+        "Subsidised / Assisted Stability",
+        "Stable / Market Secure"
+      ]
+    },
+    "without_gambling_and_justice": {
+      "n": 200,
+      "accuracy": 0.745,
+      "macro_f1": 0.564496421734511,
+      "precision": [
+        0.0,
+        0.3,
+        0.7435897435897436,
+        0.9285714285714286,
+        0.7653061224489796
+      ],
+      "recall": [
+        0.0,
+        0.5,
+        0.6744186046511628,
+        1.0,
+        0.7894736842105263
+      ],
+      "f1": [
+        0.0,
+        0.37499999999999994,
+        0.7073170731707318,
+        0.962962962962963,
+        0.7772020725388602
+      ],
+      "support": [
+        0,
+        6,
+        86,
+        13,
+        95
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          3,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          6,
+          58,
+          0,
+          22
+        ],
+        [
+          0,
+          0,
+          0,
+          13,
+          0
+        ],
+        [
+          0,
+          1,
+          19,
+          0,
+          75
+        ]
+      ],
+      "labels": [
+        "Severely Deprived (Acute Homelessness)",
+        "Unstable / Transitional",
+        "At Risk (Housing Insecure)",
+        "Subsidised / Assisted Stability",
+        "Stable / Market Secure"
+      ]
+    }
+  },
+  "by_ethnicity_h6": [
+    {
+      "ethnicity": "Asian",
+      "n": 52,
+      "macro_f1": 0.49182608695652175,
+      "accuracy": 0.7307692307692307,
+      "recall": [
+        0.0,
+        0.0,
+        0.6666666666666666,
+        1.0,
+        0.7727272727272727
+      ],
+      "support": [
+        0,
+        0,
+        27,
+        3,
+        22
+      ]
+    },
+    {
+      "ethnicity": "Asian;European",
+      "n": 15,
+      "macro_f1": 0.4892857142857143,
+      "accuracy": 0.8,
+      "recall": [
+        0.0,
+        0.0,
+        0.4,
+        1.0,
+        1.0
+      ],
+      "support": [
+        0,
+        0,
+        5,
+        3,
+        7
+      ]
+    },
+    {
+      "ethnicity": "European",
+      "n": 78,
+      "macro_f1": 0.47326296674611285,
+      "accuracy": 0.7435897435897436,
+      "recall": [
+        0.0,
+        0.0,
+        0.7037037037037037,
+        1.0,
+        0.7777777777777778
+      ],
+      "support": [
+        0,
+        2,
+        27,
+        4,
+        45
+      ]
+    },
+    {
+      "ethnicity": "MELAA",
+      "n": 5,
+      "macro_f1": 0.30476190476190473,
+      "accuracy": 0.8,
+      "recall": [
+        0.0,
+        0.0,
+        0.5,
+        0.0,
+        1.0
+      ],
+      "support": [
+        0,
+        0,
+        2,
+        0,
+        3
+      ]
+    },
+    {
+      "ethnicity": "M\u0101ori",
+      "n": 17,
+      "macro_f1": 0.4928571428571429,
+      "accuracy": 0.7647058823529411,
+      "recall": [
+        0.0,
+        0.0,
+        0.6666666666666666,
+        1.0,
+        0.8333333333333334
+      ],
+      "support": [
+        0,
+        0,
+        9,
+        2,
+        6
+      ]
+    },
+    {
+      "ethnicity": "M\u0101ori;European",
+      "n": 5,
+      "macro_f1": 0.32,
+      "accuracy": 0.8,
+      "recall": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.6666666666666666
+      ],
+      "support": [
+        0,
+        0,
+        2,
+        0,
+        3
+      ]
+    },
+    {
+      "ethnicity": "M\u0101ori;Pacific",
+      "n": 3,
+      "macro_f1": 0.3333333333333333,
+      "accuracy": 0.6666666666666666,
+      "recall": [
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "support": [
+        0,
+        1,
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "ethnicity": "Other",
+      "n": 2,
+      "macro_f1": 0.4,
+      "accuracy": 1.0,
+      "recall": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0
+      ],
+      "support": [
+        0,
+        0,
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "ethnicity": "Pacific",
+      "n": 18,
+      "macro_f1": 0.6000000000000001,
+      "accuracy": 0.7222222222222222,
+      "recall": [
+        0.0,
+        0.6666666666666666,
+        0.8,
+        1.0,
+        0.5
+      ],
+      "support": [
+        0,
+        3,
+        10,
+        1,
+        4
+      ]
+    },
+    {
+      "ethnicity": "Pacific;European",
+      "n": 5,
+      "macro_f1": 0.26,
+      "accuracy": 0.6,
+      "recall": [
+        0.0,
+        0.0,
+        0.5,
+        0.0,
+        0.6666666666666666
+      ],
+      "support": [
+        0,
+        0,
+        2,
+        0,
+        3
+      ]
+    }
+  ],
+  "importance": {
+    "static": [
+      {
+        "name": "residency_status",
+        "domain": "Demographic",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.4104405641555786
+      },
+      {
+        "name": "prior_justice_history",
+        "domain": "Justice",
+        "role": "static",
+        "sensitive": true,
+        "weight": 0.10606041550636292
+      },
+      {
+        "name": "local_board",
+        "domain": "Area",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.08571651577949524
+      },
+      {
+        "name": "tenure_start",
+        "domain": "Housing",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.08282197266817093
+      },
+      {
+        "name": "household_size_start",
+        "domain": "Household",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.06742291152477264
+      },
+      {
+        "name": "sole_parent",
+        "domain": "Household",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.05691145732998848
+      },
+      {
+        "name": "dependants_count",
+        "domain": "Household",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.046901997178792953
+      },
+      {
+        "name": "whanau_type",
+        "domain": "Household",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.04599272087216377
+      },
+      {
+        "name": "disability",
+        "domain": "Health",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.04145275056362152
+      },
+      {
+        "name": "nzdep_decile",
+        "domain": "Area",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.036816664040088654
+      },
+      {
+        "name": "age_band",
+        "domain": "Demographic",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.01946210116147995
+      }
+    ],
+    "history": [
+      {
+        "name": "housing_cost_burden",
+        "domain": "Housing",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.5624914765357971
+      },
+      {
+        "name": "rent_arrears",
+        "domain": "Housing",
+        "role": "outcome",
+        "sensitive": false,
+        "weight": 0.05817411467432976
+      },
+      {
+        "name": "persons_per_bedroom",
+        "domain": "Housing",
+        "role": "outcome",
+        "sensitive": false,
+        "weight": 0.04746854677796364
+      },
+      {
+        "name": "justice_event",
+        "domain": "Justice",
+        "role": "observed",
+        "sensitive": true,
+        "weight": 0.04621768370270729
+      },
+      {
+        "name": "deprivation_category",
+        "domain": "Housing",
+        "role": "outcome",
+        "sensitive": false,
+        "weight": 0.03520229831337929
+      },
+      {
+        "name": "essential_spend_share",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.02494085766375065
+      },
+      {
+        "name": "main_benefit",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.012233053334057331
+      },
+      {
+        "name": "pandemic_restriction_level",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.012192786671221256
+      },
+      {
+        "name": "disaster_displaced",
+        "domain": "Housing",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.01120274979621172
+      },
+      {
+        "name": "local_eh_grants",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.010735687799751759
+      },
+      {
+        "name": "weekly_income",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.008677908219397068
+      },
+      {
+        "name": "month_of_year",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.008627473376691341
+      },
+      {
+        "name": "quarter",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.00828237272799015
+      },
+      {
+        "name": "hourly_wage",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.008006205782294273
+      },
+      {
+        "name": "local_affordability_index",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.008002448827028275
+      },
+      {
+        "name": "planned_support_places",
+        "domain": "Service / Policy",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.007950514554977417
+      },
+      {
+        "name": "household_size_change",
+        "domain": "Household",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.007898563519120216
+      },
+      {
+        "name": "gambling_spend_share",
+        "domain": "Behavioural",
+        "role": "observed",
+        "sensitive": true,
+        "weight": 0.007755749858915806
+      },
+      {
+        "name": "debt_balance",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.007614099886268377
+      },
+      {
+        "name": "local_homelessness_rate",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.007605415303260088
+      },
+      {
+        "name": "local_median_rent",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.007113016676157713
+      },
+      {
+        "name": "local_service_spend",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.00673214765265584
+      },
+      {
+        "name": "lease_months_remaining",
+        "domain": "Housing",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.006727860774844885
+      },
+      {
+        "name": "mortgage_payment",
+        "domain": "Housing",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.00669099809601903
+      },
+      {
+        "name": "cpi_inflation_annual",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.006497809197753668
+      },
+      {
+        "name": "natural_disaster_severity",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.006312972400337458
+      },
+      {
+        "name": "moves_12m",
+        "domain": "Housing",
+        "role": "outcome",
+        "sensitive": false,
+        "weight": 0.006137515883892775
+      },
+      {
+        "name": "unemployment_rate",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.006109563633799553
+      },
+      {
+        "name": "emergency_accommodation_type",
+        "domain": "Service / Policy",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.005855398252606392
+      },
+      {
+        "name": "emergency_housing_stay",
+        "domain": "Housing",
+        "role": "outcome",
+        "sensitive": false,
+        "weight": 0.005692007951438427
+      },
+      {
+        "name": "substance_service_contact",
+        "domain": "Health",
+        "role": "observed",
+        "sensitive": true,
+        "weight": 0.005576602183282375
+      },
+      {
+        "name": "petrol_price",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.005531650967895985
+      },
+      {
+        "name": "public_holidays",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.005409916862845421
+      },
+      {
+        "name": "local_price_to_income",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.0053052413277328014
+      },
+      {
+        "name": "ocr_rate",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.004874849691987038
+      },
+      {
+        "name": "benefit_indexation",
+        "domain": "Service / Policy",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.004694023635238409
+      },
+      {
+        "name": "school_holiday",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.003458829363808036
+      }
+    ],
+    "future": [
+      {
+        "name": "school_holiday",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.21262158453464508
+      },
+      {
+        "name": "quarter",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.1771710366010666
+      },
+      {
+        "name": "public_holidays",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.1631980836391449
+      },
+      {
+        "name": "month_of_year",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.1524341106414795
+      },
+      {
+        "name": "planned_support_places",
+        "domain": "Service / Policy",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.10410649329423904
+      },
+      {
+        "name": "benefit_indexation",
+        "domain": "Service / Policy",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.09790631383657455
+      },
+      {
+        "name": "lease_months_remaining",
+        "domain": "Housing",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.09256213903427124
+      }
+    ]
+  },
+  "attention_h6": [
+    0.015018812380731106,
+    0.015394633635878563,
+    0.018629275262355804,
+    0.02282189577817917,
+    0.0314413458108902,
+    0.04122878611087799,
+    0.052723634988069534,
+    0.06543068587779999,
+    0.07482578605413437,
+    0.08278292417526245,
+    0.09411972761154175,
+    0.10761203616857529,
+    0.06109587848186493,
+    0.06377395242452621,
+    0.05649680271744728,
+    0.07461169362068176,
+    0.059942420572042465,
+    0.062049657106399536,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "attention_labels": [
+    "2022-01",
+    "2022-02",
+    "2022-03",
+    "2022-04",
+    "2022-05",
+    "2022-06",
+    "2022-07",
+    "2022-08",
+    "2022-09",
+    "2022-10",
+    "2022-11",
+    "2022-12",
+    "2023-01",
+    "2023-02",
+    "2023-03",
+    "2023-04",
+    "2023-05",
+    "2023-06",
+    "2023-07",
+    "2023-08",
+    "2023-09",
+    "2023-10",
+    "2023-11",
+    "2023-12"
+  ],
+  "performance_h6": {
+    "n": 200,
+    "accuracy": 0.745,
+    "precision_macro": 0.5474934589220304,
+    "recall_macro": 0.5927784577723377,
+    "specificity_macro": 0.9128167433302922,
+    "f1_macro": 0.564496421734511,
+    "auc_macro": 0.8921070429932909,
+    "per_class": [
+      {
+        "tier_id": 1,
+        "name": "Severely Deprived",
+        "support": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "specificity": 1.0,
+        "f1": 0.0,
+        "auc": null
+      },
+      {
+        "tier_id": 2,
+        "name": "Unstable / Transitional",
+        "support": 6,
+        "precision": 0.3,
+        "recall": 0.5,
+        "specificity": 0.9639175257731959,
+        "f1": 0.37499999999999994,
+        "auc": 0.8109965635738832
+      },
+      {
+        "tier_id": 3,
+        "name": "At Risk",
+        "support": 86,
+        "precision": 0.7435897435897436,
+        "recall": 0.6744186046511628,
+        "specificity": 0.8245614035087719,
+        "f1": 0.7073170731707318,
+        "auc": 0.8679110567115463
+      },
+      {
+        "tier_id": 4,
+        "name": "Subsidised / Assisted",
+        "support": 13,
+        "precision": 0.9285714285714286,
+        "recall": 1.0,
+        "specificity": 0.9946524064171123,
+        "f1": 0.962962962962963,
+        "auc": 0.9958864664747018
+      },
+      {
+        "tier_id": 5,
+        "name": "Stable / Market Secure",
+        "support": 95,
+        "precision": 0.7653061224489796,
+        "recall": 0.7894736842105263,
+        "specificity": 0.780952380952381,
+        "f1": 0.7772020725388602,
+        "auc": 0.8936340852130326
+      }
+    ],
+    "roc": [
+      {
+        "name": "Severely Deprived",
+        "auc": null,
+        "points": []
+      },
+      {
+        "name": "Unstable / Transitional",
+        "auc": 0.8109965635738832,
+        "points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0206,
+            0.1667
+          ],
+          [
+            0.0361,
+            0.5
+          ],
+          [
+            0.0567,
+            0.6667
+          ],
+          [
+            0.0825,
+            0.6667
+          ],
+          [
+            0.1031,
+            0.8333
+          ],
+          [
+            0.1289,
+            0.8333
+          ],
+          [
+            0.1546,
+            0.8333
+          ],
+          [
+            0.1804,
+            0.8333
+          ],
+          [
+            0.2062,
+            0.8333
+          ],
+          [
+            0.232,
+            0.8333
+          ],
+          [
+            0.2577,
+            0.8333
+          ],
+          [
+            0.2835,
+            0.8333
+          ],
+          [
+            0.3093,
+            0.8333
+          ],
+          [
+            0.3351,
+            0.8333
+          ],
+          [
+            0.3608,
+            0.8333
+          ],
+          [
+            0.3866,
+            0.8333
+          ],
+          [
+            0.4124,
+            0.8333
+          ],
+          [
+            0.4381,
+            0.8333
+          ],
+          [
+            0.4639,
+            0.8333
+          ],
+          [
+            0.4897,
+            0.8333
+          ],
+          [
+            0.5155,
+            0.8333
+          ],
+          [
+            0.5412,
+            0.8333
+          ],
+          [
+            0.567,
+            0.8333
+          ],
+          [
+            0.5928,
+            0.8333
+          ],
+          [
+            0.6186,
+            0.8333
+          ],
+          [
+            0.6443,
+            0.8333
+          ],
+          [
+            0.6701,
+            0.8333
+          ],
+          [
+            0.6959,
+            0.8333
+          ],
+          [
+            0.7216,
+            0.8333
+          ],
+          [
+            0.7474,
+            0.8333
+          ],
+          [
+            0.7732,
+            0.8333
+          ],
+          [
+            0.799,
+            0.8333
+          ],
+          [
+            0.8247,
+            0.8333
+          ],
+          [
+            0.8505,
+            0.8333
+          ],
+          [
+            0.8763,
+            0.8333
+          ],
+          [
+            0.9021,
+            0.8333
+          ],
+          [
+            0.9278,
+            0.8333
+          ],
+          [
+            0.9485,
+            1.0
+          ],
+          [
+            0.9742,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "At Risk",
+        "auc": 0.8679110567115463,
+        "points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0581
+          ],
+          [
+            0.0088,
+            0.1047
+          ],
+          [
+            0.0088,
+            0.1628
+          ],
+          [
+            0.0088,
+            0.2209
+          ],
+          [
+            0.0175,
+            0.2674
+          ],
+          [
+            0.0175,
+            0.3256
+          ],
+          [
+            0.0263,
+            0.3721
+          ],
+          [
+            0.0351,
+            0.4186
+          ],
+          [
+            0.0526,
+            0.4535
+          ],
+          [
+            0.0614,
+            0.5
+          ],
+          [
+            0.0877,
+            0.5233
+          ],
+          [
+            0.1053,
+            0.5581
+          ],
+          [
+            0.1053,
+            0.6163
+          ],
+          [
+            0.1404,
+            0.6279
+          ],
+          [
+            0.1667,
+            0.6512
+          ],
+          [
+            0.1842,
+            0.686
+          ],
+          [
+            0.2105,
+            0.7093
+          ],
+          [
+            0.2456,
+            0.7209
+          ],
+          [
+            0.2632,
+            0.7558
+          ],
+          [
+            0.2807,
+            0.7907
+          ],
+          [
+            0.2982,
+            0.8256
+          ],
+          [
+            0.3246,
+            0.8488
+          ],
+          [
+            0.3509,
+            0.8721
+          ],
+          [
+            0.3596,
+            0.9186
+          ],
+          [
+            0.3772,
+            0.9535
+          ],
+          [
+            0.4123,
+            0.9651
+          ],
+          [
+            0.4386,
+            0.9884
+          ],
+          [
+            0.4737,
+            1.0
+          ],
+          [
+            0.5175,
+            1.0
+          ],
+          [
+            0.5614,
+            1.0
+          ],
+          [
+            0.6053,
+            1.0
+          ],
+          [
+            0.6491,
+            1.0
+          ],
+          [
+            0.693,
+            1.0
+          ],
+          [
+            0.7368,
+            1.0
+          ],
+          [
+            0.7807,
+            1.0
+          ],
+          [
+            0.8246,
+            1.0
+          ],
+          [
+            0.8684,
+            1.0
+          ],
+          [
+            0.9123,
+            1.0
+          ],
+          [
+            0.9561,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "Subsidised / Assisted",
+        "auc": 0.9958864664747018,
+        "points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0053,
+            0.3077
+          ],
+          [
+            0.0053,
+            0.6923
+          ],
+          [
+            0.0107,
+            1.0
+          ],
+          [
+            0.0374,
+            1.0
+          ],
+          [
+            0.0642,
+            1.0
+          ],
+          [
+            0.0909,
+            1.0
+          ],
+          [
+            0.1176,
+            1.0
+          ],
+          [
+            0.1444,
+            1.0
+          ],
+          [
+            0.1711,
+            1.0
+          ],
+          [
+            0.1979,
+            1.0
+          ],
+          [
+            0.2246,
+            1.0
+          ],
+          [
+            0.2513,
+            1.0
+          ],
+          [
+            0.2781,
+            1.0
+          ],
+          [
+            0.3048,
+            1.0
+          ],
+          [
+            0.3316,
+            1.0
+          ],
+          [
+            0.3583,
+            1.0
+          ],
+          [
+            0.385,
+            1.0
+          ],
+          [
+            0.4118,
+            1.0
+          ],
+          [
+            0.4385,
+            1.0
+          ],
+          [
+            0.4652,
+            1.0
+          ],
+          [
+            0.492,
+            1.0
+          ],
+          [
+            0.5187,
+            1.0
+          ],
+          [
+            0.5455,
+            1.0
+          ],
+          [
+            0.5722,
+            1.0
+          ],
+          [
+            0.5989,
+            1.0
+          ],
+          [
+            0.6257,
+            1.0
+          ],
+          [
+            0.6524,
+            1.0
+          ],
+          [
+            0.6791,
+            1.0
+          ],
+          [
+            0.7059,
+            1.0
+          ],
+          [
+            0.7326,
+            1.0
+          ],
+          [
+            0.7594,
+            1.0
+          ],
+          [
+            0.7861,
+            1.0
+          ],
+          [
+            0.8128,
+            1.0
+          ],
+          [
+            0.8396,
+            1.0
+          ],
+          [
+            0.8663,
+            1.0
+          ],
+          [
+            0.893,
+            1.0
+          ],
+          [
+            0.9198,
+            1.0
+          ],
+          [
+            0.9465,
+            1.0
+          ],
+          [
+            0.9733,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "Stable / Market Secure",
+        "auc": 0.8936340852130326,
+        "points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0526
+          ],
+          [
+            0.0,
+            0.1053
+          ],
+          [
+            0.0,
+            0.1579
+          ],
+          [
+            0.0,
+            0.2105
+          ],
+          [
+            0.0,
+            0.2632
+          ],
+          [
+            0.0,
+            0.3158
+          ],
+          [
+            0.0,
+            0.3684
+          ],
+          [
+            0.0,
+            0.4211
+          ],
+          [
+            0.0,
+            0.4737
+          ],
+          [
+            0.0,
+            0.5263
+          ],
+          [
+            0.0095,
+            0.5684
+          ],
+          [
+            0.0286,
+            0.6
+          ],
+          [
+            0.0476,
+            0.6316
+          ],
+          [
+            0.0857,
+            0.6421
+          ],
+          [
+            0.1143,
+            0.6632
+          ],
+          [
+            0.1333,
+            0.6947
+          ],
+          [
+            0.1619,
+            0.7158
+          ],
+          [
+            0.181,
+            0.7474
+          ],
+          [
+            0.2,
+            0.7789
+          ],
+          [
+            0.219,
+            0.8105
+          ],
+          [
+            0.2571,
+            0.8211
+          ],
+          [
+            0.2667,
+            0.8632
+          ],
+          [
+            0.3048,
+            0.8737
+          ],
+          [
+            0.3333,
+            0.8947
+          ],
+          [
+            0.3714,
+            0.9053
+          ],
+          [
+            0.4095,
+            0.9158
+          ],
+          [
+            0.4381,
+            0.9368
+          ],
+          [
+            0.4857,
+            0.9368
+          ],
+          [
+            0.5048,
+            0.9684
+          ],
+          [
+            0.5429,
+            0.9789
+          ],
+          [
+            0.5905,
+            0.9789
+          ],
+          [
+            0.6381,
+            0.9789
+          ],
+          [
+            0.6857,
+            0.9789
+          ],
+          [
+            0.7238,
+            0.9895
+          ],
+          [
+            0.7619,
+            1.0
+          ],
+          [
+            0.8095,
+            1.0
+          ],
+          [
+            0.8571,
+            1.0
+          ],
+          [
+            0.9048,
+            1.0
+          ],
+          [
+            0.9524,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      }
+    ],
+    "confusion": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        3,
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        6,
+        58,
+        0,
+        22
+      ],
+      [
+        0,
+        0,
+        0,
+        13,
+        0
+      ],
+      [
+        0,
+        1,
+        19,
+        0,
+        75
+      ]
+    ],
+    "labels": [
+      "Severely Deprived (Acute Homelessness)",
+      "Unstable / Transitional",
+      "At Risk (Housing Insecure)",
+      "Subsidised / Assisted Stability",
+      "Stable / Market Secure"
+    ]
+  },
+  "seconds": 58.6
+}
