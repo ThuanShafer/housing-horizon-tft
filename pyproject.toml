@@ -1,0 +1,13 @@
+[project]
+name = "housing-horizon-tft"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.uv]
+package = false
+
+# Torch stays in requirements.txt for local fitting. Listing it here would
+# pull it into the Vercel function, which cannot refit a seed.
+[tool.vercel]
+entrypoint = "web.serve:Handler"

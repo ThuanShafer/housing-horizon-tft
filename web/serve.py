@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 import threading
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -14,8 +15,6 @@ from pathlib import Path
 WEB = Path(__file__).resolve().parent
 ROOT = WEB.parent
 sys.path.insert(0, str(ROOT / "src"))
-
-from housing_tft.train import train_seed  # noqa: E402
 
 SEED_MIN = 0
 SEED_MAX = 100
@@ -81,6 +80,18 @@ class Handler(SimpleHTTPRequestHandler):
         if bundle_ready(seed):
             self._send({"ready": True, "seed": seed, "cached": True})
             return
+        if os.environ.get("VERCEL"):
+            ready = ", ".join(str(item) for item in ready_seeds())
+            self._send(
+                {
+                    "error": (
+                        f"Seed {seed} is not published. This site can load {ready}. "
+                        "A new seed is fit by running python3 serve.py locally."
+                    )
+                },
+                501,
+            )
+            return
         if not LOCK.acquire(blocking=False):
             self._send({"error": f"Seed {BUSY['seed']} is still training.", "busy": BUSY["seed"]}, 409)
             return
@@ -88,6 +99,8 @@ class Handler(SimpleHTTPRequestHandler):
         try:
             out = BUNDLE / str(seed)
             out.mkdir(parents=True, exist_ok=True)
+            from housing_tft.train import train_seed
+
             summary = train_seed(seed, out)
             self._send({"ready": True, "seed": seed, "cached": False, **summary})
         except Exception as exc:
