@@ -356,9 +356,13 @@ def train_seed(
     base_last_s = linear_scores(base_last, False)
     base_delta_s = linear_scores(base_delta, True)
     majority_s = scores(actual_h6, np.full(len(actual_h6), majority))
+    observed_months = sorted({str(row["month"]) for row in rows})
     metrics = {
         "task": "Five-tier housing stability, Temporal Fusion Transformer",
-        "panel": "Attached workbook tft_synthetic_panel_for_500_whanau.xlsx, 500 whānau, January 2019–December 2023.",
+        "panel": (
+            f"Workbook tft_synthetic_panel_for_500_whanau, {len(grouped)} whānau, "
+            f"observed {observed_months[0]}–{observed_months[-1]}."
+        ),
         "seed": seed,
         "inner_seed": seed + 1,
         "families": {"fit": len(split.fit), "validation": len(split.val), "train_pool": 300, "test": len(split.test)},
@@ -396,6 +400,8 @@ def train_seed(
         (artifacts / "metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
     export_bundle(out_dir, model, scaler, config, split, history, metrics, cohort, examples, calendar, seed)
     (out_dir / "parity.json").write_text(json.dumps(parity), encoding="utf-8")
+    histories = {wid: _history_rows(grouped[wid]) for wid in test_meta["whanau_id"]}
+    (out_dir / "histories.json").write_text(json.dumps(histories), encoding="utf-8")
     print(
         f"seed {seed}  test macro-F1 {h6['macro_f1']:.3f}  accuracy {h6['accuracy']:.3f}  "
         f"linear {base_last_s['macro_f1']:.3f}  persistence {persistence_s['macro_f1']:.3f}  majority {majority_s['macro_f1']:.3f}",
@@ -446,6 +452,15 @@ def _importance(names, weights, spec) -> list[dict]:
     return rows
 
 
+def _history_rows(series: list[dict]) -> list[dict]:
+    keys = ("whanau_id", "time_idx", "month", *feature_map())
+    history = []
+    for row in series:
+        if HEADLINE_ORIGIN - 11 <= int(row["time_idx"]) <= HEADLINE_ORIGIN:
+            history.append({key: _jsonable(row[key]) for key in keys if key in row})
+    return history
+
+
 def _jsonable(value):
     if hasattr(value, "item"):
         value = value.item()
@@ -489,10 +504,7 @@ def _examples(grouped, meta, arrays, pred, cohort) -> list[dict]:
     id_to_index = {wid: i for i, wid in enumerate(meta["whanau_id"])}
     for wid in chosen:
         i = id_to_index[wid]
-        history = []
-        for row in grouped[wid]:
-            if HEADLINE_ORIGIN - 11 <= int(row["time_idx"]) <= HEADLINE_ORIGIN:
-                history.append({key: _jsonable(row[key]) for key in ("whanau_id", "time_idx", "month", *feature_map()) if key in row})
+        history = _history_rows(grouped[wid])
         actual_path = [_tier(int(v)) for v in arrays["y_fut"][i]]
         examples.append({
             "id": wid,

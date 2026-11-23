@@ -339,6 +339,9 @@ def load_panel(path) -> list[dict]:
     import pandas as pd
 
     frame = pd.read_excel(path, sheet_name="Panel", header=2, skiprows=[3])
+    if "row_type" in frame.columns:
+        kind = frame["row_type"].astype(str).str.strip().str.lower()
+        frame = frame.loc[kind != "forecast"].copy()
     rows = frame.to_dict(orient="records")
     blankable = {"emergency_accommodation_type", "main_benefit", "major_event_context"}
     for row in rows:

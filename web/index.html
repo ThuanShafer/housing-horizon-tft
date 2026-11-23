@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip" href="#classify">Skip to the forecast</a>
+  <a class="skip" href="#cohort">Skip to the whānau</a>
   <header class="top">
     <div>
       <p class="mark">Housing Horizon</p>
@@ -24,8 +24,8 @@
     </div>
   </header>
   <nav class="jump" aria-label="Sections">
-    <a href="#classify">1 Load</a>
-    <a href="#result">2 The call</a>
+    <a href="#cohort">1 Whānau</a>
+    <a href="#call">2 The call</a>
     <a href="#score">3 Score</a>
     <a href="#dictionary">4 Inputs</a>
   </nav>
@@ -41,11 +41,32 @@
   </section>
 
   <div class="workspace">
-    <div class="col">
-      <section id="classify" class="sheet">
-        <h2>Load a whānau</h2>
-        <p class="note">Excel, CSV, or JSON. One row is one month. A held-out example is already loaded.</p>
-        <div class="examples" id="example-row"></div>
+    <section class="sheet" id="cohort">
+      <div class="cohort-top">
+        <div>
+          <h2>Test whānau</h2>
+          <p class="note">Search an id to load that forecast. The table narrows to the same family.</p>
+        </div>
+        <p class="section-note" id="cohort-count"></p>
+      </div>
+      <div class="finder">
+        <div class="combo" id="whanau-combo">
+          <input id="whanau-search" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="whanau-list" aria-label="Search whānau by id" placeholder="Search by whānau id" autocomplete="off" spellcheck="false">
+          <button type="button" id="whanau-clear" class="clear" hidden aria-label="Clear the search">×</button>
+          <button type="button" id="whanau-toggle" aria-label="Show matching whānau">▾</button>
+          <ul id="whanau-list" role="listbox" hidden></ul>
+        </div>
+        <select id="whanau-mode" aria-label="Filter the test table">
+          <option>All whānau</option>
+          <option>Tier changed</option>
+          <option>Forecast missed</option>
+          <option>Forecast matched</option>
+        </select>
+      </div>
+      <div id="cohort-body"></div>
+      <details class="own-file">
+        <summary>Upload a different history</summary>
+        <p class="note">Excel, CSV, or JSON. One row is one month.</p>
         <label class="drop" id="drop">
           <input id="file" type="file" accept=".json,.csv,.xlsx,application/json,text/csv">
           <span>Drop a file, or choose one</span>
@@ -57,8 +78,10 @@
           <button type="button" id="download-year" class="quiet">Download JSON</button>
         </div>
         <p id="form-error" class="error" role="alert"></p>
-      </section>
+      </details>
+    </section>
 
+    <div class="col">
       <section id="drivers" class="sheet">
         <h2>What was weighed</h2>
         <div id="drivers-body"></div>
@@ -73,17 +96,9 @@
     </div>
 
     <div class="col">
-      <section class="sheet" aria-labelledby="family-title">
+      <section class="sheet" id="call" aria-labelledby="family-title">
         <h2 id="family-title">The call</h2>
         <div id="result" aria-live="polite"></div>
-      </section>
-
-      <section id="score" class="sheet">
-        <h2>Score on the held-out whānau</h2>
-        <div id="score-body"><p>Loading…</p></div>
-        <h3>Confusion matrix</h3>
-        <p class="note">Rows are the tier in the data. Columns are the forecast.</p>
-        <div id="matrix-body"></div>
       </section>
 
       <section id="tiers" class="sheet">
@@ -98,9 +113,23 @@
         </ol>
       </section>
     </div>
-    <section class="sheet" id="cohort">
-      <h2>Browse the 200 test whānau</h2>
-      <div id="cohort-body"></div>
+
+    <section id="score" class="sheet score-sheet">
+      <h2>Score on the held-out whānau</h2>
+      <div class="score-landscape">
+        <p id="score-lead" class="score-lead">Loading…</p>
+        <div id="score-stats" class="score-panel"></div>
+        <div id="score-viz" class="score-panel"></div>
+        <div class="score-tables-col">
+          <div id="score-recall" class="score-panel"></div>
+          <div class="score-panel score-matrix-panel">
+            <h3>Confusion matrix</h3>
+            <p class="note">Rows are the tier in the data. Columns are the forecast.</p>
+            <div id="matrix-body"></div>
+          </div>
+        </div>
+        <div id="score-foot" class="score-foot"></div>
+      </div>
     </section>
   </div>
   <footer>

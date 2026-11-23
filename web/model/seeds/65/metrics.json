@@ -1,6 +1,6 @@
 {
   "task": "Five-tier housing stability, Temporal Fusion Transformer",
-  "panel": "Attached workbook tft_synthetic_panel_for_500_whanau.xlsx, 500 wh\u0101nau, January 2019\u2013December 2023.",
+  "panel": "Workbook tft_synthetic_panel_for_500_whanau, 500 wh\u0101nau, observed 2022-01\u20132026-12.",
   "seed": 65,
   "inner_seed": 66,
   "families": {
@@ -11,9 +11,9 @@
   },
   "headline_origin": {
     "time_idx": 48,
-    "label": "2022-12",
-    "history": "2022-01\u20132022-12",
-    "forecast_through": "2023-12"
+    "label": "2025-12",
+    "history": "2025-01\u20132025-12",
+    "forecast_through": "2026-12"
   },
   "parameters": 490322,
   "config": {
@@ -25,173 +25,96 @@
     "decoder_len": 12
   },
   "class_counts_fit_windows": [
-    14,
-    3238,
-    35423,
-    6734,
-    70031
+    73,
+    2141,
+    57223,
+    10101,
+    45902
   ],
-  "best_val_macro_f1_h6": 0.5341435195150944,
+  "best_val_macro_f1_h6": 0.6161142837368617,
   "epochs_ran": 8,
   "history": [
     {
       "epoch": 1,
-      "train_loss": 0.32970037868431024,
-      "val_loss": 0.1820030398733981,
-      "val_macro_f1_h6": 0.5140055854642067
+      "train_loss": 0.36836000627225585,
+      "val_loss": 0.24320256484521402,
+      "val_macro_f1_h6": 0.603557925824207
     },
     {
       "epoch": 2,
-      "train_loss": 0.14286874836092597,
-      "val_loss": 0.1367720479766528,
-      "val_macro_f1_h6": 0.5176359072979785
+      "train_loss": 0.1576661296524443,
+      "val_loss": 0.2506234796868788,
+      "val_macro_f1_h6": 0.6161142837368617
     },
     {
       "epoch": 3,
-      "train_loss": 0.10006796082666328,
-      "val_loss": 0.10050902847905417,
-      "val_macro_f1_h6": 0.5341435195150944
+      "train_loss": 0.11511309193866746,
+      "val_loss": 0.2614648517053407,
+      "val_macro_f1_h6": 0.6061057631858752
     },
     {
       "epoch": 4,
-      "train_loss": 0.08231471033246668,
-      "val_loss": 0.11134492177684027,
-      "val_macro_f1_h6": 0.5237884961286118
+      "train_loss": 0.09196517369500151,
+      "val_loss": 0.2509057585854788,
+      "val_macro_f1_h6": 0.6101219073821442
     },
     {
       "epoch": 5,
-      "train_loss": 0.07288501849314113,
-      "val_loss": 0.09253569235941311,
-      "val_macro_f1_h6": 0.5126477742689909
+      "train_loss": 0.0768733860270397,
+      "val_loss": 0.2620254552579141,
+      "val_macro_f1_h6": 0.5735731868063267
     },
     {
       "epoch": 6,
-      "train_loss": 0.0641265853501118,
-      "val_loss": 0.1027156553122106,
-      "val_macro_f1_h6": 0.5223516607918247
+      "train_loss": 0.06743625557503184,
+      "val_loss": 0.24467761210493139,
+      "val_macro_f1_h6": 0.5938276784883574
     },
     {
       "epoch": 7,
-      "train_loss": 0.05811562826773068,
-      "val_loss": 0.09735910981759295,
-      "val_macro_f1_h6": 0.5348353145837571
+      "train_loss": 0.060092716838593956,
+      "val_loss": 0.24598244737397443,
+      "val_macro_f1_h6": 0.5886161652555095
     },
     {
       "epoch": 8,
-      "train_loss": 0.049057270479094875,
-      "val_loss": 0.10059722296826475,
-      "val_macro_f1_h6": 0.5270943940379321
+      "train_loss": 0.05366222159014092,
+      "val_loss": 0.26908614299855793,
+      "val_macro_f1_h6": 0.5622679091727066
     }
   ],
   "test_origin": {
     "now": {
       "n": 200,
-      "accuracy": 0.96,
-      "macro_f1": 0.7696664192365656,
+      "accuracy": 0.935,
+      "macro_f1": 0.7258608058608058,
       "precision": [
         0.0,
+        0.6666666666666666,
+        0.9787234042553191,
         1.0,
-        0.9583333333333334,
-        1.0,
-        0.954954954954955
+        0.8901098901098901
       ],
       "recall": [
         0.0,
         1.0,
-        0.9452054794520548,
-        0.8666666666666667,
-        0.9814814814814815
-      ],
-      "f1": [
-        0.0,
-        1.0,
-        0.9517241379310345,
-        0.9285714285714286,
-        0.9680365296803655
-      ],
-      "support": [
-        0,
-        4,
-        73,
-        15,
-        108
-      ],
-      "confusion": [
-        [
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          4,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          69,
-          0,
-          4
-        ],
-        [
-          0,
-          0,
-          1,
-          13,
-          1
-        ],
-        [
-          0,
-          0,
-          2,
-          0,
-          106
-        ]
-      ],
-      "labels": [
-        "Severely Deprived (Acute Homelessness)",
-        "Unstable / Transitional",
-        "At Risk (Housing Insecure)",
-        "Subsidised / Assisted Stability",
-        "Stable / Market Secure"
-      ]
-    },
-    "h3": {
-      "n": 200,
-      "accuracy": 0.855,
-      "macro_f1": 0.562776771898975,
-      "precision": [
-        0.0,
-        0.14285714285714285,
-        0.8765432098765432,
-        0.8571428571428571,
-        0.8877551020408163
-      ],
-      "recall": [
-        0.0,
-        0.25,
-        0.8352941176470589,
+        0.9108910891089109,
         0.9230769230769231,
-        0.8877551020408163
+        0.9642857142857143
       ],
       "f1": [
         0.0,
-        0.18181818181818182,
-        0.8554216867469879,
-        0.888888888888889,
-        0.8877551020408163
+        0.8,
+        0.9435897435897436,
+        0.9600000000000001,
+        0.9257142857142856
       ],
       "support": [
         0,
-        4,
-        85,
+        2,
+        101,
         13,
-        98
+        84
       ],
       "confusion": [
         [
@@ -203,15 +126,15 @@
         ],
         [
           0,
-          1,
-          0,
           2,
-          1
+          0,
+          0,
+          0
         ],
         [
           0,
-          5,
-          71,
+          0,
+          92,
           0,
           9
         ],
@@ -225,9 +148,9 @@
         [
           0,
           1,
-          10,
+          2,
           0,
-          87
+          81
         ]
       ],
       "labels": [
@@ -238,113 +161,36 @@
         "Stable / Market Secure"
       ]
     },
-    "h6": {
+    "h3": {
       "n": 200,
-      "accuracy": 0.84,
-      "macro_f1": 0.6116730834177642,
+      "accuracy": 0.88,
+      "macro_f1": 0.5846169590643274,
       "precision": [
         0.0,
-        0.4,
-        0.8488372093023255,
-        0.9285714285714286,
-        0.8421052631578947
-      ],
-      "recall": [
-        0.0,
-        0.5,
-        0.8202247191011236,
-        0.9285714285714286,
-        0.8602150537634409
-      ],
-      "f1": [
-        0.0,
-        0.4444444444444445,
-        0.8342857142857142,
-        0.9285714285714286,
-        0.8510638297872339
-      ],
-      "support": [
-        0,
-        4,
-        89,
-        14,
-        93
-      ],
-      "confusion": [
-        [
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          2,
-          1,
-          1,
-          0
-        ],
-        [
-          0,
-          2,
-          73,
-          0,
-          14
-        ],
-        [
-          0,
-          0,
-          0,
-          13,
-          1
-        ],
-        [
-          0,
-          1,
-          12,
-          0,
-          80
-        ]
-      ],
-      "labels": [
-        "Severely Deprived (Acute Homelessness)",
-        "Unstable / Transitional",
-        "At Risk (Housing Insecure)",
-        "Subsidised / Assisted Stability",
-        "Stable / Market Secure"
-      ]
-    },
-    "h12": {
-      "n": 200,
-      "accuracy": 0.85,
-      "macro_f1": 0.5841298701298702,
-      "precision": [
-        0.0,
-        0.2,
-        0.8613861386138614,
+        0.1,
+        0.945054945054945,
         1.0,
-        0.8518518518518519
+        0.8850574712643678
       ],
       "recall": [
         0.0,
         0.5,
-        0.8787878787878788,
-        0.8666666666666667,
-        0.8214285714285714
+        0.8514851485148515,
+        0.9230769230769231,
+        0.9166666666666666
       ],
       "f1": [
         0.0,
-        0.28571428571428575,
-        0.8699999999999999,
-        0.9285714285714286,
-        0.8363636363636364
+        0.16666666666666669,
+        0.8958333333333333,
+        0.9600000000000001,
+        0.9005847953216374
       ],
       "support": [
         0,
         2,
-        99,
-        15,
+        101,
+        13,
         84
       ],
       "confusion": [
@@ -358,30 +204,184 @@
         [
           0,
           1,
-          1,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          7,
+          86,
+          0,
+          8
+        ],
+        [
+          0,
+          0,
+          0,
+          12,
+          1
+        ],
+        [
+          0,
+          2,
+          5,
+          0,
+          77
+        ]
+      ],
+      "labels": [
+        "Severely Deprived (Acute Homelessness)",
+        "Unstable / Transitional",
+        "At Risk (Housing Insecure)",
+        "Subsidised / Assisted Stability",
+        "Stable / Market Secure"
+      ]
+    },
+    "h6": {
+      "n": 200,
+      "accuracy": 0.81,
+      "macro_f1": 0.5539004046442587,
+      "precision": [
+        0.0,
+        0.09090909090909091,
+        0.8977272727272727,
+        1.0,
+        0.7865168539325843
+      ],
+      "recall": [
+        0.0,
+        1.0,
+        0.7452830188679245,
+        0.9230769230769231,
+        0.875
+      ],
+      "f1": [
+        0.0,
+        0.16666666666666669,
+        0.8144329896907216,
+        0.9600000000000001,
+        0.8284023668639053
+      ],
+      "support": [
+        0,
+        1,
+        106,
+        13,
+        80
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          0,
           0,
           0
         ],
         [
           0,
-          2,
-          87,
+          1,
           0,
-          10
+          0,
+          0
+        ],
+        [
+          0,
+          9,
+          79,
+          0,
+          18
         ],
         [
           0,
           0,
           0,
-          13,
-          2
+          12,
+          1
         ],
         [
           0,
-          2,
-          13,
+          1,
+          9,
           0,
-          69
+          70
+        ]
+      ],
+      "labels": [
+        "Severely Deprived (Acute Homelessness)",
+        "Unstable / Transitional",
+        "At Risk (Housing Insecure)",
+        "Subsidised / Assisted Stability",
+        "Stable / Market Secure"
+      ]
+    },
+    "h12": {
+      "n": 200,
+      "accuracy": 0.79,
+      "macro_f1": 0.5083468372423596,
+      "precision": [
+        0.0,
+        0.0,
+        0.8163265306122449,
+        1.0,
+        0.7857142857142857
+      ],
+      "recall": [
+        0.0,
+        0.0,
+        0.7766990291262136,
+        0.9230769230769231,
+        0.7857142857142857
+      ],
+      "f1": [
+        0.0,
+        0.0,
+        0.7960199004975125,
+        0.9600000000000001,
+        0.7857142857142857
+      ],
+      "support": [
+        0,
+        0,
+        103,
+        13,
+        84
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          80,
+          0,
+          17
+        ],
+        [
+          0,
+          0,
+          0,
+          12,
+          1
+        ],
+        [
+          0,
+          0,
+          18,
+          0,
+          66
         ]
       ],
       "labels": [
@@ -394,42 +394,42 @@
     }
   },
   "test_all_windows_macro_f1": {
-    "h3": 0.6125445452778597,
-    "h6": 0.5773058206734945,
-    "h12": 0.5418777909623699
+    "h3": 0.6517022747217884,
+    "h6": 0.6090429988611392,
+    "h12": 0.5780175826502597
   },
   "baselines_h6": {
     "majority": {
       "n": 200,
-      "accuracy": 0.465,
-      "macro_f1": 0.12696245733788397,
+      "accuracy": 0.53,
+      "macro_f1": 0.13856209150326798,
       "precision": [
         0.0,
         0.0,
+        0.53,
         0.0,
-        0.0,
-        0.465
+        0.0
       ],
       "recall": [
         0.0,
         0.0,
+        1.0,
         0.0,
-        0.0,
-        1.0
+        0.0
       ],
       "f1": [
         0.0,
         0.0,
+        0.6928104575163399,
         0.0,
-        0.0,
-        0.6348122866894198
+        0.0
       ],
       "support": [
         0,
-        4,
-        89,
-        14,
-        93
+        1,
+        106,
+        13,
+        80
       ],
       "confusion": [
         [
@@ -442,30 +442,30 @@
         [
           0,
           0,
+          1,
           0,
-          0,
-          4
+          0
         ],
         [
           0,
           0,
+          106,
           0,
-          0,
-          89
+          0
         ],
         [
           0,
           0,
+          13,
           0,
-          0,
-          14
+          0
         ],
         [
           0,
           0,
+          80,
           0,
-          0,
-          93
+          0
         ]
       ],
       "labels": [
@@ -478,35 +478,35 @@
     },
     "persistence": {
       "n": 200,
-      "accuracy": 0.8,
-      "macro_f1": 0.5613639973821823,
+      "accuracy": 0.835,
+      "macro_f1": 0.531530576175327,
       "precision": [
         0.0,
-        0.25,
-        0.8493150684931506,
-        0.9333333333333333,
-        0.7685185185185185
+        0.0,
+        0.8613861386138614,
+        1.0,
+        0.7976190476190477
       ],
       "recall": [
         0.0,
-        0.25,
-        0.6966292134831461,
+        0.0,
+        0.8207547169811321,
         1.0,
-        0.8924731182795699
+        0.8375
       ],
       "f1": [
         0.0,
-        0.25,
-        0.7654320987654321,
-        0.9655172413793104,
-        0.8258706467661692
+        0.0,
+        0.8405797101449276,
+        1.0,
+        0.8170731707317073
       ],
       "support": [
         0,
-        4,
-        89,
-        14,
-        93
+        1,
+        106,
+        13,
+        80
       ],
       "confusion": [
         [
@@ -518,31 +518,31 @@
         ],
         [
           0,
+          0,
           1,
-          2,
-          1,
+          0,
           0
         ],
         [
           0,
           2,
-          62,
+          87,
           0,
-          25
+          17
         ],
         [
           0,
           0,
           0,
-          14,
+          13,
           0
         ],
         [
           0,
-          1,
-          9,
           0,
-          83
+          13,
+          0,
+          67
         ]
       ],
       "labels": [
@@ -555,35 +555,35 @@
     },
     "last_month_linear": {
       "n": 200,
-      "accuracy": 0.75,
-      "macro_f1": 0.5404713804713805,
+      "accuracy": 0.745,
+      "macro_f1": 0.5459185469909921,
       "precision": [
         0.0,
-        0.25,
-        0.6756756756756757,
+        0.2,
+        0.8131868131868132,
         1.0,
-        0.8472222222222222
+        0.6774193548387096
       ],
       "recall": [
         0.0,
-        0.25,
-        0.8426966292134831,
-        0.9285714285714286,
-        0.6559139784946236
+        1.0,
+        0.6981132075471698,
+        0.8461538461538461,
+        0.7875
       ],
       "f1": [
         0.0,
-        0.25,
-        0.75,
-        0.962962962962963,
-        0.7393939393939394
+        0.33333333333333337,
+        0.751269035532995,
+        0.9166666666666666,
+        0.7283236994219653
       ],
       "support": [
         0,
-        4,
-        89,
-        14,
-        93
+        1,
+        106,
+        13,
+        80
       ],
       "confusion": [
         [
@@ -596,30 +596,30 @@
         [
           0,
           1,
-          3,
+          0,
           0,
           0
         ],
         [
           0,
-          3,
-          75,
+          4,
+          74,
           0,
-          11
+          28
         ],
         [
           0,
           0,
-          1,
-          13,
-          0
+          0,
+          11,
+          2
         ],
         [
           0,
           0,
-          32,
+          17,
           0,
-          61
+          63
         ]
       ],
       "labels": [
@@ -632,35 +632,35 @@
     },
     "last_month_plus_deltas_linear": {
       "n": 200,
-      "accuracy": 0.805,
-      "macro_f1": 0.570771594313763,
+      "accuracy": 0.75,
+      "macro_f1": 0.4770043532644304,
       "precision": [
         0.0,
-        0.3333333333333333,
-        0.7297297297297297,
+        0.0,
+        0.79,
         1.0,
-        0.9041095890410958
+        0.7349397590361446
       ],
       "recall": [
         0.0,
-        0.25,
-        0.9101123595505618,
-        0.9285714285714286,
-        0.7096774193548387
+        0.0,
+        0.7452830188679245,
+        0.7692307692307693,
+        0.7625
       ],
       "f1": [
         0.0,
-        0.28571428571428575,
-        0.81,
-        0.962962962962963,
-        0.7951807228915663
+        0.0,
+        0.7669902912621359,
+        0.8695652173913044,
+        0.7484662576687117
       ],
       "support": [
         0,
-        4,
-        89,
-        14,
-        93
+        1,
+        106,
+        13,
+        80
       ],
       "confusion": [
         [
@@ -672,31 +672,31 @@
         ],
         [
           0,
+          0,
           1,
-          3,
           0,
           0
         ],
         [
           0,
-          2,
-          81,
+          7,
+          79,
           0,
-          6
+          20
         ],
         [
           0,
           0,
-          0,
-          13,
-          1
+          1,
+          10,
+          2
         ],
         [
           0,
           0,
-          27,
+          19,
           0,
-          66
+          61
         ]
       ],
       "labels": [
@@ -712,35 +712,35 @@
     "note": "Gambling share set to 0, justice event set to 0, and prior justice history set to no at evaluation. The model was not retrained.",
     "full": {
       "n": 200,
-      "accuracy": 0.84,
-      "macro_f1": 0.6116730834177642,
+      "accuracy": 0.81,
+      "macro_f1": 0.5539004046442587,
       "precision": [
         0.0,
-        0.4,
-        0.8488372093023255,
-        0.9285714285714286,
-        0.8421052631578947
+        0.09090909090909091,
+        0.8977272727272727,
+        1.0,
+        0.7865168539325843
       ],
       "recall": [
         0.0,
-        0.5,
-        0.8202247191011236,
-        0.9285714285714286,
-        0.8602150537634409
+        1.0,
+        0.7452830188679245,
+        0.9230769230769231,
+        0.875
       ],
       "f1": [
         0.0,
-        0.4444444444444445,
-        0.8342857142857142,
-        0.9285714285714286,
-        0.8510638297872339
+        0.16666666666666669,
+        0.8144329896907216,
+        0.9600000000000001,
+        0.8284023668639053
       ],
       "support": [
         0,
-        4,
-        89,
-        14,
-        93
+        1,
+        106,
+        13,
+        80
       ],
       "confusion": [
         [
@@ -752,31 +752,31 @@
         ],
         [
           0,
-          2,
           1,
-          1,
+          0,
+          0,
           0
         ],
         [
           0,
-          2,
-          73,
+          9,
+          79,
           0,
-          14
+          18
         ],
         [
           0,
           0,
           0,
-          13,
+          12,
           1
         ],
         [
           0,
           1,
-          12,
+          9,
           0,
-          80
+          70
         ]
       ],
       "labels": [
@@ -789,35 +789,35 @@
     },
     "without_gambling_and_justice": {
       "n": 200,
-      "accuracy": 0.845,
-      "macro_f1": 0.613847837985769,
+      "accuracy": 0.815,
+      "macro_f1": 0.5561025641025641,
       "precision": [
         0.0,
-        0.4,
-        0.8588235294117647,
-        0.9285714285714286,
-        0.84375
+        0.09090909090909091,
+        0.898876404494382,
+        1.0,
+        0.7954545454545454
       ],
       "recall": [
         0.0,
-        0.5,
-        0.8202247191011236,
-        0.9285714285714286,
-        0.8709677419354839
+        1.0,
+        0.7547169811320755,
+        0.9230769230769231,
+        0.875
       ],
       "f1": [
         0.0,
-        0.4444444444444445,
-        0.8390804597701149,
-        0.9285714285714286,
-        0.8571428571428571
+        0.16666666666666669,
+        0.8205128205128206,
+        0.9600000000000001,
+        0.8333333333333334
       ],
       "support": [
         0,
-        4,
-        89,
-        14,
-        93
+        1,
+        106,
+        13,
+        80
       ],
       "confusion": [
         [
@@ -829,31 +829,31 @@
         ],
         [
           0,
-          2,
           1,
-          1,
+          0,
+          0,
           0
         ],
         [
           0,
-          2,
-          73,
+          9,
+          80,
           0,
-          14
+          17
         ],
         [
           0,
           0,
           0,
-          13,
+          12,
           1
         ],
         [
           0,
           1,
-          11,
+          9,
           0,
-          81
+          70
         ]
       ],
       "labels": [
@@ -868,66 +868,146 @@
   "by_ethnicity_h6": [
     {
       "ethnicity": "Asian",
-      "n": 58,
-      "macro_f1": 0.5376623376623376,
-      "accuracy": 0.8620689655172413,
+      "n": 49,
+      "macro_f1": 0.6018840579710145,
+      "accuracy": 0.8163265306122449,
       "recall": [
         0.0,
-        0.0,
-        0.9354838709677419,
         1.0,
-        0.7391304347826086
+        0.7307692307692307,
+        1.0,
+        0.8947368421052632
       ],
       "support": [
         0,
-        0,
-        31,
-        4,
-        23
+        1,
+        26,
+        3,
+        19
       ]
     },
     {
       "ethnicity": "Asian;European",
-      "n": 16,
-      "macro_f1": 0.5138755980861245,
-      "accuracy": 0.8125,
+      "n": 11,
+      "macro_f1": 0.3482352941176471,
+      "accuracy": 0.9090909090909091,
       "recall": [
         0.0,
         0.0,
-        0.5714285714285714,
         1.0,
+        0.0,
+        0.6666666666666666
+      ],
+      "support": [
+        0,
+        0,
+        8,
+        0,
+        3
+      ]
+    },
+    {
+      "ethnicity": "European",
+      "n": 71,
+      "macro_f1": 0.5220542897962253,
+      "accuracy": 0.8450704225352113,
+      "recall": [
+        0.0,
+        0.0,
+        0.7222222222222222,
+        0.8571428571428571,
         1.0
       ],
       "support": [
         0,
         0,
+        36,
         7,
-        1,
-        8
-      ]
-    },
-    {
-      "ethnicity": "European",
-      "n": 69,
-      "macro_f1": 0.6350324374420759,
-      "accuracy": 0.8260869565217391,
-      "recall": [
-        0.0,
-        0.5,
-        0.7368421052631579,
-        1.0,
-        0.8571428571428571
-      ],
-      "support": [
-        0,
-        2,
-        19,
-        6,
-        42
+        28
       ]
     },
     {
       "ethnicity": "MELAA",
+      "n": 1,
+      "macro_f1": 0.2,
+      "accuracy": 1.0,
+      "recall": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "support": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "ethnicity": "M\u0101ori",
+      "n": 21,
+      "macro_f1": 0.44631578947368417,
+      "accuracy": 0.6190476190476191,
+      "recall": [
+        0.0,
+        0.0,
+        0.6666666666666666,
+        1.0,
+        0.5454545454545454
+      ],
+      "support": [
+        0,
+        0,
+        9,
+        1,
+        11
+      ]
+    },
+    {
+      "ethnicity": "M\u0101ori;European",
+      "n": 7,
+      "macro_f1": 0.3,
+      "accuracy": 0.7142857142857143,
+      "recall": [
+        0.0,
+        0.0,
+        0.3333333333333333,
+        0.0,
+        1.0
+      ],
+      "support": [
+        0,
+        0,
+        3,
+        0,
+        4
+      ]
+    },
+    {
+      "ethnicity": "M\u0101ori;Pacific",
+      "n": 3,
+      "macro_f1": 0.2,
+      "accuracy": 1.0,
+      "recall": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "support": [
+        0,
+        0,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "ethnicity": "Other",
       "n": 4,
       "macro_f1": 0.4,
       "accuracy": 1.0,
@@ -947,204 +1027,124 @@
       ]
     },
     {
-      "ethnicity": "M\u0101ori",
-      "n": 24,
-      "macro_f1": 0.4777543859649123,
-      "accuracy": 0.8333333333333334,
-      "recall": [
-        0.0,
-        0.0,
-        0.7857142857142857,
-        0.5,
-        1.0
-      ],
-      "support": [
-        0,
-        0,
-        14,
-        2,
-        8
-      ]
-    },
-    {
-      "ethnicity": "M\u0101ori;European",
-      "n": 3,
-      "macro_f1": 0.26666666666666666,
-      "accuracy": 0.6666666666666666,
-      "recall": [
-        0.0,
-        0.0,
-        0.5,
-        0.0,
-        1.0
-      ],
-      "support": [
-        0,
-        0,
-        2,
-        0,
-        1
-      ]
-    },
-    {
-      "ethnicity": "M\u0101ori;Pacific",
-      "n": 2,
-      "macro_f1": 0.2,
-      "accuracy": 1.0,
-      "recall": [
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "support": [
-        0,
-        0,
-        2,
-        0,
-        0
-      ]
-    },
-    {
-      "ethnicity": "Other",
-      "n": 2,
-      "macro_f1": 0.2,
-      "accuracy": 1.0,
-      "recall": [
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "support": [
-        0,
-        0,
-        2,
-        0,
-        0
-      ]
-    },
-    {
       "ethnicity": "Pacific",
-      "n": 18,
-      "macro_f1": 0.64,
-      "accuracy": 0.8333333333333334,
+      "n": 28,
+      "macro_f1": 0.5368760064412238,
+      "accuracy": 0.8214285714285714,
       "recall": [
         0.0,
-        0.5,
-        0.9,
+        0.0,
+        0.7333333333333333,
         1.0,
-        0.8
+        0.9090909090909091
       ],
       "support": [
         0,
+        0,
+        15,
         2,
-        10,
-        1,
-        5
+        11
       ]
     },
     {
       "ethnicity": "Pacific;European",
-      "n": 4,
-      "macro_f1": 0.2,
-      "accuracy": 0.75,
+      "n": 5,
+      "macro_f1": 0.15,
+      "accuracy": 0.6,
       "recall": [
         0.0,
         0.0,
+        0.75,
         0.0,
-        0.0,
-        1.0
+        0.0
       ],
       "support": [
         0,
         0,
-        1,
+        4,
         0,
-        3
+        1
       ]
     }
   ],
   "importance": {
     "static": [
       {
-        "name": "whanau_type",
-        "domain": "Household",
-        "role": "static",
-        "sensitive": false,
-        "weight": 0.2798024117946625
-      },
-      {
         "name": "tenure_start",
         "domain": "Housing",
         "role": "static",
         "sensitive": false,
-        "weight": 0.2347288727760315
-      },
-      {
-        "name": "residency_status",
-        "domain": "Demographic",
-        "role": "static",
-        "sensitive": false,
-        "weight": 0.08389707654714584
+        "weight": 0.2920112907886505
       },
       {
         "name": "disability",
         "domain": "Health",
         "role": "static",
         "sensitive": false,
-        "weight": 0.0838601365685463
+        "weight": 0.12023749947547913
       },
       {
-        "name": "age_band",
+        "name": "residency_status",
         "domain": "Demographic",
         "role": "static",
         "sensitive": false,
-        "weight": 0.07397820055484772
-      },
-      {
-        "name": "dependants_count",
-        "domain": "Household",
-        "role": "static",
-        "sensitive": false,
-        "weight": 0.06268540769815445
-      },
-      {
-        "name": "nzdep_decile",
-        "domain": "Area",
-        "role": "static",
-        "sensitive": false,
-        "weight": 0.05379249528050423
-      },
-      {
-        "name": "household_size_start",
-        "domain": "Household",
-        "role": "static",
-        "sensitive": false,
-        "weight": 0.042243022471666336
-      },
-      {
-        "name": "local_board",
-        "domain": "Area",
-        "role": "static",
-        "sensitive": false,
-        "weight": 0.030023260042071342
+        "weight": 0.11730620265007019
       },
       {
         "name": "sole_parent",
         "domain": "Household",
         "role": "static",
         "sensitive": false,
-        "weight": 0.029892439022660255
+        "weight": 0.10199079662561417
+      },
+      {
+        "name": "local_board",
+        "domain": "Area",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.09087604284286499
+      },
+      {
+        "name": "whanau_type",
+        "domain": "Household",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.0762619748711586
+      },
+      {
+        "name": "age_band",
+        "domain": "Demographic",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.06228023022413254
+      },
+      {
+        "name": "nzdep_decile",
+        "domain": "Area",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.0479283332824707
+      },
+      {
+        "name": "dependants_count",
+        "domain": "Household",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.04133781045675278
       },
       {
         "name": "prior_justice_history",
         "domain": "Justice",
         "role": "static",
         "sensitive": true,
-        "weight": 0.025096697732806206
+        "weight": 0.02973639778792858
+      },
+      {
+        "name": "household_size_start",
+        "domain": "Household",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.02003338187932968
       }
     ],
     "history": [
@@ -1153,332 +1153,332 @@
         "domain": "Housing",
         "role": "observed",
         "sensitive": false,
-        "weight": 0.40939876437187195
+        "weight": 0.40427348017692566
       },
       {
         "name": "rent_arrears",
         "domain": "Housing",
         "role": "outcome",
         "sensitive": false,
-        "weight": 0.11639722436666489
-      },
-      {
-        "name": "disaster_displaced",
-        "domain": "Housing",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.07214110344648361
-      },
-      {
-        "name": "persons_per_bedroom",
-        "domain": "Housing",
-        "role": "outcome",
-        "sensitive": false,
-        "weight": 0.042241018265485764
-      },
-      {
-        "name": "unemployment_rate",
-        "domain": "Macro & Events",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.033746037632226944
+        "weight": 0.16857098042964935
       },
       {
         "name": "deprivation_category",
         "domain": "Housing",
         "role": "outcome",
         "sensitive": false,
-        "weight": 0.02461492083966732
+        "weight": 0.07665695250034332
+      },
+      {
+        "name": "disaster_displaced",
+        "domain": "Housing",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.03719782829284668
+      },
+      {
+        "name": "persons_per_bedroom",
+        "domain": "Housing",
+        "role": "outcome",
+        "sensitive": false,
+        "weight": 0.02034701406955719
       },
       {
         "name": "household_size_change",
         "domain": "Household",
         "role": "observed",
         "sensitive": false,
-        "weight": 0.021808933466672897
-      },
-      {
-        "name": "mortgage_payment",
-        "domain": "Housing",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.020788872614502907
+        "weight": 0.019781697541475296
       },
       {
         "name": "substance_service_contact",
         "domain": "Health",
         "role": "observed",
         "sensitive": true,
-        "weight": 0.01659943349659443
-      },
-      {
-        "name": "natural_disaster_severity",
-        "domain": "Macro & Events",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.015286811627447605
-      },
-      {
-        "name": "debt_balance",
-        "domain": "Socio-economic",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.014872768893837929
-      },
-      {
-        "name": "local_median_rent",
-        "domain": "Area",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.011245138011872768
-      },
-      {
-        "name": "main_benefit",
-        "domain": "Socio-economic",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.010377760976552963
-      },
-      {
-        "name": "essential_spend_share",
-        "domain": "Socio-economic",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.010341046378016472
-      },
-      {
-        "name": "justice_event",
-        "domain": "Justice",
-        "role": "observed",
-        "sensitive": true,
-        "weight": 0.010272666811943054
-      },
-      {
-        "name": "local_eh_grants",
-        "domain": "Area",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.010198508389294147
-      },
-      {
-        "name": "local_homelessness_rate",
-        "domain": "Area",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.009881650097668171
+        "weight": 0.017882075160741806
       },
       {
         "name": "school_holiday",
         "domain": "Temporal",
         "role": "known",
         "sensitive": false,
-        "weight": 0.009151251055300236
-      },
-      {
-        "name": "planned_support_places",
-        "domain": "Service / Policy",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.008945515379309654
-      },
-      {
-        "name": "lease_months_remaining",
-        "domain": "Housing",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.008863081224262714
-      },
-      {
-        "name": "petrol_price",
-        "domain": "Macro & Events",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.008607719093561172
-      },
-      {
-        "name": "quarter",
-        "domain": "Temporal",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.008539523929357529
-      },
-      {
-        "name": "local_service_spend",
-        "domain": "Area",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.00848058145493269
+        "weight": 0.016929922625422478
       },
       {
         "name": "gambling_spend_share",
         "domain": "Behavioural",
         "role": "observed",
         "sensitive": true,
-        "weight": 0.008411968126893044
-      },
-      {
-        "name": "emergency_housing_stay",
-        "domain": "Housing",
-        "role": "outcome",
-        "sensitive": false,
-        "weight": 0.00828899908810854
-      },
-      {
-        "name": "emergency_accommodation_type",
-        "domain": "Service / Policy",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.008214161731302738
-      },
-      {
-        "name": "ocr_rate",
-        "domain": "Macro & Events",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.007647282909601927
-      },
-      {
-        "name": "benefit_indexation",
-        "domain": "Service / Policy",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.007622207049280405
-      },
-      {
-        "name": "local_affordability_index",
-        "domain": "Area",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.00748378736898303
-      },
-      {
-        "name": "public_holidays",
-        "domain": "Temporal",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.007476193830370903
+        "weight": 0.012952737510204315
       },
       {
         "name": "moves_12m",
         "domain": "Housing",
         "role": "outcome",
         "sensitive": false,
-        "weight": 0.006292390171438456
-      },
-      {
-        "name": "pandemic_restriction_level",
-        "domain": "Macro & Events",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.006202078890055418
-      },
-      {
-        "name": "hourly_wage",
-        "domain": "Socio-economic",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.006140557583421469
-      },
-      {
-        "name": "month_of_year",
-        "domain": "Temporal",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.006000345107167959
-      },
-      {
-        "name": "local_price_to_income",
-        "domain": "Area",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.0059783621691167355
-      },
-      {
-        "name": "cpi_inflation_annual",
-        "domain": "Macro & Events",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.005856185685843229
+        "weight": 0.012727991677820683
       },
       {
         "name": "weekly_income",
         "domain": "Socio-economic",
         "role": "observed",
         "sensitive": false,
-        "weight": 0.005585553590208292
-      }
-    ],
-    "future": [
+        "weight": 0.012324192561209202
+      },
+      {
+        "name": "local_service_spend",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.011352300643920898
+      },
+      {
+        "name": "debt_balance",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.010093935765326023
+      },
+      {
+        "name": "local_median_rent",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.009693179279565811
+      },
+      {
+        "name": "emergency_accommodation_type",
+        "domain": "Service / Policy",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.009616751223802567
+      },
+      {
+        "name": "ocr_rate",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.009340854361653328
+      },
       {
         "name": "month_of_year",
         "domain": "Temporal",
         "role": "known",
         "sensitive": false,
-        "weight": 0.22570174932479858
+        "weight": 0.008599899709224701
       },
       {
-        "name": "school_holiday",
-        "domain": "Temporal",
-        "role": "known",
+        "name": "pandemic_restriction_level",
+        "domain": "Macro & Events",
+        "role": "observed",
         "sensitive": false,
-        "weight": 0.22440867125988007
+        "weight": 0.008574130944907665
+      },
+      {
+        "name": "mortgage_payment",
+        "domain": "Housing",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.008302533067762852
+      },
+      {
+        "name": "local_homelessness_rate",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.00815292913466692
       },
       {
         "name": "public_holidays",
         "domain": "Temporal",
         "role": "known",
         "sensitive": false,
-        "weight": 0.1689782589673996
+        "weight": 0.007950659841299057
       },
       {
-        "name": "benefit_indexation",
-        "domain": "Service / Policy",
-        "role": "known",
+        "name": "local_affordability_index",
+        "domain": "Area",
+        "role": "observed",
         "sensitive": false,
-        "weight": 0.1505546122789383
+        "weight": 0.007734594400972128
+      },
+      {
+        "name": "justice_event",
+        "domain": "Justice",
+        "role": "observed",
+        "sensitive": true,
+        "weight": 0.007692150305956602
+      },
+      {
+        "name": "local_eh_grants",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.007643183693289757
+      },
+      {
+        "name": "petrol_price",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.007475390564650297
+      },
+      {
+        "name": "cpi_inflation_annual",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.007162204012274742
       },
       {
         "name": "planned_support_places",
         "domain": "Service / Policy",
         "role": "known",
         "sensitive": false,
-        "weight": 0.08955688774585724
+        "weight": 0.007032087072730064
       },
       {
         "name": "quarter",
         "domain": "Temporal",
         "role": "known",
         "sensitive": false,
-        "weight": 0.08374585956335068
+        "weight": 0.006947390269488096
       },
       {
         "name": "lease_months_remaining",
         "domain": "Housing",
         "role": "known",
         "sensitive": false,
-        "weight": 0.057054437696933746
+        "weight": 0.006939619313925505
+      },
+      {
+        "name": "unemployment_rate",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.0068740686401724815
+      },
+      {
+        "name": "main_benefit",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.0067657469771802425
+      },
+      {
+        "name": "emergency_housing_stay",
+        "domain": "Housing",
+        "role": "outcome",
+        "sensitive": false,
+        "weight": 0.006538040470331907
+      },
+      {
+        "name": "benefit_indexation",
+        "domain": "Service / Policy",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.006439887918531895
+      },
+      {
+        "name": "essential_spend_share",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.006433286238461733
+      },
+      {
+        "name": "natural_disaster_severity",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.006281364243477583
+      },
+      {
+        "name": "local_price_to_income",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.005628351122140884
+      },
+      {
+        "name": "hourly_wage",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.005090972874313593
+      }
+    ],
+    "future": [
+      {
+        "name": "school_holiday",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.22166751325130463
+      },
+      {
+        "name": "month_of_year",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.21190084517002106
+      },
+      {
+        "name": "benefit_indexation",
+        "domain": "Service / Policy",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.2053920328617096
+      },
+      {
+        "name": "public_holidays",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.15949180722236633
+      },
+      {
+        "name": "quarter",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.08232788741588593
+      },
+      {
+        "name": "lease_months_remaining",
+        "domain": "Housing",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.06299640983343124
+      },
+      {
+        "name": "planned_support_places",
+        "domain": "Service / Policy",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.05622339993715286
       }
     ]
   },
   "attention_h6": [
-    0.010991879738867283,
-    0.01573772169649601,
-    0.02185024321079254,
-    0.027659831568598747,
-    0.03698210045695305,
-    0.043027207255363464,
-    0.0462699793279171,
-    0.04762784391641617,
-    0.048265233635902405,
-    0.04953772947192192,
-    0.05380259081721306,
-    0.0587838776409626,
-    0.07915986329317093,
-    0.08911794424057007,
-    0.060845423489809036,
-    0.11122240126132965,
-    0.1162363737821579,
-    0.08288179337978363,
+    0.040900345891714096,
+    0.030546611174941063,
+    0.03003867156803608,
+    0.031988415867090225,
+    0.0350528210401535,
+    0.0375981368124485,
+    0.040929388254880905,
+    0.04395578056573868,
+    0.04725388437509537,
+    0.0522971972823143,
+    0.05449676886200905,
+    0.059629376977682114,
+    0.08354737609624863,
+    0.0687468945980072,
+    0.06841852515935898,
+    0.09324212372303009,
+    0.07881312072277069,
+    0.10254459083080292,
     0.0,
     0.0,
     0.0,
@@ -1487,39 +1487,39 @@
     0.0
   ],
   "attention_labels": [
-    "2022-01",
-    "2022-02",
-    "2022-03",
-    "2022-04",
-    "2022-05",
-    "2022-06",
-    "2022-07",
-    "2022-08",
-    "2022-09",
-    "2022-10",
-    "2022-11",
-    "2022-12",
-    "2023-01",
-    "2023-02",
-    "2023-03",
-    "2023-04",
-    "2023-05",
-    "2023-06",
-    "2023-07",
-    "2023-08",
-    "2023-09",
-    "2023-10",
-    "2023-11",
-    "2023-12"
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12",
+    "2026-01",
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05",
+    "2026-06",
+    "2026-07",
+    "2026-08",
+    "2026-09",
+    "2026-10",
+    "2026-11",
+    "2026-12"
   ],
   "performance_h6": {
     "n": 200,
-    "accuracy": 0.84,
-    "precision_macro": 0.6039027802063298,
-    "recall_macro": 0.6218022402871985,
-    "specificity_macro": 0.9444027000920062,
-    "f1_macro": 0.6116730834177642,
-    "auc_macro": 0.9037893935289675,
+    "accuracy": 0.81,
+    "precision_macro": 0.5550306435137896,
+    "recall_macro": 0.7086719883889695,
+    "specificity_macro": 0.9391341459068391,
+    "f1_macro": 0.5539004046442587,
+    "auc_macro": 0.9603644072387563,
     "per_class": [
       {
         "tier_id": 1,
@@ -1534,42 +1534,42 @@
       {
         "tier_id": 2,
         "name": "Unstable / Transitional",
-        "support": 4,
-        "precision": 0.4,
-        "recall": 0.5,
-        "specificity": 0.9846938775510204,
-        "f1": 0.4444444444444445,
-        "auc": 0.7334183673469388
+        "support": 1,
+        "precision": 0.09090909090909091,
+        "recall": 1.0,
+        "specificity": 0.949748743718593,
+        "f1": 0.16666666666666669,
+        "auc": 0.9949748743718593
       },
       {
         "tier_id": 3,
         "name": "At Risk",
-        "support": 89,
-        "precision": 0.8488372093023255,
-        "recall": 0.8202247191011236,
-        "specificity": 0.8828828828828829,
-        "f1": 0.8342857142857142,
-        "auc": 0.9410871545703007
+        "support": 106,
+        "precision": 0.8977272727272727,
+        "recall": 0.7452830188679245,
+        "specificity": 0.9042553191489362,
+        "f1": 0.8144329896907216,
+        "auc": 0.9141910879164994
       },
       {
         "tier_id": 4,
         "name": "Subsidised / Assisted",
-        "support": 14,
-        "precision": 0.9285714285714286,
-        "recall": 0.9285714285714286,
-        "specificity": 0.9946236559139785,
-        "f1": 0.9285714285714286,
-        "auc": 0.9969278033794163
+        "support": 13,
+        "precision": 1.0,
+        "recall": 0.9230769230769231,
+        "specificity": 1.0,
+        "f1": 0.9600000000000001,
+        "auc": 1.0
       },
       {
         "tier_id": 5,
         "name": "Stable / Market Secure",
-        "support": 93,
-        "precision": 0.8421052631578947,
-        "recall": 0.8602150537634409,
-        "specificity": 0.8598130841121495,
-        "f1": 0.8510638297872339,
-        "auc": 0.9437242488192141
+        "support": 80,
+        "precision": 0.7865168539325843,
+        "recall": 0.875,
+        "specificity": 0.8416666666666667,
+        "f1": 0.8284023668639053,
+        "auc": 0.9322916666666666
       }
     ],
     "roc": [
@@ -1580,166 +1580,166 @@
       },
       {
         "name": "Unstable / Transitional",
-        "auc": 0.7334183673469388,
+        "auc": 0.9949748743718593,
         "points": [
           [
             0.0,
             0.0
           ],
           [
-            0.0153,
-            0.5
-          ],
-          [
-            0.0408,
-            0.5
-          ],
-          [
-            0.0663,
-            0.5
-          ],
-          [
-            0.0918,
-            0.5
-          ],
-          [
-            0.1173,
-            0.5
-          ],
-          [
-            0.1429,
-            0.5
-          ],
-          [
-            0.1684,
-            0.5
-          ],
-          [
-            0.1939,
-            0.5
-          ],
-          [
-            0.2194,
-            0.5
-          ],
-          [
-            0.2398,
-            0.75
-          ],
-          [
-            0.2653,
-            0.75
-          ],
-          [
-            0.2908,
-            0.75
-          ],
-          [
-            0.3163,
-            0.75
-          ],
-          [
-            0.3418,
-            0.75
-          ],
-          [
-            0.3673,
-            0.75
-          ],
-          [
-            0.3929,
-            0.75
-          ],
-          [
-            0.4184,
-            0.75
-          ],
-          [
-            0.4439,
-            0.75
-          ],
-          [
-            0.4694,
-            0.75
-          ],
-          [
-            0.4949,
-            0.75
-          ],
-          [
-            0.5204,
-            0.75
-          ],
-          [
-            0.5459,
-            0.75
-          ],
-          [
-            0.5714,
-            0.75
-          ],
-          [
-            0.5969,
-            0.75
-          ],
-          [
-            0.6224,
-            0.75
-          ],
-          [
-            0.648,
-            0.75
-          ],
-          [
-            0.6735,
-            0.75
-          ],
-          [
-            0.699,
-            0.75
-          ],
-          [
-            0.7245,
-            0.75
-          ],
-          [
-            0.75,
-            0.75
-          ],
-          [
-            0.7755,
-            0.75
-          ],
-          [
-            0.801,
-            0.75
-          ],
-          [
-            0.8214,
+            0.0201,
             1.0
           ],
           [
-            0.8469,
+            0.0452,
             1.0
           ],
           [
-            0.8724,
+            0.0704,
             1.0
           ],
           [
-            0.898,
+            0.0955,
             1.0
           ],
           [
-            0.9235,
+            0.1206,
             1.0
           ],
           [
-            0.949,
+            0.1457,
             1.0
           ],
           [
-            0.9745,
+            0.1709,
+            1.0
+          ],
+          [
+            0.196,
+            1.0
+          ],
+          [
+            0.2211,
+            1.0
+          ],
+          [
+            0.2462,
+            1.0
+          ],
+          [
+            0.2714,
+            1.0
+          ],
+          [
+            0.2965,
+            1.0
+          ],
+          [
+            0.3216,
+            1.0
+          ],
+          [
+            0.3467,
+            1.0
+          ],
+          [
+            0.3719,
+            1.0
+          ],
+          [
+            0.397,
+            1.0
+          ],
+          [
+            0.4221,
+            1.0
+          ],
+          [
+            0.4472,
+            1.0
+          ],
+          [
+            0.4724,
+            1.0
+          ],
+          [
+            0.4975,
+            1.0
+          ],
+          [
+            0.5226,
+            1.0
+          ],
+          [
+            0.5477,
+            1.0
+          ],
+          [
+            0.5729,
+            1.0
+          ],
+          [
+            0.598,
+            1.0
+          ],
+          [
+            0.6231,
+            1.0
+          ],
+          [
+            0.6482,
+            1.0
+          ],
+          [
+            0.6734,
+            1.0
+          ],
+          [
+            0.6985,
+            1.0
+          ],
+          [
+            0.7236,
+            1.0
+          ],
+          [
+            0.7487,
+            1.0
+          ],
+          [
+            0.7739,
+            1.0
+          ],
+          [
+            0.799,
+            1.0
+          ],
+          [
+            0.8241,
+            1.0
+          ],
+          [
+            0.8492,
+            1.0
+          ],
+          [
+            0.8744,
+            1.0
+          ],
+          [
+            0.8995,
+            1.0
+          ],
+          [
+            0.9246,
+            1.0
+          ],
+          [
+            0.9497,
+            1.0
+          ],
+          [
+            0.9749,
             1.0
           ],
           [
@@ -1750,166 +1750,166 @@
       },
       {
         "name": "At Risk",
-        "auc": 0.9410871545703007,
+        "auc": 0.9141910879164994,
         "points": [
           [
             0.0,
             0.0
           ],
           [
-            0.009,
-            0.0449
+            0.0,
+            0.0472
           ],
           [
-            0.009,
-            0.1011
+            0.0,
+            0.0943
           ],
           [
-            0.009,
-            0.1573
+            0.0,
+            0.1415
           ],
           [
-            0.009,
-            0.2135
+            0.0,
+            0.1887
           ],
           [
-            0.009,
-            0.2697
+            0.0,
+            0.2358
           ],
           [
-            0.018,
-            0.3146
+            0.0106,
+            0.2736
           ],
           [
-            0.018,
-            0.3708
+            0.0106,
+            0.3208
           ],
           [
-            0.018,
-            0.427
+            0.0106,
+            0.3679
           ],
           [
-            0.018,
-            0.4831
+            0.0106,
+            0.4151
           ],
           [
-            0.027,
-            0.5281
+            0.0106,
+            0.4623
           ],
           [
-            0.036,
-            0.573
+            0.0106,
+            0.5094
           ],
           [
-            0.036,
-            0.6292
+            0.0106,
+            0.5566
           ],
           [
-            0.045,
-            0.6742
+            0.0106,
+            0.6038
           ],
           [
-            0.0631,
-            0.7079
+            0.0319,
+            0.6321
           ],
           [
-            0.0811,
-            0.7416
+            0.0426,
+            0.6698
           ],
           [
-            0.0901,
-            0.7865
+            0.0532,
+            0.7075
           ],
           [
-            0.1081,
-            0.8202
+            0.0851,
+            0.7264
           ],
           [
-            0.1171,
-            0.8652
+            0.1064,
+            0.7547
           ],
           [
-            0.1261,
-            0.9101
+            0.1383,
+            0.7736
           ],
           [
-            0.1532,
-            0.9326
+            0.1596,
+            0.8019
           ],
           [
-            0.1802,
-            0.9551
+            0.1915,
+            0.8208
           ],
           [
-            0.2162,
-            0.9663
+            0.2234,
+            0.8396
           ],
           [
-            0.2613,
-            0.9663
+            0.2553,
+            0.8585
           ],
           [
-            0.3063,
-            0.9663
+            0.266,
+            0.8962
           ],
           [
-            0.3423,
-            0.9775
+            0.2979,
+            0.9151
           ],
           [
-            0.3874,
-            0.9775
+            0.3404,
+            0.9245
           ],
           [
-            0.4324,
-            0.9775
+            0.3936,
+            0.9245
           ],
           [
-            0.4685,
-            0.9888
+            0.4255,
+            0.9434
           ],
           [
-            0.5135,
-            0.9888
+            0.4681,
+            0.9528
           ],
           [
-            0.5586,
-            0.9888
+            0.5106,
+            0.9623
           ],
           [
-            0.6036,
-            0.9888
+            0.5532,
+            0.9717
           ],
           [
-            0.6396,
+            0.5851,
+            0.9906
+          ],
+          [
+            0.6383,
+            0.9906
+          ],
+          [
+            0.6915,
+            0.9906
+          ],
+          [
+            0.7447,
+            0.9906
+          ],
+          [
+            0.7872,
             1.0
           ],
           [
-            0.6847,
+            0.8404,
             1.0
           ],
           [
-            0.7297,
+            0.8936,
             1.0
           ],
           [
-            0.7748,
-            1.0
-          ],
-          [
-            0.8198,
-            1.0
-          ],
-          [
-            0.8649,
-            1.0
-          ],
-          [
-            0.9099,
-            1.0
-          ],
-          [
-            0.955,
+            0.9468,
             1.0
           ],
           [
@@ -1920,7 +1920,7 @@
       },
       {
         "name": "Subsidised / Assisted",
-        "auc": 0.9969278033794163,
+        "auc": 1.0,
         "points": [
           [
             0.0,
@@ -1928,158 +1928,158 @@
           ],
           [
             0.0,
-            0.3571
+            0.3846
           ],
           [
-            0.0054,
-            0.6429
+            0.0,
+            0.7692
           ],
           [
-            0.0108,
-            0.9286
-          ],
-          [
-            0.0323,
+            0.0107,
             1.0
           ],
           [
-            0.0591,
+            0.0374,
             1.0
           ],
           [
-            0.086,
+            0.0642,
             1.0
           ],
           [
-            0.1129,
+            0.0909,
             1.0
           ],
           [
-            0.1398,
+            0.1176,
             1.0
           ],
           [
-            0.1667,
+            0.1444,
             1.0
           ],
           [
-            0.1935,
+            0.1711,
             1.0
           ],
           [
-            0.2204,
+            0.1979,
             1.0
           ],
           [
-            0.2473,
+            0.2246,
             1.0
           ],
           [
-            0.2742,
+            0.2513,
             1.0
           ],
           [
-            0.3011,
+            0.2781,
             1.0
           ],
           [
-            0.328,
+            0.3048,
             1.0
           ],
           [
-            0.3548,
+            0.3316,
             1.0
           ],
           [
-            0.3817,
+            0.3583,
             1.0
           ],
           [
-            0.4086,
+            0.385,
             1.0
           ],
           [
-            0.4355,
+            0.4118,
             1.0
           ],
           [
-            0.4624,
+            0.4385,
             1.0
           ],
           [
-            0.4892,
+            0.4652,
             1.0
           ],
           [
-            0.5161,
+            0.492,
             1.0
           ],
           [
-            0.543,
+            0.5187,
             1.0
           ],
           [
-            0.5699,
+            0.5455,
             1.0
           ],
           [
-            0.5968,
+            0.5722,
             1.0
           ],
           [
-            0.6237,
+            0.5989,
             1.0
           ],
           [
-            0.6505,
+            0.6257,
             1.0
           ],
           [
-            0.6774,
+            0.6524,
             1.0
           ],
           [
-            0.7043,
+            0.6791,
             1.0
           ],
           [
-            0.7312,
+            0.7059,
             1.0
           ],
           [
-            0.7581,
+            0.7326,
             1.0
           ],
           [
-            0.7849,
+            0.7594,
             1.0
           ],
           [
-            0.8118,
+            0.7861,
             1.0
           ],
           [
-            0.8387,
+            0.8128,
             1.0
           ],
           [
-            0.8656,
+            0.8396,
             1.0
           ],
           [
-            0.8925,
+            0.8663,
             1.0
           ],
           [
-            0.9194,
+            0.893,
             1.0
           ],
           [
-            0.9462,
+            0.9198,
             1.0
           ],
           [
-            0.9731,
+            0.9465,
+            1.0
+          ],
+          [
+            0.9733,
             1.0
           ],
           [
@@ -2090,7 +2090,7 @@
       },
       {
         "name": "Stable / Market Secure",
-        "auc": 0.9437242488192141,
+        "auc": 0.9322916666666666,
         "points": [
           [
             0.0,
@@ -2098,158 +2098,158 @@
           ],
           [
             0.0,
-            0.0538
+            0.0625
           ],
           [
             0.0,
-            0.1075
+            0.125
           ],
           [
             0.0,
-            0.1613
+            0.1875
           ],
           [
             0.0,
-            0.2151
+            0.25
           ],
           [
             0.0,
-            0.2688
+            0.3125
           ],
           [
-            0.0093,
-            0.3118
+            0.0083,
+            0.3625
           ],
           [
-            0.0093,
-            0.3656
+            0.025,
+            0.4
           ],
           [
-            0.0093,
-            0.4194
+            0.0333,
+            0.45
           ],
           [
-            0.0093,
-            0.4731
+            0.0417,
+            0.5
           ],
           [
-            0.0093,
-            0.5269
+            0.0667,
+            0.525
           ],
           [
-            0.0187,
-            0.5699
+            0.0667,
+            0.5875
           ],
           [
-            0.0187,
-            0.6237
+            0.0667,
+            0.65
           ],
           [
-            0.028,
-            0.6667
+            0.0917,
+            0.675
           ],
           [
-            0.028,
-            0.7204
+            0.1083,
+            0.7125
           ],
           [
-            0.028,
-            0.7742
+            0.1083,
+            0.775
           ],
           [
-            0.0374,
-            0.8172
+            0.1167,
+            0.825
           ],
           [
-            0.0654,
-            0.8387
+            0.1417,
+            0.85
           ],
           [
-            0.0935,
-            0.8602
+            0.1583,
+            0.8875
           ],
           [
-            0.1402,
-            0.8602
+            0.1667,
+            0.9375
           ],
           [
-            0.1589,
-            0.8925
+            0.2,
+            0.95
           ],
           [
-            0.1869,
-            0.914
+            0.2167,
+            0.9875
           ],
           [
-            0.215,
-            0.9355
+            0.2583,
+            0.9875
           ],
           [
-            0.2523,
-            0.9462
+            0.3,
+            0.9875
           ],
           [
-            0.2991,
-            0.9462
+            0.3417,
+            0.9875
           ],
           [
-            0.3458,
-            0.9462
+            0.3833,
+            0.9875
           ],
           [
-            0.3738,
-            0.9677
+            0.425,
+            0.9875
           ],
           [
-            0.4206,
-            0.9677
+            0.4667,
+            0.9875
           ],
           [
-            0.4673,
-            0.9677
+            0.5083,
+            0.9875
           ],
           [
-            0.5047,
-            0.9785
+            0.55,
+            0.9875
           ],
           [
-            0.5514,
-            0.9785
+            0.5917,
+            0.9875
           ],
           [
-            0.5981,
-            0.9785
-          ],
-          [
-            0.6449,
-            0.9785
-          ],
-          [
-            0.6822,
-            0.9892
-          ],
-          [
-            0.729,
-            0.9892
-          ],
-          [
-            0.7664,
+            0.625,
             1.0
           ],
           [
-            0.8131,
+            0.6667,
             1.0
           ],
           [
-            0.8598,
+            0.7083,
             1.0
           ],
           [
-            0.9065,
+            0.75,
             1.0
           ],
           [
-            0.9533,
+            0.7917,
+            1.0
+          ],
+          [
+            0.8333,
+            1.0
+          ],
+          [
+            0.875,
+            1.0
+          ],
+          [
+            0.9167,
+            1.0
+          ],
+          [
+            0.9583,
             1.0
           ],
           [
@@ -2269,31 +2269,31 @@
       ],
       [
         0,
-        2,
         1,
-        1,
+        0,
+        0,
         0
       ],
       [
         0,
-        2,
-        73,
+        9,
+        79,
         0,
-        14
+        18
       ],
       [
         0,
         0,
         0,
-        13,
+        12,
         1
       ],
       [
         0,
         1,
-        12,
+        9,
         0,
-        80
+        70
       ]
     ],
     "labels": [
@@ -2304,5 +2304,5 @@
       "Stable / Market Secure"
     ]
   },
-  "seconds": 64.4
+  "seconds": 58.8
 }

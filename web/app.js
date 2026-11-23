@@ -22,7 +22,11 @@ const DOMAIN_CLASS = {
   "Macro & Events": "d-macro",
 };
 
-const scoreBody = document.querySelector("#score-body");
+const scoreLead = document.querySelector("#score-lead");
+const scoreStats = document.querySelector("#score-stats");
+const scoreViz = document.querySelector("#score-viz");
+const scoreRecall = document.querySelector("#score-recall");
+const scoreFoot = document.querySelector("#score-foot");
 const matrixBody = document.querySelector("#matrix-body");
 const driversBody = document.querySelector("#drivers-body");
 const cohortBody = document.querySelector("#cohort-body");
@@ -31,13 +35,23 @@ const dictNote = document.querySelector("#dict-note");
 const result = document.querySelector("#result");
 const jsonBox = document.querySelector("#json");
 const formError = document.querySelector("#form-error");
-const exampleRow = document.querySelector("#example-row");
+const whanauSearch = document.querySelector("#whanau-search");
+const whanauList = document.querySelector("#whanau-list");
+const whanauMode = document.querySelector("#whanau-mode");
+const whanauClear = document.querySelector("#whanau-clear");
+const cohortCount = document.querySelector("#cohort-count");
 
 let model;
 let metrics;
 let cohort = [];
 let examples = [];
+let histories = {};
+let exampleById = new Map();
 let activeExample = null;
+let selectedId = null;
+let listOpen = false;
+let activeOption = 0;
+let cohortTableBody = null;
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
@@ -52,6 +66,24 @@ function fmt(value) {
 
 function pct(value) {
   return `${(Number(value) * 100).toFixed(1)}%`;
+}
+
+function shiftMonth(value, steps) {
+  const match = String(value || "").match(/^(\d{4})-(\d{2})$/);
+  if (!match) return String(value || "");
+  const cursor = Number(match[1]) * 12 + (Number(match[2]) - 1) + steps;
+  const year = Math.floor(cursor / 12);
+  const month = (cursor % 12) + 1;
+  return `${year}-${String(month).padStart(2, "0")}`;
+}
+
+function prettyMonth(value, long) {
+  const match = String(value || "").match(/^(\d{4})-(\d{2})$/);
+  if (!match) return String(value || "");
+  const names = long
+    ? ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  return `${names[Number(match[2]) - 1]} ${match[1]}`;
 }
 
 function clear(node) {
@@ -69,24 +101,32 @@ function bundleBase(seed) {
 async function loadBundle(seed) {
   const base = bundleBase(seed);
   const stamp = Date.now();
-  const [modelDoc, metricsDoc, cohortDoc, exampleDoc] = await Promise.all(
-    ["model.json", "metrics.json", "cohort.json", "examples.json"].map((name) =>
+  const [modelDoc, metricsDoc, cohortDoc, exampleDoc, historyRes] = await Promise.all([
+    ...["model.json", "metrics.json", "cohort.json", "examples.json"].map((name) =>
       fetch(`${base}/${name}?t=${stamp}`).then((res) => {
         if (!res.ok) throw new Error(`Could not read the seed ${seed} bundle.`);
         return res.json();
       }),
     ),
-  );
+    fetch(`${base}/histories.json?t=${stamp}`),
+  ]);
   model = loadModel(modelDoc);
   metrics = metricsDoc;
   cohort = cohortDoc;
   examples = exampleDoc;
+  histories = historyRes.ok ? await historyRes.json() : {};
+  exampleById = new Map(examples.map((example) => [example.id, example]));
+  selectedId = null;
+  listOpen = false;
+  activeOption = 0;
+  whanauSearch.value = "";
+  whanauMode.value = "All whānau";
   renderScore();
   renderDrivers();
   renderCohort();
   renderDictionary();
-  renderExamples();
-  showExample(examples[0]);
+  const first = cohort.find((row) => row.id === examples[0]?.id) || cohort[0];
+  if (first) selectFamily(first);
   const fit = metrics.families;
   seedStatus.textContent = `Fit ${fit.fit}, validation ${fit.validation}, test ${fit.test}.`;
 }
@@ -122,7 +162,71 @@ async function useSeed(seed) {
   }
 }
 
+function wireFinder() {
+  whanauSearch.addEventListener("input", () => {
+    listOpen = true;
+    activeOption = 0;
+    const exact = cohort.find((row) => row.id.toLowerCase() === whanauSearch.value.trim().toLowerCase());
+    if (exact) {
+      listOpen = false;
+      selectFamily(exact);
+      return;
+    }
+    paintCohortLists();
+  });
+  whanauSearch.addEventListener("focus", () => {
+    listOpen = true;
+    paintCohortLists();
+  });
+  whanauSearch.addEventListener("keydown", (event) => {
+    const rows = matchingRows();
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      if (!listOpen) {
+        listOpen = true;
+        activeOption = 0;
+      } else activeOption = Math.min(Math.max(rows.length - 1, 0), activeOption + 1);
+      paintCohortLists();
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      listOpen = true;
+      activeOption = Math.max(0, activeOption - 1);
+      paintCohortLists();
+    } else if (event.key === "Enter") {
+      event.preventDefault();
+      const row = rows[activeOption] || rows[0];
+      if (row) selectFamily(row, { fillSearch: true, scroll: true });
+    } else if (event.key === "Escape") {
+      listOpen = false;
+      paintCohortLists();
+    }
+  });
+  document.querySelector("#whanau-toggle").addEventListener("mousedown", (event) => event.preventDefault());
+  document.querySelector("#whanau-toggle").addEventListener("click", () => {
+    listOpen = !listOpen;
+    activeOption = 0;
+    paintCohortLists();
+  });
+  whanauClear.addEventListener("mousedown", (event) => event.preventDefault());
+  whanauClear.addEventListener("click", () => {
+    whanauSearch.value = "";
+    listOpen = true;
+    activeOption = 0;
+    paintCohortLists();
+  });
+  whanauMode.addEventListener("change", () => {
+    activeOption = 0;
+    paintCohortLists();
+  });
+  document.addEventListener("click", (event) => {
+    if (!listOpen || document.querySelector("#whanau-combo").contains(event.target)) return;
+    listOpen = false;
+    paintCohortLists();
+  });
+}
+
 async function boot() {
+  wireFinder();
   await loadBundle(42);
   seedPick.addEventListener("input", () => {
     seedValue.textContent = seedPick.value;
@@ -135,10 +239,13 @@ async function boot() {
 }
 
 function renderScore() {
-  clear(scoreBody);
+  clear(scoreStats);
+  clear(scoreViz);
+  clear(scoreRecall);
+  clear(scoreFoot);
   const test = metrics.test_origin;
   const base = metrics.baselines_h6;
-  const stats = el("div", "stats");
+  const stats = el("div", "stats score-headline-stats");
   [
     ["Nowcast macro-F1", test.now.macro_f1, `Latest month, ${metrics.headline_origin.label}`],
     ["Six-month macro-F1", test.h6.macro_f1, "Six months after that snapshot"],
@@ -149,16 +256,14 @@ function renderScore() {
     card.append(el("span", null, label), el("b", null, fmt(value)), el("span", null, note));
     stats.append(card);
   });
-  scoreBody.append(stats);
-  if (metrics.performance_h6) scoreBody.append(metricBlock(metrics.performance_h6));
+  scoreStats.append(stats);
+  if (metrics.performance_h6) scoreViz.append(metricBlock(metrics.performance_h6));
 
-  const lead = el("p");
   const correct = cohort.filter((row) => row.predicted.h6 === row.actual.h6).length;
   const unchanged = cohort.filter((row) => row.actual.now === row.actual.h6).length;
   const changers = cohort.length - unchanged;
   const caught = cohort.filter((row) => row.actual.now !== row.actual.h6 && row.predicted.h6 === row.actual.h6).length;
-  lead.textContent = `On ${cohort.length} held-out whānau, looking six months past ${metrics.headline_origin.label}, the tier is right for ${correct}. ${unchanged} do not change tier, so carrying that month forward scores ${fmt(base.persistence.macro_f1)} macro-F1 (${pct(base.persistence.accuracy)} accuracy) against the transformer at ${fmt(test.h6.macro_f1)} (${pct(test.h6.accuracy)}). Of the ${changers} who change, the transformer calls ${caught}. A last-month linear model scores ${fmt(base.last_month_linear.macro_f1)}; with 3- and 6-month changes it scores ${fmt(base.last_month_plus_deltas_linear.macro_f1)}.`;
-  scoreBody.append(lead);
+  scoreLead.textContent = `On ${cohort.length} held-out whānau, looking six months past ${metrics.headline_origin.label}, the tier is right for ${correct}. ${unchanged} do not change tier, so carrying that month forward scores ${fmt(base.persistence.macro_f1)} macro-F1 (${pct(base.persistence.accuracy)} accuracy) against the transformer at ${fmt(test.h6.macro_f1)} (${pct(test.h6.accuracy)}). Of the ${changers} who change, the transformer calls ${caught}. A last-month linear model scores ${fmt(base.last_month_linear.macro_f1)}; with 3- and 6-month changes it scores ${fmt(base.last_month_plus_deltas_linear.macro_f1)}.`;
 
   const table = el("table");
   const head = el("tr");
@@ -171,15 +276,15 @@ function renderScore() {
     body.append(row);
   });
   table.append(body);
-  scoreBody.append(el("h3", null, "Recall by tier at six months"), table);
-  scoreBody.append(el("p", "section-note", `Same 200 whānau: nowcast macro-F1 ${fmt(test.now.macro_f1)}, +3 months ${fmt(test.h3.macro_f1)}, +12 months ${fmt(test.h12.macro_f1)}. Severe deprivation has single-digit support here, so that recall is a small count.`));
+  scoreRecall.append(el("h3", null, "Recall by tier at six months"), table);
+  scoreRecall.append(el("p", "section-note", `Same 200 whānau: nowcast macro-F1 ${fmt(test.now.macro_f1)}, +3 months ${fmt(test.h3.macro_f1)}, +12 months ${fmt(test.h12.macro_f1)}. Severe deprivation has single-digit support here, so that recall is a small count.`));
   clear(matrixBody);
   matrixBody.append(matrix(test.h6.confusion, ["Severe", "Unstable", "At risk", "Assisted", "Stable"]));
 
   const fit = metrics.families;
   const through = metrics.headline_origin.forecast_through || metrics.headline_origin.forecast_year;
   const seedText = `Seed ${metrics.seed} · ${fit.train_pool} train / ${fit.test} test · seed ${metrics.inner_seed} holds out ${fit.validation} for early stopping · fit on ${fit.fit}. Window ${metrics.headline_origin.history}, forecast through ${through}.`;
-  scoreBody.append(el("p", "section-note", seedText));
+  scoreFoot.append(el("p", "section-note", seedText));
 }
 
 function metricBlock(perf) {
@@ -205,16 +310,16 @@ function metricBlock(perf) {
 
 function rocSvg(curves) {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("viewBox", "0 0 220 220");
+  svg.setAttribute("viewBox", "0 0 240 240");
   svg.setAttribute("class", "roc");
   svg.setAttribute("role", "img");
   svg.setAttribute("aria-label", "ROC curves for the six-month forecast");
   const axis = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  axis.setAttribute("d", "M30 10 V190 H210");
+  axis.setAttribute("d", "M30 10 V205 H215");
   axis.setAttribute("class", "axis");
   svg.append(axis);
   const chance = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  chance.setAttribute("d", "M30 190 L210 10");
+  chance.setAttribute("d", "M30 205 L215 10");
   chance.setAttribute("class", "chance");
   svg.append(chance);
   const tone = getComputedStyle(document.documentElement);
@@ -222,7 +327,7 @@ function rocSvg(curves) {
   const legend = el("div", "roc-legend");
   curves.forEach((curve, index) => {
     if (!curve.points || !curve.points.length) return;
-    const d = curve.points.map(([fpr, tpr], i) => `${i ? "L" : "M"}${30 + fpr * 180} ${190 - tpr * 180}`).join(" ");
+    const d = curve.points.map(([fpr, tpr], i) => `${i ? "L" : "M"}${30 + fpr * 185} ${205 - tpr * 195}`).join(" ");
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", d);
     path.setAttribute("fill", "none");
@@ -233,7 +338,7 @@ function rocSvg(curves) {
   });
   const x = document.createElementNS("http://www.w3.org/2000/svg", "text");
   x.setAttribute("x", "120");
-  x.setAttribute("y", "208");
+  x.setAttribute("y", "222");
   x.setAttribute("class", "tick");
   x.textContent = "False positive rate";
   const y = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -242,7 +347,7 @@ function rocSvg(curves) {
   y.setAttribute("class", "tick");
   y.textContent = "True positive rate";
   svg.append(x, y);
-  const block = el("div");
+  const block = el("div", "roc-block");
   block.append(svg, legend);
   return block;
 }
@@ -306,65 +411,195 @@ function barBlock(title, rows) {
 function renderCohort() {
   clear(cohortBody);
   cohortBody.append(tierCompare());
-  const filters = el("div", "filters");
-  const select = document.createElement("select");
-  select.setAttribute("aria-label", "Filter test whānau");
-  ["All whānau", "Tier changed", "Forecast missed", "Forecast matched"].forEach((label) => {
-    const option = document.createElement("option");
-    option.value = label;
-    option.textContent = label;
-    select.append(option);
-  });
-  const search = document.createElement("input");
-  search.type = "search";
-  search.placeholder = "Search id or local board";
-  search.setAttribute("aria-label", "Search test whānau");
-  filters.append(select, search);
-  const count = el("p", "section-note");
   const scroller = el("div", "scroll");
   const table = el("table");
   const head = el("tr");
-  ["Whānau", "Board", "Ethnicity", "Dec 2024", "June actual", "June forecast", "P"].forEach((label, i) => {
+  const originLabel = prettyMonth(metrics.headline_origin.label);
+  const sixLabel = prettyMonth(shiftMonth(metrics.headline_origin.label, 6));
+  ["Whānau", "Board", "Ethnicity", originLabel, `${sixLabel} actual`, `${sixLabel} forecast`, "P"].forEach((label, i) => {
     head.append(el("th", i === 6 ? "n" : null, label));
   });
   table.append(el("thead").appendChild(head).parentNode);
-  const body = el("tbody");
-  table.append(body);
+  cohortTableBody = el("tbody");
+  table.append(cohortTableBody);
   scroller.append(table);
-  cohortBody.append(filters, count, scroller);
+  cohortBody.append(scroller);
+  paintCohortLists();
+}
 
-  function paint() {
-    clear(body);
-    const q = search.value.trim().toLowerCase();
-    const mode = select.value;
-    const rows = cohort.filter((row) => {
-      if (q && !`${row.id} ${row.local_board}`.toLowerCase().includes(q)) return false;
-      const changed = row.actual.now !== row.actual.h6;
-      const hit = row.predicted.h6 === row.actual.h6;
-      if (mode === "Tier changed") return changed;
-      if (mode === "Forecast missed") return !hit;
-      if (mode === "Forecast matched") return hit;
-      return true;
+function passesMode(row, mode) {
+  const changed = row.actual.now !== row.actual.h6;
+  const hit = row.predicted.h6 === row.actual.h6;
+  if (mode === "Tier changed") return changed;
+  if (mode === "Forecast missed") return !hit;
+  if (mode === "Forecast matched") return hit;
+  return true;
+}
+
+function matchingRows() {
+  const q = whanauSearch.value.trim().toLowerCase();
+  return cohort.filter((row) => {
+    if (q && !`${row.id} ${row.local_board}`.toLowerCase().includes(q)) return false;
+    return passesMode(row, whanauMode.value);
+  });
+}
+
+function familyHistory(id) {
+  if (histories && histories[id]) return histories[id];
+  return exampleById.get(id)?.history || null;
+}
+
+function tierMark(id, tone) {
+  const pill = el("span", tone ? `pill ${tone}` : "pill fact");
+  const dot = document.createElement("i");
+  dot.style.background = TIER_COLOR[id];
+  pill.append(dot, document.createTextNode(tierShort(id)));
+  return pill;
+}
+
+function chanceCell(row) {
+  const probability = row.probability_h6[row.predicted.h6 - 1];
+  const wrap = el("span", "chance");
+  const track = document.createElement("i");
+  const fill = document.createElement("b");
+  fill.style.width = `${probability * 100}%`;
+  fill.style.background = row.predicted.h6 === row.actual.h6 ? "var(--stable)" : "var(--severe)";
+  track.append(fill);
+  wrap.append(track, el("span", null, pct(probability)));
+  return wrap;
+}
+
+function paintCohortLists() {
+  const rows = matchingRows();
+  if (activeOption > rows.length - 1) activeOption = 0;
+  cohortCount.textContent = rows.length === 1 && rows[0].id === selectedId
+    ? `${rows[0].id} loaded`
+    : `${rows.length} shown`;
+  whanauClear.hidden = whanauSearch.value.trim() === "";
+  whanauSearch.setAttribute("aria-expanded", listOpen ? "true" : "false");
+  whanauList.hidden = !listOpen;
+  clear(whanauList);
+  if (!rows.length) {
+    whanauSearch.removeAttribute("aria-activedescendant");
+    const empty = el("li", "empty", "No whānau matches that id.");
+    empty.setAttribute("role", "presentation");
+    whanauList.append(empty);
+  } else {
+    if (listOpen && rows[activeOption]) whanauSearch.setAttribute("aria-activedescendant", `whanau-opt-${activeOption}`);
+    else whanauSearch.removeAttribute("aria-activedescendant");
+    rows.forEach((row, index) => {
+      const option = el("li");
+      option.id = `whanau-opt-${index}`;
+      option.setAttribute("role", "option");
+      option.setAttribute("aria-selected", index === activeOption ? "true" : "false");
+      const board = el("span", "board", row.local_board);
+      option.append(el("b", null, row.id), board, tierMark(row.predicted.h6, row.predicted.h6 === row.actual.h6 ? "hit" : "miss"));
+      option.addEventListener("mousedown", (event) => {
+        event.preventDefault();
+        selectFamily(row, { fillSearch: true, scroll: true });
+      });
+      whanauList.append(option);
     });
-    count.textContent = `${rows.length} shown`;
-    rows.forEach((row) => {
-      const tr = el("tr");
-      const hit = row.predicted.h6 === row.actual.h6;
-      tr.append(
-        el("td", null, row.id),
-        el("td", null, row.local_board),
-        el("td", null, row.ethnicity),
-        el("td", null, tierShort(row.actual.now)),
-        el("td", null, tierShort(row.actual.h6)),
-        el("td", hit ? "hit" : "miss", tierShort(row.predicted.h6)),
-        el("td", "n", pct(row.probability_h6[row.predicted.h6 - 1])),
-      );
-      body.append(tr);
-    });
+    const active = listOpen ? whanauList.querySelector("[aria-selected='true']") : null;
+    if (active) {
+      const top = active.offsetTop;
+      const bottom = top + active.offsetHeight;
+      if (top < whanauList.scrollTop) whanauList.scrollTop = top;
+      else if (bottom > whanauList.scrollTop + whanauList.clientHeight) {
+        whanauList.scrollTop = bottom - whanauList.clientHeight;
+      }
+    }
   }
-  select.addEventListener("change", paint);
-  search.addEventListener("input", paint);
-  paint();
+  if (!cohortTableBody) return;
+  clear(cohortTableBody);
+  rows.forEach((row) => {
+    const tr = el("tr");
+    const hit = row.predicted.h6 === row.actual.h6;
+    if (row.id === selectedId) tr.classList.add("picked");
+    tr.setAttribute("aria-selected", row.id === selectedId ? "true" : "false");
+    const forecastCell = el("td");
+    forecastCell.append(tierMark(row.predicted.h6, hit ? "hit" : "miss"));
+    const probabilityCell = el("td", "n");
+    probabilityCell.append(chanceCell(row));
+    const nowCell = el("td");
+    nowCell.append(tierMark(row.actual.now));
+    const juneCell = el("td");
+    juneCell.append(tierMark(row.actual.h6));
+    tr.append(el("td", "wid", row.id), el("td", null, row.local_board), el("td", null, row.ethnicity), nowCell, juneCell, forecastCell, probabilityCell);
+    tr.addEventListener("click", () => selectFamily(row, { fillSearch: true, scroll: true }));
+    cohortTableBody.append(tr);
+  });
+}
+
+function selectFamily(row, opts = {}) {
+  if (!row) return;
+  selectedId = row.id;
+  if (opts.fillSearch) {
+    whanauSearch.value = row.id;
+    listOpen = false;
+    activeOption = 0;
+  }
+  if (!passesMode(row, whanauMode.value)) whanauMode.value = "All whānau";
+  const history = familyHistory(row.id);
+  const example = exampleById.get(row.id);
+  formError.textContent = "";
+  if (history) {
+    activeExample = example || { id: row.id, history, actual: row.actual };
+    jsonBox.value = JSON.stringify({ history }, null, 2);
+    paintResult(classify(model, { history }), activeExample);
+  } else {
+    activeExample = { id: row.id, actual: row.actual };
+    jsonBox.value = JSON.stringify(row, null, 2);
+    paintPublished(row);
+  }
+  paintCohortLists();
+  if (opts.scroll) document.querySelector("#call").scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function paintPublished(row) {
+  renderDrivers();
+  const forecast = model.doc.tiers[row.predicted.h6 - 1];
+  const snapshot = model.doc.tiers[row.actual.now - 1];
+  const june = model.doc.tiers[row.actual.h6 - 1];
+  const probability = row.probability_h6[row.predicted.h6 - 1];
+  const runnerUp = Math.max(...row.probability_h6.filter((_, index) => index !== forecast.id - 1));
+  const hit = row.predicted.h6 === row.actual.h6;
+  document.querySelector("#flow-input").textContent = `${row.id}, ${row.local_board}. ${row.ethnicity}.`;
+  document.querySelector("#flow-weights").textContent = "Weights appear once this history is on the page.";
+  document.querySelector("#flow-attend").textContent = "Attention is drawn from the loaded twelve months.";
+  document.querySelector("#flow-out").textContent = `${forecast.short}, ${pct(probability)}.`;
+  clear(result);
+  result.append(el("p", "kicker", `${row.id} · ${row.local_board}`));
+  const pair = el("div", "pair");
+  pair.append(
+    tierCard("Six-month forecast", {
+      tier_id: forecast.id,
+      name: forecast.name,
+      probability,
+      margin: probability - runnerUp,
+      low_confidence: probability < 0.4,
+    }),
+    factCard(prettyMonth(metrics.headline_origin.label, true), snapshot),
+  );
+  result.append(pair);
+  const sixName = prettyMonth(shiftMonth(metrics.headline_origin.label, 6), true);
+  result.append(el("p", null, `In the workbook, ${sixName} is ${june.name}. The forecast ${hit ? "matches" : "does not match"} that outcome.`));
+  result.append(el("h3", null, "Six-month probabilities"));
+  const probs = el("div", "prob");
+  row.probability_h6.forEach((value, index) => {
+    const tier = model.doc.tiers[index];
+    const line = el("div", "prob-row");
+    line.append(el("span", null, tier.short));
+    const track = el("div", "track");
+    const fill = document.createElement("i");
+    fill.style.width = `${value * 100}%`;
+    fill.style.background = TIER_COLOR[tier.id];
+    track.append(fill);
+    line.append(track, el("span", "num", pct(value)));
+    probs.append(line);
+  });
+  result.append(probs);
+  result.append(el("p", "section-note", "Published test forecast for this whānau. The month path and attention appear when the twelve-month history is in the bundle."));
 }
 
 function tierCompare() {
@@ -392,8 +627,9 @@ function tierCompare() {
     wrap.append(row);
   });
   const key = el("div", "chart-key");
-  key.append(el("span", "a", "June actual"), el("span", "p", "June forecast"));
-  const block = el("div");
+  const sixLabel = prettyMonth(shiftMonth(metrics.headline_origin.label, 6));
+  key.append(el("span", "a", `${sixLabel} actual`), el("span", "p", `${sixLabel} forecast`));
+  const block = el("div", "viz-block");
   block.append(wrap, key);
   return block;
 }
@@ -454,26 +690,11 @@ function renderDictionary() {
   dictBody.append(grid);
 }
 
-function renderExamples() {
-  clear(exampleRow);
-  examples.forEach((example, index) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = example.id;
-    button.addEventListener("click", () => showExample(example));
-    exampleRow.append(button);
-    example._button = button;
-    if (index === 0) button.setAttribute("aria-pressed", "true");
-  });
-}
-
-function showExample(example) {
-  activeExample = example;
-  exampleRow.querySelectorAll("button").forEach((button) => button.setAttribute("aria-pressed", button.textContent === example.id ? "true" : "false"));
-  const payload = { history: example.history };
-  jsonBox.value = JSON.stringify(payload, null, 2);
-  formError.textContent = "";
-  paintResult(classify(model, payload), example);
+function factCard(label, tier) {
+  const card = el("div", "card");
+  card.style.borderTopColor = TIER_COLOR[tier.id];
+  card.append(el("p", "kicker", label), el("p", "tier-name", tier.name));
+  return card;
 }
 
 function paintResult(output, example) {
@@ -485,7 +706,7 @@ function paintResult(output, example) {
   document.querySelector("#flow-attend").textContent = peak ? `Strongest month in this case: ${peak[1]}.` : "Attention over the 24 months.";
   document.querySelector("#flow-input").textContent = top ? `This case leans first on ${top.name.replaceAll("_", " ")}.` : "Static identity and place, the observed past, and a known future calendar.";
   clear(result);
-  result.append(el("p", "kicker", example ? `Held-out example ${example.id}` : (output.whanau_id || "Uploaded history")));
+  result.append(el("p", "kicker", example ? `Test whānau ${example.id}` : (output.whanau_id || "Uploaded history")));
   const pair = el("div", "pair");
   pair.append(tierCard("Six-month forecast", output.classification), tierCard("Latest month", output.nowcast));
   result.append(pair);
@@ -524,6 +745,7 @@ function paintResult(output, example) {
   result.append(path);
 
   result.append(el("h3", null, "Attention for the six-month query"));
+  const attnWrap = el("div", "attn-wrap");
   const attn = el("div", "attn");
   const max = Math.max(...output.attention.weights);
   output.attention.weights.forEach((weight, index) => {
@@ -533,7 +755,8 @@ function paintResult(output, example) {
     bar.title = `${output.attention.labels[index]} ${weight.toFixed(3)}`;
     attn.append(bar);
   });
-  result.append(attn);
+  attnWrap.append(attn);
+  result.append(attnWrap);
   result.append(el("p", "section-note", "Teal bars are the twelve history months. Ochre bars are the twelve forecast months."));
 
   result.append(el("h3", null, "Strongest history inputs for this case"));
@@ -688,8 +911,11 @@ async function unzip(buffer) {
 
 function classifyPayload(payload) {
   activeExample = null;
-  exampleRow.querySelectorAll("button").forEach((button) => button.setAttribute("aria-pressed", "false"));
+  selectedId = null;
+  whanauSearch.value = "";
+  listOpen = false;
   paintResult(classify(model, payload), null);
+  paintCohortLists();
 }
 
 function runText() {
@@ -744,5 +970,7 @@ drop.addEventListener("drop", async (event) => {
 });
 
 boot().catch((error) => {
-  scoreBody.textContent = `The model file did not load. ${error.message}`;
+  scoreLead.textContent = `The model file did not load. ${error.message}`;
+  [scoreStats, scoreViz, scoreRecall, scoreFoot].forEach(clear);
+  clear(matrixBody);
 });

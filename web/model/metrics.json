@@ -1,6 +1,6 @@
 {
   "task": "Five-tier housing stability, Temporal Fusion Transformer",
-  "panel": "Attached workbook tft_synthetic_panel_for_500_whanau.xlsx, 500 wh\u0101nau, January 2019\u2013December 2023.",
+  "panel": "Workbook tft_synthetic_panel_for_500_whanau, 500 wh\u0101nau, observed 2022-01\u20132026-12.",
   "seed": 42,
   "inner_seed": 43,
   "families": {
@@ -11,9 +11,9 @@
   },
   "headline_origin": {
     "time_idx": 48,
-    "label": "2022-12",
-    "history": "2022-01\u20132022-12",
-    "forecast_through": "2023-12"
+    "label": "2025-12",
+    "history": "2025-01\u20132025-12",
+    "forecast_through": "2026-12"
   },
   "parameters": 490322,
   "config": {
@@ -25,102 +25,108 @@
     "decoder_len": 12
   },
   "class_counts_fit_windows": [
-    14,
-    2836,
-    38523,
-    8533,
-    65534
+    42,
+    2045,
+    63850,
+    12025,
+    37478
   ],
-  "best_val_macro_f1_h6": 0.5931231673528051,
-  "epochs_ran": 8,
+  "best_val_macro_f1_h6": 0.6265548541042187,
+  "epochs_ran": 9,
   "history": [
     {
       "epoch": 1,
-      "train_loss": 0.31160895655284054,
-      "val_loss": 0.19580574594773686,
-      "val_macro_f1_h6": 0.5827924747045594
+      "train_loss": 0.3324179096533372,
+      "val_loss": 0.1654088755448659,
+      "val_macro_f1_h6": 0.6139529120863431
     },
     {
       "epoch": 2,
-      "train_loss": 0.12828339545039444,
-      "val_loss": 0.15904766585140884,
-      "val_macro_f1_h6": 0.5931231673528051
+      "train_loss": 0.15092021742382566,
+      "val_loss": 0.14049894235155605,
+      "val_macro_f1_h6": 0.6189989996614275
     },
     {
       "epoch": 3,
-      "train_loss": 0.09905903401138547,
-      "val_loss": 0.14875649775604943,
-      "val_macro_f1_h6": 0.5718936410428291
+      "train_loss": 0.11433665894710265,
+      "val_loss": 0.12674361268679302,
+      "val_macro_f1_h6": 0.6226134203962861
     },
     {
       "epoch": 4,
-      "train_loss": 0.08179637702467206,
-      "val_loss": 0.133256377495389,
-      "val_macro_f1_h6": 0.5912565437441241
+      "train_loss": 0.09748584577092179,
+      "val_loss": 0.12562293000854888,
+      "val_macro_f1_h6": 0.6265548541042187
     },
     {
       "epoch": 5,
-      "train_loss": 0.07473373497660096,
-      "val_loss": 0.14531328494131968,
-      "val_macro_f1_h6": 0.5771928523082622
+      "train_loss": 0.08258678693626378,
+      "val_loss": 0.13332154317213607,
+      "val_macro_f1_h6": 0.5986141479820505
     },
     {
       "epoch": 6,
-      "train_loss": 0.06376875573181891,
-      "val_loss": 0.1323759057584244,
-      "val_macro_f1_h6": 0.5819042507034645
+      "train_loss": 0.0726329020148999,
+      "val_loss": 0.12249077308822323,
+      "val_macro_f1_h6": 0.6223162744126377
     },
     {
       "epoch": 7,
-      "train_loss": 0.05701120160855688,
-      "val_loss": 0.14548030126470704,
-      "val_macro_f1_h6": 0.5737205886494742
+      "train_loss": 0.06572579140061731,
+      "val_loss": 0.12424831786402711,
+      "val_macro_f1_h6": 0.5766444205908768
     },
     {
       "epoch": 8,
-      "train_loss": 0.05356024020426982,
-      "val_loss": 0.17464551438015324,
-      "val_macro_f1_h6": 0.5683609992079816
+      "train_loss": 0.05846722244142412,
+      "val_loss": 0.12546978728459762,
+      "val_macro_f1_h6": 0.5842845945710486
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.05430710347923073,
+      "val_loss": 0.13622310873087462,
+      "val_macro_f1_h6": 0.5650768801545176
     }
   ],
   "test_origin": {
     "now": {
       "n": 200,
       "accuracy": 0.955,
-      "macro_f1": 0.7578105110020003,
+      "macro_f1": 0.781610800744879,
       "precision": [
         0.0,
-        0.8,
-        0.9242424242424242,
         1.0,
-        0.9741379310344828
+        0.9444444444444444,
+        1.0,
+        0.9583333333333334
       ],
       "recall": [
         0.0,
         1.0,
-        0.953125,
+        0.9550561797752809,
         1.0,
-        0.9495798319327731
+        0.9583333333333334
       ],
       "f1": [
         0.0,
-        0.888888888888889,
-        0.9384615384615383,
         1.0,
-        0.9617021276595743
+        0.9497206703910613,
+        1.0,
+        0.9583333333333334
       ],
       "support": [
-        0,
+        1,
         4,
-        64,
-        13,
-        119
+        89,
+        10,
+        96
       ],
       "confusion": [
         [
           0,
           0,
-          0,
+          1,
           0,
           0
         ],
@@ -134,23 +140,23 @@
         [
           0,
           0,
-          61,
+          85,
           0,
-          3
+          4
         ],
         [
           0,
           0,
           0,
-          13,
+          10,
           0
         ],
         [
           0,
-          1,
-          5,
           0,
-          113
+          4,
+          0,
+          92
         ]
       ],
       "labels": [
@@ -163,35 +169,35 @@
     },
     "h3": {
       "n": 200,
-      "accuracy": 0.82,
-      "macro_f1": 0.5942169272772401,
+      "accuracy": 0.865,
+      "macro_f1": 0.6210049747489719,
       "precision": [
         0.0,
         0.25,
-        0.8378378378378378,
+        0.8765432098765432,
         1.0,
-        0.8285714285714286
+        0.8910891089108911
       ],
       "recall": [
         0.0,
-        0.5,
-        0.7380952380952381,
+        0.6666666666666666,
+        0.8255813953488372,
         1.0,
-        0.8787878787878788
+        0.8910891089108911
       ],
       "f1": [
         0.0,
-        0.3333333333333333,
-        0.7848101265822786,
+        0.36363636363636365,
+        0.8502994011976048,
         1.0,
-        0.8529411764705883
+        0.8910891089108911
       ],
       "support": [
         0,
-        4,
-        84,
-        13,
-        99
+        3,
+        86,
+        10,
+        101
       ],
       "confusion": [
         [
@@ -206,28 +212,28 @@
           2,
           1,
           0,
-          1
-        ],
-        [
-          0,
-          5,
-          62,
-          0,
-          17
-        ],
-        [
-          0,
-          0,
-          0,
-          13,
           0
         ],
         [
           0,
-          1,
-          11,
+          4,
+          71,
           0,
-          87
+          11
+        ],
+        [
+          0,
+          0,
+          0,
+          10,
+          0
+        ],
+        [
+          0,
+          2,
+          9,
+          0,
+          90
         ]
       ],
       "labels": [
@@ -240,71 +246,71 @@
     },
     "h6": {
       "n": 200,
-      "accuracy": 0.765,
-      "macro_f1": 0.6019391261659303,
+      "accuracy": 0.815,
+      "macro_f1": 0.5655064935064935,
       "precision": [
         0.0,
-        0.3333333333333333,
-        0.7439024390243902,
+        0.14285714285714285,
+        0.7951807228915663,
         1.0,
-        0.7916666666666666
+        0.86
       ],
       "recall": [
         0.0,
+        0.25,
+        0.7764705882352941,
         1.0,
-        0.7093023255813954,
-        1.0,
-        0.7755102040816326
+        0.86
       ],
       "f1": [
         0.0,
-        0.5,
-        0.7261904761904763,
+        0.18181818181818182,
+        0.7857142857142857,
         1.0,
-        0.7835051546391752
+        0.8599999999999999
       ],
       "support": [
-        0,
-        3,
-        86,
-        13,
-        98
+        1,
+        4,
+        85,
+        10,
+        100
       ],
       "confusion": [
         [
           0,
           0,
+          1,
           0,
-          0,
-          0
-        ],
-        [
-          0,
-          3,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          5,
-          61,
-          0,
-          20
-        ],
-        [
-          0,
-          0,
-          0,
-          13,
           0
         ],
         [
           0,
           1,
-          21,
+          2,
           0,
-          76
+          1
+        ],
+        [
+          0,
+          6,
+          66,
+          0,
+          13
+        ],
+        [
+          0,
+          0,
+          0,
+          10,
+          0
+        ],
+        [
+          0,
+          0,
+          14,
+          0,
+          86
         ]
       ],
       "labels": [
@@ -317,35 +323,35 @@
     },
     "h12": {
       "n": 200,
-      "accuracy": 0.735,
-      "macro_f1": 0.49375450396348797,
+      "accuracy": 0.795,
+      "macro_f1": 0.590492569800876,
       "precision": [
         0.0,
-        0.0,
-        0.8048780487804879,
+        0.2857142857142857,
+        0.7386363636363636,
         1.0,
-        0.7083333333333334
+        0.8631578947368421
       ],
       "recall": [
         0.0,
-        0.0,
-        0.6470588235294118,
+        0.5,
+        0.7926829268292683,
         1.0,
-        0.8
+        0.7884615384615384
       ],
       "f1": [
         0.0,
-        0.0,
-        0.717391304347826,
+        0.36363636363636365,
+        0.7647058823529412,
         1.0,
-        0.7513812154696135
+        0.8241206030150754
       ],
       "support": [
         0,
-        0,
-        102,
-        13,
-        85
+        4,
+        82,
+        10,
+        104
       ],
       "confusion": [
         [
@@ -357,31 +363,31 @@
         ],
         [
           0,
-          0,
-          0,
+          2,
+          2,
           0,
           0
         ],
         [
           0,
-          8,
-          66,
+          4,
+          65,
           0,
-          28
+          13
         ],
         [
           0,
           0,
           0,
-          13,
+          10,
           0
         ],
         [
           0,
           1,
-          16,
+          21,
           0,
-          68
+          82
         ]
       ],
       "labels": [
@@ -394,78 +400,78 @@
     }
   },
   "test_all_windows_macro_f1": {
-    "h3": 0.6220138468667099,
-    "h6": 0.5890329032904728,
-    "h12": 0.5244356307760272
+    "h3": 0.6513483373884834,
+    "h6": 0.6237069843697329,
+    "h12": 0.5912074533875342
   },
   "baselines_h6": {
     "majority": {
       "n": 200,
-      "accuracy": 0.49,
-      "macro_f1": 0.13154362416107382,
+      "accuracy": 0.425,
+      "macro_f1": 0.11929824561403508,
       "precision": [
         0.0,
         0.0,
+        0.425,
         0.0,
-        0.0,
-        0.49
+        0.0
       ],
       "recall": [
         0.0,
         0.0,
+        1.0,
         0.0,
-        0.0,
-        1.0
+        0.0
       ],
       "f1": [
         0.0,
         0.0,
+        0.5964912280701754,
         0.0,
-        0.0,
-        0.6577181208053691
+        0.0
       ],
       "support": [
-        0,
-        3,
-        86,
-        13,
-        98
+        1,
+        4,
+        85,
+        10,
+        100
       ],
       "confusion": [
         [
           0,
           0,
-          0,
+          1,
           0,
           0
         ],
         [
           0,
           0,
+          4,
           0,
-          0,
-          3
+          0
         ],
         [
           0,
           0,
+          85,
           0,
-          0,
-          86
+          0
         ],
         [
           0,
           0,
+          10,
           0,
-          0,
-          13
+          0
         ],
         [
           0,
           0,
+          100,
           0,
-          0,
-          98
+          0
         ]
       ],
       "labels": [
@@ -478,71 +484,71 @@
     },
     "persistence": {
       "n": 200,
-      "accuracy": 0.755,
-      "macro_f1": 0.6069677419354839,
+      "accuracy": 0.82,
+      "macro_f1": 0.5326061459066385,
       "precision": [
         0.0,
-        0.5,
-        0.796875,
+        0.0,
+        0.797752808988764,
         1.0,
-        0.7142857142857143
+        0.8645833333333334
       ],
       "recall": [
         0.0,
-        0.6666666666666666,
-        0.5930232558139535,
+        0.0,
+        0.8352941176470589,
         1.0,
-        0.8673469387755102
+        0.83
       ],
       "f1": [
         0.0,
-        0.5714285714285715,
-        0.6799999999999999,
+        0.0,
+        0.8160919540229884,
         1.0,
-        0.783410138248848
+        0.8469387755102041
       ],
       "support": [
-        0,
-        3,
-        86,
-        13,
-        98
+        1,
+        4,
+        85,
+        10,
+        100
       ],
       "confusion": [
         [
           0,
           0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          2,
           1,
           0,
           0
         ],
         [
+          1,
           0,
           1,
-          51,
           0,
-          34
+          2
+        ],
+        [
+          0,
+          3,
+          71,
+          0,
+          11
         ],
         [
           0,
           0,
           0,
-          13,
+          10,
           0
         ],
         [
           0,
           1,
-          12,
+          16,
           0,
-          85
+          83
         ]
       ],
       "labels": [
@@ -555,71 +561,71 @@
     },
     "last_month_linear": {
       "n": 200,
-      "accuracy": 0.71,
-      "macro_f1": 0.5306709405462369,
+      "accuracy": 0.765,
+      "macro_f1": 0.5474318744838975,
       "precision": [
         0.0,
-        0.3333333333333333,
-        0.6593406593406593,
+        0.16666666666666666,
+        0.7386363636363636,
         1.0,
-        0.7368421052631579
+        0.8020833333333334
       ],
       "recall": [
         0.0,
-        0.3333333333333333,
-        0.6976744186046512,
-        0.8461538461538461,
-        0.7142857142857143
+        0.25,
+        0.7647058823529411,
+        1.0,
+        0.77
       ],
       "f1": [
         0.0,
-        0.3333333333333333,
-        0.6779661016949152,
-        0.9166666666666666,
-        0.7253886010362695
+        0.2,
+        0.7514450867052023,
+        1.0,
+        0.7857142857142857
       ],
       "support": [
-        0,
-        3,
-        86,
-        13,
-        98
+        1,
+        4,
+        85,
+        10,
+        100
       ],
       "confusion": [
         [
           0,
           0,
-          0,
+          1,
           0,
           0
         ],
         [
           0,
           1,
-          2,
           0,
+          0,
+          3
+        ],
+        [
+          0,
+          4,
+          65,
+          0,
+          16
+        ],
+        [
+          0,
+          0,
+          0,
+          10,
           0
         ],
         [
           0,
-          2,
-          60,
-          0,
-          24
-        ],
-        [
-          0,
-          0,
           1,
-          11,
-          1
-        ],
-        [
+          22,
           0,
-          0,
-          28,
-          0,
-          70
+          77
         ]
       ],
       "labels": [
@@ -632,71 +638,71 @@
     },
     "last_month_plus_deltas_linear": {
       "n": 200,
-      "accuracy": 0.68,
-      "macro_f1": 0.468954248366013,
+      "accuracy": 0.75,
+      "macro_f1": 0.5015318306249636,
       "precision": [
         0.0,
-        0.16666666666666666,
-        0.6382978723404256,
-        0.8181818181818182,
-        0.7415730337078652
+        0.0,
+        0.7065217391304348,
+        1.0,
+        0.7978723404255319
       ],
       "recall": [
         0.0,
-        0.3333333333333333,
-        0.6976744186046512,
-        0.6923076923076923,
-        0.673469387755102
+        0.0,
+        0.7647058823529411,
+        1.0,
+        0.75
       ],
       "f1": [
         0.0,
-        0.2222222222222222,
-        0.6666666666666666,
-        0.7500000000000001,
-        0.7058823529411764
+        0.0,
+        0.7344632768361581,
+        1.0,
+        0.7731958762886597
       ],
       "support": [
-        0,
-        3,
-        86,
-        13,
-        98
+        1,
+        4,
+        85,
+        10,
+        100
       ],
       "confusion": [
         [
           0,
           0,
-          0,
+          1,
           0,
           0
         ],
         [
           0,
-          1,
+          0,
           2,
           0,
+          2
+        ],
+        [
+          0,
+          3,
+          65,
+          0,
+          17
+        ],
+        [
+          0,
+          0,
+          0,
+          10,
           0
         ],
         [
           0,
-          5,
-          60,
           1,
-          20
-        ],
-        [
+          24,
           0,
-          0,
-          1,
-          9,
-          3
-        ],
-        [
-          0,
-          0,
-          31,
-          1,
-          66
+          75
         ]
       ],
       "labels": [
@@ -712,71 +718,71 @@
     "note": "Gambling share set to 0, justice event set to 0, and prior justice history set to no at evaluation. The model was not retrained.",
     "full": {
       "n": 200,
-      "accuracy": 0.765,
-      "macro_f1": 0.6019391261659303,
+      "accuracy": 0.815,
+      "macro_f1": 0.5655064935064935,
       "precision": [
         0.0,
-        0.3333333333333333,
-        0.7439024390243902,
+        0.14285714285714285,
+        0.7951807228915663,
         1.0,
-        0.7916666666666666
+        0.86
       ],
       "recall": [
         0.0,
+        0.25,
+        0.7764705882352941,
         1.0,
-        0.7093023255813954,
-        1.0,
-        0.7755102040816326
+        0.86
       ],
       "f1": [
         0.0,
-        0.5,
-        0.7261904761904763,
+        0.18181818181818182,
+        0.7857142857142857,
         1.0,
-        0.7835051546391752
+        0.8599999999999999
       ],
       "support": [
-        0,
-        3,
-        86,
-        13,
-        98
+        1,
+        4,
+        85,
+        10,
+        100
       ],
       "confusion": [
         [
           0,
           0,
+          1,
           0,
-          0,
-          0
-        ],
-        [
-          0,
-          3,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          5,
-          61,
-          0,
-          20
-        ],
-        [
-          0,
-          0,
-          0,
-          13,
           0
         ],
         [
           0,
           1,
-          21,
+          2,
           0,
-          76
+          1
+        ],
+        [
+          0,
+          6,
+          66,
+          0,
+          13
+        ],
+        [
+          0,
+          0,
+          0,
+          10,
+          0
+        ],
+        [
+          0,
+          0,
+          14,
+          0,
+          86
         ]
       ],
       "labels": [
@@ -789,71 +795,71 @@
     },
     "without_gambling_and_justice": {
       "n": 200,
-      "accuracy": 0.76,
-      "macro_f1": 0.5996100107477353,
+      "accuracy": 0.81,
+      "macro_f1": 0.562943722943723,
       "precision": [
         0.0,
-        0.3333333333333333,
-        0.7407407407407407,
+        0.14285714285714285,
+        0.8,
         1.0,
-        0.7835051546391752
+        0.8446601941747572
       ],
       "recall": [
         0.0,
+        0.25,
+        0.7529411764705882,
         1.0,
-        0.6976744186046512,
-        1.0,
-        0.7755102040816326
+        0.87
       ],
       "f1": [
         0.0,
-        0.5,
-        0.7185628742514969,
+        0.18181818181818182,
+        0.7757575757575759,
         1.0,
-        0.7794871794871796
+        0.8571428571428571
       ],
       "support": [
-        0,
-        3,
-        86,
-        13,
-        98
+        1,
+        4,
+        85,
+        10,
+        100
       ],
       "confusion": [
         [
           0,
           0,
+          1,
           0,
-          0,
-          0
-        ],
-        [
-          0,
-          3,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          5,
-          60,
-          0,
-          21
-        ],
-        [
-          0,
-          0,
-          0,
-          13,
           0
         ],
         [
           0,
           1,
-          21,
+          2,
           0,
-          76
+          1
+        ],
+        [
+          0,
+          6,
+          64,
+          0,
+          15
+        ],
+        [
+          0,
+          0,
+          0,
+          10,
+          0
+        ],
+        [
+          0,
+          0,
+          13,
+          0,
+          87
         ]
       ],
       "labels": [
@@ -868,86 +874,146 @@
   "by_ethnicity_h6": [
     {
       "ethnicity": "Asian",
-      "n": 67,
-      "macro_f1": 0.498108448928121,
-      "accuracy": 0.746268656716418,
+      "n": 58,
+      "macro_f1": 0.5351887152115898,
+      "accuracy": 0.8275862068965517,
       "recall": [
         0.0,
         0.0,
-        0.7096774193548387,
+        0.8095238095238095,
         1.0,
-        0.7575757575757576
+        0.9
       ],
       "support": [
         0,
-        0,
-        31,
         3,
-        33
+        21,
+        4,
+        30
       ]
     },
     {
       "ethnicity": "Asian;European",
-      "n": 10,
-      "macro_f1": 0.4597402597402597,
-      "accuracy": 0.7,
+      "n": 14,
+      "macro_f1": 0.4424242424242424,
+      "accuracy": 0.6428571428571429,
       "recall": [
         0.0,
-        0.0,
-        0.5,
         1.0,
-        0.8
+        0.7142857142857143,
+        0.0,
+        0.5
       ],
       "support": [
         0,
-        0,
-        4,
         1,
-        5
+        7,
+        0,
+        6
       ]
     },
     {
       "ethnicity": "European",
-      "n": 62,
-      "macro_f1": 0.6985257985257984,
-      "accuracy": 0.7741935483870968,
+      "n": 67,
+      "macro_f1": 0.5517837837837838,
+      "accuracy": 0.8805970149253731,
       "recall": [
         0.0,
+        0.0,
+        0.7777777777777778,
         1.0,
-        0.75,
-        1.0,
-        0.7692307692307693
+        0.9444444444444444
       ],
       "support": [
         0,
-        1,
-        20,
-        2,
-        39
+        0,
+        27,
+        4,
+        36
       ]
     },
     {
       "ethnicity": "MELAA",
-      "n": 6,
-      "macro_f1": 0.45999999999999996,
-      "accuracy": 0.6666666666666666,
+      "n": 2,
+      "macro_f1": 0.0,
+      "accuracy": 0.0,
       "recall": [
         0.0,
         0.0,
-        0.3333333333333333,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "support": [
+        1,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "ethnicity": "M\u0101ori",
+      "n": 26,
+      "macro_f1": 0.3138461538461539,
+      "accuracy": 0.7692307692307693,
+      "recall": [
+        0.0,
+        0.0,
+        0.7692307692307693,
+        0.0,
+        0.7692307692307693
+      ],
+      "support": [
+        0,
+        0,
+        13,
+        0,
+        13
+      ]
+    },
+    {
+      "ethnicity": "M\u0101ori;European",
+      "n": 5,
+      "macro_f1": 0.4,
+      "accuracy": 1.0,
+      "recall": [
+        0.0,
+        0.0,
         1.0,
+        0.0,
         1.0
       ],
       "support": [
         0,
         0,
-        3,
         1,
-        2
+        0,
+        4
       ]
     },
     {
-      "ethnicity": "MELAA;European",
+      "ethnicity": "M\u0101ori;Pacific",
+      "n": 2,
+      "macro_f1": 0.2,
+      "accuracy": 1.0,
+      "recall": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "support": [
+        0,
+        0,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "ethnicity": "Other",
       "n": 1,
       "macro_f1": 0.2,
       "accuracy": 1.0,
@@ -967,123 +1033,43 @@
       ]
     },
     {
-      "ethnicity": "M\u0101ori",
-      "n": 19,
-      "macro_f1": 0.5466666666666666,
-      "accuracy": 0.8947368421052632,
+      "ethnicity": "Pacific",
+      "n": 22,
+      "macro_f1": 0.5170868347338936,
+      "accuracy": 0.7727272727272727,
       "recall": [
         0.0,
         0.0,
-        0.9,
+        0.7272727272727273,
         1.0,
-        0.8333333333333334
+        0.7777777777777778
       ],
       "support": [
         0,
         0,
-        10,
-        3,
-        6
-      ]
-    },
-    {
-      "ethnicity": "M\u0101ori;European",
-      "n": 4,
-      "macro_f1": 0.2,
-      "accuracy": 0.5,
-      "recall": [
-        0.0,
-        0.0,
-        0.5,
-        0.0,
-        0.5
-      ],
-      "support": [
-        0,
-        0,
+        11,
         2,
-        0,
-        2
+        9
       ]
     },
     {
-      "ethnicity": "M\u0101ori;Pacific",
+      "ethnicity": "Pacific;European",
       "n": 3,
-      "macro_f1": 0.3333333333333333,
+      "macro_f1": 0.16,
       "accuracy": 0.6666666666666666,
       "recall": [
         0.0,
         0.0,
-        0.5,
-        1.0,
+        0.6666666666666666,
+        0.0,
         0.0
       ],
       "support": [
         0,
         0,
-        2,
-        1,
+        3,
+        0,
         0
-      ]
-    },
-    {
-      "ethnicity": "Other",
-      "n": 4,
-      "macro_f1": 0.29333333333333333,
-      "accuracy": 0.75,
-      "recall": [
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.6666666666666666
-      ],
-      "support": [
-        0,
-        0,
-        1,
-        0,
-        3
-      ]
-    },
-    {
-      "ethnicity": "Pacific",
-      "n": 18,
-      "macro_f1": 0.6314285714285715,
-      "accuracy": 0.7777777777777778,
-      "recall": [
-        0.0,
-        1.0,
-        0.75,
-        1.0,
-        0.6666666666666666
-      ],
-      "support": [
-        0,
-        2,
-        12,
-        1,
-        3
-      ]
-    },
-    {
-      "ethnicity": "Pacific;European",
-      "n": 6,
-      "macro_f1": 0.4,
-      "accuracy": 0.8333333333333334,
-      "recall": [
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        1.0
-      ],
-      "support": [
-        0,
-        0,
-        1,
-        1,
-        4
       ]
     }
   ],
@@ -1094,77 +1080,77 @@
         "domain": "Housing",
         "role": "static",
         "sensitive": false,
-        "weight": 0.36650019884109497
-      },
-      {
-        "name": "sole_parent",
-        "domain": "Household",
-        "role": "static",
-        "sensitive": false,
-        "weight": 0.14748133718967438
-      },
-      {
-        "name": "whanau_type",
-        "domain": "Household",
-        "role": "static",
-        "sensitive": false,
-        "weight": 0.11568305641412735
-      },
-      {
-        "name": "disability",
-        "domain": "Health",
-        "role": "static",
-        "sensitive": false,
-        "weight": 0.08641242980957031
+        "weight": 0.3652711510658264
       },
       {
         "name": "local_board",
         "domain": "Area",
         "role": "static",
         "sensitive": false,
-        "weight": 0.05800970643758774
-      },
-      {
-        "name": "residency_status",
-        "domain": "Demographic",
-        "role": "static",
-        "sensitive": false,
-        "weight": 0.054484773427248
+        "weight": 0.09317315369844437
       },
       {
         "name": "household_size_start",
         "domain": "Household",
         "role": "static",
         "sensitive": false,
-        "weight": 0.04832955822348595
+        "weight": 0.08845017105340958
       },
       {
-        "name": "nzdep_decile",
-        "domain": "Area",
+        "name": "whanau_type",
+        "domain": "Household",
         "role": "static",
         "sensitive": false,
-        "weight": 0.042328499257564545
+        "weight": 0.08251115679740906
       },
       {
         "name": "dependants_count",
         "domain": "Household",
         "role": "static",
         "sensitive": false,
-        "weight": 0.03037787415087223
+        "weight": 0.07135797291994095
       },
       {
-        "name": "prior_justice_history",
-        "domain": "Justice",
+        "name": "disability",
+        "domain": "Health",
         "role": "static",
-        "sensitive": true,
-        "weight": 0.026021959260106087
+        "sensitive": false,
+        "weight": 0.06763043999671936
+      },
+      {
+        "name": "nzdep_decile",
+        "domain": "Area",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.06454166024923325
+      },
+      {
+        "name": "sole_parent",
+        "domain": "Household",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.0546279177069664
+      },
+      {
+        "name": "residency_status",
+        "domain": "Demographic",
+        "role": "static",
+        "sensitive": false,
+        "weight": 0.03897179290652275
       },
       {
         "name": "age_band",
         "domain": "Demographic",
         "role": "static",
         "sensitive": false,
-        "weight": 0.024370592087507248
+        "weight": 0.036806851625442505
+      },
+      {
+        "name": "prior_justice_history",
+        "domain": "Justice",
+        "role": "static",
+        "sensitive": true,
+        "weight": 0.036657676100730896
       }
     ],
     "history": [
@@ -1173,259 +1159,259 @@
         "domain": "Housing",
         "role": "observed",
         "sensitive": false,
-        "weight": 0.5430370569229126
-      },
-      {
-        "name": "rent_arrears",
-        "domain": "Housing",
-        "role": "outcome",
-        "sensitive": false,
-        "weight": 0.056762292981147766
+        "weight": 0.40979382395744324
       },
       {
         "name": "emergency_accommodation_type",
         "domain": "Service / Policy",
         "role": "observed",
         "sensitive": false,
-        "weight": 0.044302552938461304
+        "weight": 0.13896454870700836
       },
       {
-        "name": "natural_disaster_severity",
-        "domain": "Macro & Events",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.028455091640353203
-      },
-      {
-        "name": "household_size_change",
-        "domain": "Household",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.02749730832874775
-      },
-      {
-        "name": "moves_12m",
+        "name": "rent_arrears",
         "domain": "Housing",
         "role": "outcome",
         "sensitive": false,
-        "weight": 0.022394098341464996
-      },
-      {
-        "name": "main_benefit",
-        "domain": "Socio-economic",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.02160780131816864
-      },
-      {
-        "name": "emergency_housing_stay",
-        "domain": "Housing",
-        "role": "outcome",
-        "sensitive": false,
-        "weight": 0.018062036484479904
-      },
-      {
-        "name": "public_holidays",
-        "domain": "Temporal",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.01781802996993065
-      },
-      {
-        "name": "essential_spend_share",
-        "domain": "Socio-economic",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.014559709466993809
-      },
-      {
-        "name": "persons_per_bedroom",
-        "domain": "Housing",
-        "role": "outcome",
-        "sensitive": false,
-        "weight": 0.012941109016537666
-      },
-      {
-        "name": "weekly_income",
-        "domain": "Socio-economic",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.012251160107553005
-      },
-      {
-        "name": "debt_balance",
-        "domain": "Socio-economic",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.012009087018668652
-      },
-      {
-        "name": "school_holiday",
-        "domain": "Temporal",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.010114459320902824
-      },
-      {
-        "name": "month_of_year",
-        "domain": "Temporal",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.009511923417448997
-      },
-      {
-        "name": "lease_months_remaining",
-        "domain": "Housing",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.009296187199652195
-      },
-      {
-        "name": "substance_service_contact",
-        "domain": "Health",
-        "role": "observed",
-        "sensitive": true,
-        "weight": 0.00905451737344265
-      },
-      {
-        "name": "gambling_spend_share",
-        "domain": "Behavioural",
-        "role": "observed",
-        "sensitive": true,
-        "weight": 0.00900967139750719
-      },
-      {
-        "name": "unemployment_rate",
-        "domain": "Macro & Events",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.008476775139570236
-      },
-      {
-        "name": "pandemic_restriction_level",
-        "domain": "Macro & Events",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.00728972814977169
-      },
-      {
-        "name": "benefit_indexation",
-        "domain": "Service / Policy",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.0072275446727871895
-      },
-      {
-        "name": "local_median_rent",
-        "domain": "Area",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.007045684847980738
-      },
-      {
-        "name": "local_service_spend",
-        "domain": "Area",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.007020948920398951
-      },
-      {
-        "name": "local_eh_grants",
-        "domain": "Area",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.007011550944298506
-      },
-      {
-        "name": "planned_support_places",
-        "domain": "Service / Policy",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.006936689373105764
-      },
-      {
-        "name": "ocr_rate",
-        "domain": "Macro & Events",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.006856265012174845
-      },
-      {
-        "name": "disaster_displaced",
-        "domain": "Housing",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.006851361598819494
-      },
-      {
-        "name": "petrol_price",
-        "domain": "Macro & Events",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.00640804274007678
-      },
-      {
-        "name": "mortgage_payment",
-        "domain": "Housing",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.006328723393380642
-      },
-      {
-        "name": "local_homelessness_rate",
-        "domain": "Area",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.006131361238658428
-      },
-      {
-        "name": "local_affordability_index",
-        "domain": "Area",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.0060732108540833
+        "weight": 0.03308736905455589
       },
       {
         "name": "deprivation_category",
         "domain": "Housing",
         "role": "outcome",
         "sensitive": false,
-        "weight": 0.005865626502782106
+        "weight": 0.03133576735854149
       },
       {
-        "name": "hourly_wage",
-        "domain": "Socio-economic",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.005599867086857557
-      },
-      {
-        "name": "cpi_inflation_annual",
-        "domain": "Macro & Events",
-        "role": "observed",
-        "sensitive": false,
-        "weight": 0.005452929064631462
-      },
-      {
-        "name": "quarter",
-        "domain": "Temporal",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.005175087600946426
-      },
-      {
-        "name": "local_price_to_income",
+        "name": "local_median_rent",
         "domain": "Area",
         "role": "observed",
         "sensitive": false,
-        "weight": 0.0049033756367862225
+        "weight": 0.027372051030397415
+      },
+      {
+        "name": "emergency_housing_stay",
+        "domain": "Housing",
+        "role": "outcome",
+        "sensitive": false,
+        "weight": 0.02603757753968239
+      },
+      {
+        "name": "essential_spend_share",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.023810632526874542
+      },
+      {
+        "name": "gambling_spend_share",
+        "domain": "Behavioural",
+        "role": "observed",
+        "sensitive": true,
+        "weight": 0.02038596197962761
+      },
+      {
+        "name": "ocr_rate",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.01904953084886074
+      },
+      {
+        "name": "moves_12m",
+        "domain": "Housing",
+        "role": "outcome",
+        "sensitive": false,
+        "weight": 0.016776833683252335
+      },
+      {
+        "name": "natural_disaster_severity",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.01556598860770464
+      },
+      {
+        "name": "household_size_change",
+        "domain": "Household",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.013301386497914791
+      },
+      {
+        "name": "month_of_year",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.012696383520960808
+      },
+      {
+        "name": "weekly_income",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.012364962138235569
+      },
+      {
+        "name": "local_eh_grants",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.011712939478456974
+      },
+      {
+        "name": "pandemic_restriction_level",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.01153657864779234
       },
       {
         "name": "justice_event",
         "domain": "Justice",
         "role": "observed",
         "sensitive": true,
-        "weight": 0.004661495331674814
+        "weight": 0.011316053569316864
+      },
+      {
+        "name": "local_price_to_income",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.01093578152358532
+      },
+      {
+        "name": "public_holidays",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.01092252042144537
+      },
+      {
+        "name": "unemployment_rate",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.010533901862800121
+      },
+      {
+        "name": "school_holiday",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.010316581465303898
+      },
+      {
+        "name": "lease_months_remaining",
+        "domain": "Housing",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.010299943387508392
+      },
+      {
+        "name": "main_benefit",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.009857368655502796
+      },
+      {
+        "name": "petrol_price",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.009600909426808357
+      },
+      {
+        "name": "debt_balance",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.009586798958480358
+      },
+      {
+        "name": "planned_support_places",
+        "domain": "Service / Policy",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.008063222281634808
+      },
+      {
+        "name": "cpi_inflation_annual",
+        "domain": "Macro & Events",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.007869189605116844
+      },
+      {
+        "name": "benefit_indexation",
+        "domain": "Service / Policy",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.007809572387486696
+      },
+      {
+        "name": "quarter",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.007756231818348169
+      },
+      {
+        "name": "local_service_spend",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.006994921248406172
+      },
+      {
+        "name": "hourly_wage",
+        "domain": "Socio-economic",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.006915676407516003
+      },
+      {
+        "name": "substance_service_contact",
+        "domain": "Health",
+        "role": "observed",
+        "sensitive": true,
+        "weight": 0.006523407995700836
+      },
+      {
+        "name": "local_affordability_index",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.006459273397922516
+      },
+      {
+        "name": "mortgage_payment",
+        "domain": "Housing",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.00625980831682682
+      },
+      {
+        "name": "persons_per_bedroom",
+        "domain": "Housing",
+        "role": "outcome",
+        "sensitive": false,
+        "weight": 0.0061980560421943665
+      },
+      {
+        "name": "disaster_displaced",
+        "domain": "Housing",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.006139303091913462
+      },
+      {
+        "name": "local_homelessness_rate",
+        "domain": "Area",
+        "role": "observed",
+        "sensitive": false,
+        "weight": 0.005848750472068787
       }
     ],
     "future": [
@@ -1434,71 +1420,71 @@
         "domain": "Temporal",
         "role": "known",
         "sensitive": false,
-        "weight": 0.34635257720947266
-      },
-      {
-        "name": "planned_support_places",
-        "domain": "Service / Policy",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.16618558764457703
+        "weight": 0.42537757754325867
       },
       {
         "name": "quarter",
         "domain": "Temporal",
         "role": "known",
         "sensitive": false,
-        "weight": 0.1659565269947052
+        "weight": 0.18849894404411316
       },
       {
         "name": "benefit_indexation",
         "domain": "Service / Policy",
         "role": "known",
         "sensitive": false,
-        "weight": 0.1277417540550232
+        "weight": 0.11163200438022614
       },
       {
-        "name": "lease_months_remaining",
-        "domain": "Housing",
+        "name": "planned_support_places",
+        "domain": "Service / Policy",
         "role": "known",
         "sensitive": false,
-        "weight": 0.08222329616546631
-      },
-      {
-        "name": "month_of_year",
-        "domain": "Temporal",
-        "role": "known",
-        "sensitive": false,
-        "weight": 0.0711723193526268
+        "weight": 0.10603182762861252
       },
       {
         "name": "public_holidays",
         "domain": "Temporal",
         "role": "known",
         "sensitive": false,
-        "weight": 0.040367964655160904
+        "weight": 0.06263496726751328
+      },
+      {
+        "name": "lease_months_remaining",
+        "domain": "Housing",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.06175157427787781
+      },
+      {
+        "name": "month_of_year",
+        "domain": "Temporal",
+        "role": "known",
+        "sensitive": false,
+        "weight": 0.044073306024074554
       }
     ]
   },
   "attention_h6": [
-    0.023439763113856316,
-    0.020952336490154266,
-    0.02289578504860401,
-    0.02797924540936947,
-    0.03380975127220154,
-    0.04089626297354698,
-    0.04816802591085434,
-    0.052673377096652985,
-    0.0592096708714962,
-    0.0678345263004303,
-    0.07760230451822281,
-    0.08655892312526703,
-    0.09669183939695358,
-    0.08444998413324356,
-    0.0727735236287117,
-    0.07594068348407745,
-    0.054190535098314285,
-    0.05393350496888161,
+    0.019816193729639053,
+    0.016913624480366707,
+    0.019337404519319534,
+    0.02424229308962822,
+    0.028295505791902542,
+    0.03343399614095688,
+    0.03758860006928444,
+    0.04195215180516243,
+    0.046731963753700256,
+    0.05151890218257904,
+    0.05557827651500702,
+    0.05855460464954376,
+    0.09622801095247269,
+    0.1050214022397995,
+    0.09271223843097687,
+    0.09433402866125107,
+    0.10575833171606064,
+    0.0719824805855751,
     0.0,
     0.0,
     0.0,
@@ -1507,74 +1493,74 @@
     0.0
   ],
   "attention_labels": [
-    "2022-01",
-    "2022-02",
-    "2022-03",
-    "2022-04",
-    "2022-05",
-    "2022-06",
-    "2022-07",
-    "2022-08",
-    "2022-09",
-    "2022-10",
-    "2022-11",
-    "2022-12",
-    "2023-01",
-    "2023-02",
-    "2023-03",
-    "2023-04",
-    "2023-05",
-    "2023-06",
-    "2023-07",
-    "2023-08",
-    "2023-09",
-    "2023-10",
-    "2023-11",
-    "2023-12"
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12",
+    "2026-01",
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05",
+    "2026-06",
+    "2026-07",
+    "2026-08",
+    "2026-09",
+    "2026-10",
+    "2026-11",
+    "2026-12"
   ],
   "performance_h6": {
     "n": 200,
-    "accuracy": 0.765,
-    "precision_macro": 0.573780487804878,
-    "recall_macro": 0.6969625059326056,
-    "specificity_macro": 0.9178508379039567,
-    "f1_macro": 0.6019391261659303,
-    "auc_macro": 0.9333429371723837,
+    "accuracy": 0.815,
+    "precision_macro": 0.5596075731497419,
+    "recall_macro": 0.5772941176470587,
+    "specificity_macro": 0.9363123336291037,
+    "f1_macro": 0.5655064935064935,
+    "auc_macro": 0.9363698848278659,
     "per_class": [
       {
         "tier_id": 1,
         "name": "Severely Deprived",
-        "support": 0,
+        "support": 1,
         "precision": 0.0,
         "recall": 0.0,
         "specificity": 1.0,
         "f1": 0.0,
-        "auc": null
+        "auc": 0.9396984924623115
       },
       {
         "tier_id": 2,
         "name": "Unstable / Transitional",
-        "support": 3,
-        "precision": 0.3333333333333333,
-        "recall": 1.0,
-        "specificity": 0.9695431472081218,
-        "f1": 0.5,
-        "auc": 0.9813874788494078
+        "support": 4,
+        "precision": 0.14285714285714285,
+        "recall": 0.25,
+        "specificity": 0.9693877551020408,
+        "f1": 0.18181818181818182,
+        "auc": 0.9017857142857143
       },
       {
         "tier_id": 3,
         "name": "At Risk",
-        "support": 86,
-        "precision": 0.7439024390243902,
-        "recall": 0.7093023255813954,
-        "specificity": 0.8157894736842105,
-        "f1": 0.7261904761904763,
-        "auc": 0.8689310485516116
+        "support": 85,
+        "precision": 0.7951807228915663,
+        "recall": 0.7764705882352941,
+        "specificity": 0.8521739130434782,
+        "f1": 0.7857142857142857,
+        "auc": 0.9095652173913044
       },
       {
         "tier_id": 4,
         "name": "Subsidised / Assisted",
-        "support": 13,
+        "support": 10,
         "precision": 1.0,
         "recall": 1.0,
         "specificity": 1.0,
@@ -1584,182 +1570,347 @@
       {
         "tier_id": 5,
         "name": "Stable / Market Secure",
-        "support": 98,
-        "precision": 0.7916666666666666,
-        "recall": 0.7755102040816326,
-        "specificity": 0.803921568627451,
-        "f1": 0.7835051546391752,
-        "auc": 0.8830532212885154
+        "support": 100,
+        "precision": 0.86,
+        "recall": 0.86,
+        "specificity": 0.86,
+        "f1": 0.8599999999999999,
+        "auc": 0.9308
       }
     ],
     "roc": [
       {
         "name": "Severely Deprived",
-        "auc": null,
-        "points": []
-      },
-      {
-        "name": "Unstable / Transitional",
-        "auc": 0.9813874788494078,
+        "auc": 0.9396984924623115,
         "points": [
           [
             0.0,
             0.0
           ],
           [
-            0.0203,
-            0.3333
+            0.0251,
+            0.0
           ],
           [
-            0.0355,
+            0.0503,
+            0.0
+          ],
+          [
+            0.0704,
             1.0
           ],
           [
-            0.0609,
+            0.0955,
             1.0
           ],
           [
-            0.0863,
+            0.1206,
             1.0
           ],
           [
-            0.1117,
+            0.1457,
             1.0
           ],
           [
-            0.1371,
+            0.1709,
             1.0
           ],
           [
-            0.1624,
+            0.196,
             1.0
           ],
           [
-            0.1878,
+            0.2211,
             1.0
           ],
           [
-            0.2132,
+            0.2462,
             1.0
           ],
           [
-            0.2386,
+            0.2714,
             1.0
           ],
           [
-            0.264,
+            0.2965,
             1.0
           ],
           [
-            0.2893,
+            0.3216,
             1.0
           ],
           [
-            0.3147,
+            0.3467,
             1.0
           ],
           [
-            0.3401,
+            0.3719,
             1.0
           ],
           [
-            0.3655,
+            0.397,
             1.0
           ],
           [
-            0.3909,
+            0.4221,
             1.0
           ],
           [
-            0.4162,
+            0.4472,
             1.0
           ],
           [
-            0.4416,
+            0.4724,
             1.0
           ],
           [
-            0.467,
+            0.4975,
             1.0
           ],
           [
-            0.4924,
+            0.5226,
             1.0
           ],
           [
-            0.5178,
+            0.5477,
             1.0
           ],
           [
-            0.5431,
+            0.5729,
             1.0
           ],
           [
-            0.5685,
+            0.598,
             1.0
           ],
           [
-            0.5939,
+            0.6231,
             1.0
           ],
           [
-            0.6193,
+            0.6482,
             1.0
           ],
           [
-            0.6447,
+            0.6734,
             1.0
           ],
           [
-            0.6701,
+            0.6985,
             1.0
           ],
           [
-            0.6954,
+            0.7236,
             1.0
           ],
           [
-            0.7208,
+            0.7487,
             1.0
           ],
           [
-            0.7462,
+            0.7739,
             1.0
           ],
           [
-            0.7716,
+            0.799,
             1.0
           ],
           [
-            0.797,
+            0.8241,
             1.0
           ],
           [
-            0.8223,
+            0.8492,
             1.0
           ],
           [
-            0.8477,
+            0.8744,
             1.0
           ],
           [
-            0.8731,
+            0.8995,
             1.0
           ],
           [
-            0.8985,
+            0.9246,
             1.0
           ],
           [
-            0.9239,
+            0.9497,
             1.0
           ],
           [
-            0.9492,
+            0.9749,
             1.0
           ],
           [
-            0.9746,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "name": "Unstable / Transitional",
+        "auc": 0.9017857142857143,
+        "points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0204,
+            0.25
+          ],
+          [
+            0.0408,
+            0.5
+          ],
+          [
+            0.0663,
+            0.5
+          ],
+          [
+            0.0918,
+            0.5
+          ],
+          [
+            0.1173,
+            0.5
+          ],
+          [
+            0.1378,
+            0.75
+          ],
+          [
+            0.1633,
+            0.75
+          ],
+          [
+            0.1888,
+            0.75
+          ],
+          [
+            0.2092,
+            1.0
+          ],
+          [
+            0.2347,
+            1.0
+          ],
+          [
+            0.2602,
+            1.0
+          ],
+          [
+            0.2857,
+            1.0
+          ],
+          [
+            0.3112,
+            1.0
+          ],
+          [
+            0.3367,
+            1.0
+          ],
+          [
+            0.3622,
+            1.0
+          ],
+          [
+            0.3878,
+            1.0
+          ],
+          [
+            0.4133,
+            1.0
+          ],
+          [
+            0.4388,
+            1.0
+          ],
+          [
+            0.4643,
+            1.0
+          ],
+          [
+            0.4898,
+            1.0
+          ],
+          [
+            0.5153,
+            1.0
+          ],
+          [
+            0.5408,
+            1.0
+          ],
+          [
+            0.5663,
+            1.0
+          ],
+          [
+            0.5918,
+            1.0
+          ],
+          [
+            0.6173,
+            1.0
+          ],
+          [
+            0.6429,
+            1.0
+          ],
+          [
+            0.6684,
+            1.0
+          ],
+          [
+            0.6939,
+            1.0
+          ],
+          [
+            0.7194,
+            1.0
+          ],
+          [
+            0.7449,
+            1.0
+          ],
+          [
+            0.7704,
+            1.0
+          ],
+          [
+            0.7959,
+            1.0
+          ],
+          [
+            0.8214,
+            1.0
+          ],
+          [
+            0.8469,
+            1.0
+          ],
+          [
+            0.8724,
+            1.0
+          ],
+          [
+            0.898,
+            1.0
+          ],
+          [
+            0.9235,
+            1.0
+          ],
+          [
+            0.949,
+            1.0
+          ],
+          [
+            0.9745,
             1.0
           ],
           [
@@ -1770,166 +1921,166 @@
       },
       {
         "name": "At Risk",
-        "auc": 0.8689310485516116,
+        "auc": 0.9095652173913044,
         "points": [
           [
             0.0,
             0.0
           ],
           [
-            0.0088,
-            0.0465
+            0.0,
+            0.0588
           ],
           [
-            0.0088,
-            0.1047
+            0.0,
+            0.1176
           ],
           [
-            0.0088,
-            0.1628
+            0.0,
+            0.1765
           ],
           [
-            0.0175,
-            0.2093
+            0.0,
+            0.2353
           ],
           [
-            0.0263,
-            0.2558
+            0.0,
+            0.2941
           ],
           [
-            0.0263,
-            0.314
+            0.0,
+            0.3529
           ],
           [
-            0.0351,
-            0.3605
+            0.0,
+            0.4118
           ],
           [
-            0.0351,
-            0.4186
+            0.0087,
+            0.4588
           ],
           [
-            0.0439,
-            0.4651
+            0.0261,
+            0.4941
           ],
           [
-            0.0702,
-            0.4884
+            0.0261,
+            0.5529
           ],
           [
-            0.0877,
-            0.5233
+            0.0348,
+            0.6
           ],
           [
-            0.1053,
-            0.5581
+            0.0435,
+            0.6471
           ],
           [
-            0.1228,
-            0.593
+            0.0696,
+            0.6706
           ],
           [
-            0.1404,
-            0.6279
+            0.0783,
+            0.7176
           ],
           [
-            0.1579,
-            0.6628
+            0.1043,
+            0.7412
           ],
           [
-            0.1842,
-            0.686
+            0.1217,
+            0.7765
           ],
           [
-            0.193,
-            0.7326
+            0.1652,
+            0.7765
           ],
           [
-            0.2105,
-            0.7674
+            0.2,
+            0.7882
           ],
           [
-            0.2193,
-            0.814
+            0.2261,
+            0.8118
           ],
           [
-            0.2544,
-            0.8256
+            0.2435,
+            0.8471
           ],
           [
-            0.2807,
-            0.8488
+            0.2783,
+            0.8588
           ],
           [
-            0.3158,
-            0.8605
+            0.3043,
+            0.8824
           ],
           [
-            0.3333,
-            0.8953
+            0.3391,
+            0.8941
           ],
           [
-            0.3684,
-            0.907
+            0.3739,
+            0.9059
           ],
           [
-            0.3947,
-            0.9302
+            0.3913,
+            0.9412
           ],
           [
-            0.4386,
-            0.9302
+            0.4174,
+            0.9647
           ],
           [
-            0.4649,
-            0.9535
+            0.4522,
+            0.9765
           ],
           [
-            0.4912,
-            0.9767
+            0.4957,
+            0.9765
           ],
           [
-            0.5263,
-            0.9884
+            0.5304,
+            0.9882
           ],
           [
-            0.5614,
+            0.5652,
             1.0
           ],
           [
-            0.6053,
+            0.6087,
             1.0
           ],
           [
-            0.6491,
+            0.6522,
             1.0
           ],
           [
-            0.693,
+            0.6957,
             1.0
           ],
           [
-            0.7368,
+            0.7391,
             1.0
           ],
           [
-            0.7807,
+            0.7826,
             1.0
           ],
           [
-            0.8246,
+            0.8261,
             1.0
           ],
           [
-            0.8684,
+            0.8696,
             1.0
           ],
           [
-            0.9123,
+            0.913,
             1.0
           ],
           [
-            0.9561,
+            0.9565,
             1.0
           ],
           [
@@ -1948,158 +2099,158 @@
           ],
           [
             0.0,
-            0.3846
+            0.5
           ],
           [
             0.0,
-            0.7692
-          ],
-          [
-            0.0107,
             1.0
           ],
           [
-            0.0374,
+            0.0263,
             1.0
           ],
           [
-            0.0642,
+            0.0526,
             1.0
           ],
           [
-            0.0909,
+            0.0789,
             1.0
           ],
           [
-            0.1176,
+            0.1053,
             1.0
           ],
           [
-            0.1444,
+            0.1316,
             1.0
           ],
           [
-            0.1711,
+            0.1579,
             1.0
           ],
           [
-            0.1979,
+            0.1842,
             1.0
           ],
           [
-            0.2246,
+            0.2105,
             1.0
           ],
           [
-            0.2513,
+            0.2368,
             1.0
           ],
           [
-            0.2781,
+            0.2632,
             1.0
           ],
           [
-            0.3048,
+            0.2895,
             1.0
           ],
           [
-            0.3316,
+            0.3158,
             1.0
           ],
           [
-            0.3583,
+            0.3421,
             1.0
           ],
           [
-            0.385,
+            0.3684,
             1.0
           ],
           [
-            0.4118,
+            0.3947,
             1.0
           ],
           [
-            0.4385,
+            0.4211,
             1.0
           ],
           [
-            0.4652,
+            0.4474,
             1.0
           ],
           [
-            0.492,
+            0.4737,
             1.0
           ],
           [
-            0.5187,
+            0.5,
             1.0
           ],
           [
-            0.5455,
+            0.5263,
             1.0
           ],
           [
-            0.5722,
+            0.5526,
             1.0
           ],
           [
-            0.5989,
+            0.5789,
             1.0
           ],
           [
-            0.6257,
+            0.6053,
             1.0
           ],
           [
-            0.6524,
+            0.6316,
             1.0
           ],
           [
-            0.6791,
+            0.6579,
             1.0
           ],
           [
-            0.7059,
+            0.6842,
             1.0
           ],
           [
-            0.7326,
+            0.7105,
             1.0
           ],
           [
-            0.7594,
+            0.7368,
             1.0
           ],
           [
-            0.7861,
+            0.7632,
             1.0
           ],
           [
-            0.8128,
+            0.7895,
             1.0
           ],
           [
-            0.8396,
+            0.8158,
             1.0
           ],
           [
-            0.8663,
+            0.8421,
             1.0
           ],
           [
-            0.893,
+            0.8684,
             1.0
           ],
           [
-            0.9198,
+            0.8947,
             1.0
           ],
           [
-            0.9465,
+            0.9211,
             1.0
           ],
           [
-            0.9733,
+            0.9474,
+            1.0
+          ],
+          [
+            0.9737,
             1.0
           ],
           [
@@ -2110,7 +2261,7 @@
       },
       {
         "name": "Stable / Market Secure",
-        "auc": 0.8830532212885154,
+        "auc": 0.9308,
         "points": [
           [
             0.0,
@@ -2118,158 +2269,158 @@
           ],
           [
             0.0,
-            0.051
+            0.05
           ],
           [
             0.0,
-            0.102
+            0.1
           ],
           [
             0.0,
-            0.1531
+            0.15
           ],
           [
             0.0,
-            0.2041
+            0.2
           ],
           [
             0.0,
-            0.2551
+            0.25
           ],
           [
             0.0,
-            0.3061
+            0.3
           ],
           [
             0.0,
-            0.3571
+            0.35
           ],
           [
-            0.0098,
-            0.398
+            0.01,
+            0.39
           ],
           [
-            0.0196,
-            0.4388
+            0.01,
+            0.44
           ],
           [
-            0.0294,
-            0.4796
+            0.03,
+            0.47
           ],
           [
-            0.049,
-            0.5102
+            0.03,
+            0.52
           ],
           [
-            0.0588,
-            0.551
+            0.04,
+            0.56
           ],
           [
-            0.0588,
-            0.602
+            0.05,
+            0.6
           ],
           [
-            0.0784,
-            0.6327
+            0.06,
+            0.64
           ],
           [
-            0.098,
-            0.6633
+            0.07,
+            0.68
           ],
           [
-            0.1078,
-            0.7041
+            0.09,
+            0.71
           ],
           [
-            0.1176,
-            0.7449
+            0.12,
+            0.73
           ],
           [
-            0.1569,
-            0.7551
+            0.12,
+            0.78
           ],
           [
-            0.1961,
-            0.7653
+            0.14,
+            0.81
           ],
           [
-            0.2157,
-            0.7959
+            0.14,
+            0.86
           ],
           [
-            0.2451,
-            0.8163
+            0.16,
+            0.89
           ],
           [
-            0.2745,
-            0.8367
+            0.18,
+            0.92
           ],
           [
-            0.3039,
-            0.8571
+            0.22,
+            0.93
           ],
           [
-            0.3431,
-            0.8673
+            0.26,
+            0.94
           ],
           [
-            0.3725,
-            0.8878
+            0.3,
+            0.95
           ],
           [
-            0.3922,
-            0.9184
+            0.34,
+            0.96
           ],
           [
-            0.4314,
-            0.9286
+            0.38,
+            0.97
           ],
           [
-            0.4706,
-            0.9388
+            0.43,
+            0.97
           ],
           [
-            0.5098,
-            0.949
+            0.46,
+            0.99
           ],
           [
-            0.549,
-            0.9592
-          ],
-          [
-            0.5882,
-            0.9694
-          ],
-          [
-            0.6373,
-            0.9694
-          ],
-          [
-            0.6765,
-            0.9796
-          ],
-          [
-            0.7255,
-            0.9796
-          ],
-          [
-            0.7647,
-            0.9898
-          ],
-          [
-            0.8137,
-            0.9898
-          ],
-          [
-            0.8529,
+            0.5,
             1.0
           ],
           [
-            0.902,
+            0.55,
             1.0
           ],
           [
-            0.951,
+            0.6,
+            1.0
+          ],
+          [
+            0.65,
+            1.0
+          ],
+          [
+            0.7,
+            1.0
+          ],
+          [
+            0.75,
+            1.0
+          ],
+          [
+            0.8,
+            1.0
+          ],
+          [
+            0.85,
+            1.0
+          ],
+          [
+            0.9,
+            1.0
+          ],
+          [
+            0.95,
             1.0
           ],
           [
@@ -2283,37 +2434,37 @@
       [
         0,
         0,
+        1,
         0,
-        0,
-        0
-      ],
-      [
-        0,
-        3,
-        0,
-        0,
-        0
-      ],
-      [
-        0,
-        5,
-        61,
-        0,
-        20
-      ],
-      [
-        0,
-        0,
-        0,
-        13,
         0
       ],
       [
         0,
         1,
-        21,
+        2,
         0,
-        76
+        1
+      ],
+      [
+        0,
+        6,
+        66,
+        0,
+        13
+      ],
+      [
+        0,
+        0,
+        0,
+        10,
+        0
+      ],
+      [
+        0,
+        0,
+        14,
+        0,
+        86
       ]
     ],
     "labels": [
@@ -2324,5 +2475,5 @@
       "Stable / Market Secure"
     ]
   },
-  "seconds": 62.6
+  "seconds": 70.7
 }
