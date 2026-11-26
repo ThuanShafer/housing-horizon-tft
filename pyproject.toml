@@ -9,5 +9,6 @@ package = false
 
 # Torch stays in requirements.txt for local fitting. Listing it here would
 # pull it into the Vercel function, which cannot refit a seed.
+# Used when Vercel project root is the repo root (not web/).
 [tool.vercel]
 entrypoint = "web.serve:Handler"

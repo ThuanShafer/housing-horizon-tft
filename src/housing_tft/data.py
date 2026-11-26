@@ -213,6 +213,20 @@ def _future_known(history_end: dict, future_rows: list[dict]) -> list[dict]:
     return rows
 
 
+def future_known_rows(series: list[dict], origin: int = HEADLINE_ORIGIN) -> list[dict]:
+    """Browser-ready future months with the same known inputs training uses."""
+    by_time = {int(row["time_idx"]): row for row in series}
+    keys = tuple(feature_map())
+    future_raw = [by_time[origin + step] for step in range(1, 13)]
+    known = _future_known(by_time[origin], future_raw)
+    rows = []
+    for partial, source in zip(known, future_raw):
+        row = {key: source[key] for key in keys if key in source}
+        row.update(partial)
+        rows.append(row)
+    return rows
+
+
 def build_windows(grouped: dict[str, list[dict]], ids: list[str], scaler: Scaler, origins: list[int] | None = None):
     chosen = valid_origins([int(row["time_idx"]) for row in grouped[ids[0]]]) if origins is None else list(origins)
     n_windows = len(ids) * len(chosen)
@@ -322,7 +336,11 @@ def coerce_record(raw: dict, impute: dict[str, float] | None = None) -> tuple[di
     if "year" in row:
         row["year"] = int(float(row["year"]))
     if "month" in row:
-        row["month"] = int(float(row["month"]))
+        raw_month = str(row["month"]).strip()
+        if "-" in raw_month:
+            row["month"] = raw_month
+        else:
+            row["month"] = int(float(raw_month))
     return row, notes
 
 

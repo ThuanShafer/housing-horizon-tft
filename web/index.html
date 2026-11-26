@@ -115,8 +115,15 @@
     </div>
 
     <section id="score" class="sheet score-sheet">
-      <h2>Score on the held-out whānau</h2>
-      <div class="score-landscape">
+      <div class="score-head">
+        <h2>Score on the held-out whānau</h2>
+        <div class="score-tabs" role="tablist" aria-label="Evaluation model">
+          <button type="button" class="score-tab" id="score-tab-compare" role="tab" aria-selected="true" aria-controls="score-panel" data-model="compare" hidden>Compare</button>
+          <button type="button" class="score-tab" id="score-tab-tft" role="tab" aria-selected="false" aria-controls="score-panel" data-model="tft">TFT</button>
+          <button type="button" class="score-tab" id="score-tab-rf" role="tab" aria-selected="false" aria-controls="score-panel" data-model="rf" hidden>Random Forest</button>
+        </div>
+      </div>
+      <div class="score-landscape" id="score-panel" role="tabpanel">
         <p id="score-lead" class="score-lead">Loading…</p>
         <div id="score-stats" class="score-panel"></div>
         <div id="score-viz" class="score-panel"></div>

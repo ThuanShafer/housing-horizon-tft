@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import sys
 import unittest
+from unittest import mock
 from pathlib import Path
 
 import numpy as np
@@ -20,6 +21,7 @@ from housing_tft.data import (  # noqa: E402
     fit_scaler,
     group_rows,
 )
+from housing_tft.baselines import aligned_proba  # noqa: E402
 from housing_tft.model import TemporalFusionTransformer, manual_lstm  # noqa: E402
 from housing_tft.simulate import simulate, tier_from_state  # noqa: E402
 from housing_tft.spec import (  # noqa: E402
@@ -151,6 +153,17 @@ class PanelTests(unittest.TestCase):
         mean, std = scaler.mean["lease_months_remaining"], scaler.std["lease_months_remaining"]
         future = arrays["known_num_fut"][0, :, lease_at] * std + mean
         self.assertTrue(np.allclose(future, np.maximum(0, 6 - np.arange(1, 13)), atol=1e-3))
+
+
+class BaselineTests(unittest.TestCase):
+    def test_aligned_proba_pads_missing_classes(self):
+        sklearn = mock.MagicMock()
+        sklearn.classes_ = np.array([1, 3, 4])
+        sklearn.predict_proba.return_value = np.array([[0.2, 0.5, 0.3], [0.1, 0.2, 0.7]])
+        out = aligned_proba(sklearn, np.zeros((2, 3)))
+        self.assertAlmostEqual(out[0, 1], 0.2)
+        self.assertAlmostEqual(out[0, 3], 0.5)
+        self.assertAlmostEqual(out.sum(axis=1).tolist(), [1.0, 1.0])
 
 
 if __name__ == "__main__":

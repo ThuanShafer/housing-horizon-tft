@@ -26,10 +26,12 @@ from housing_tft.data import (
     build_windows,
     category_index,
     fit_scaler,
+    future_known_rows,
     group_rows,
     load_panel,
     panel_calendar,
 )
+from housing_tft.baselines import random_forest_evaluation
 from housing_tft.forecast import feature_catalog, predict_batch, softmax
 from housing_tft.metrics import performance, scores
 from housing_tft.model import TemporalFusionTransformer, count_parameters
@@ -266,7 +268,7 @@ def train_seed(
     model.load_state_dict(best_state)
     model.eval()
 
-    print("fitting linear baselines")
+    print("fitting snapshot baselines")
     y_fit, y_val = fit_w["y_fut"][:, 5], val_w["y_fut"][:, 5]
     base_last = fit_linear(design_matrix(fit_w, False), y_fit, design_matrix(val_w, False), y_val, class_weight, seed)
     base_delta = fit_linear(design_matrix(fit_w, True), y_fit, design_matrix(val_w, True), y_val, class_weight, seed)
@@ -391,6 +393,7 @@ def train_seed(
         "attention_h6": [float(v) for v in attention],
         "attention_labels": [calendar[t]["month"] for t in range(HEADLINE_ORIGIN - 11, HEADLINE_ORIGIN + 13)],
         "performance_h6": performance(test_one["y_fut"][:, 5], pred["future"][:, 5].argmax(-1), softmax(pred["future"][:, 5])),
+        "random_forest": random_forest_evaluation(fit_w, test_one, design_matrix, seed),
         "seconds": round(time.perf_counter() - started, 1),
     }
     if save_checkpoint:
@@ -400,7 +403,13 @@ def train_seed(
         (artifacts / "metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
     export_bundle(out_dir, model, scaler, config, split, history, metrics, cohort, examples, calendar, seed)
     (out_dir / "parity.json").write_text(json.dumps(parity), encoding="utf-8")
-    histories = {wid: _history_rows(grouped[wid]) for wid in test_meta["whanau_id"]}
+    histories = {
+        wid: {
+            "history": _history_rows(grouped[wid]),
+            "future_known": [{key: _jsonable(row[key]) for key in row} for row in future_known_rows(grouped[wid])],
+        }
+        for wid in test_meta["whanau_id"]
+    }
     (out_dir / "histories.json").write_text(json.dumps(histories), encoding="utf-8")
     print(
         f"seed {seed}  test macro-F1 {h6['macro_f1']:.3f}  accuracy {h6['accuracy']:.3f}  "
@@ -506,9 +515,11 @@ def _examples(grouped, meta, arrays, pred, cohort) -> list[dict]:
         i = id_to_index[wid]
         history = _history_rows(grouped[wid])
         actual_path = [_tier(int(v)) for v in arrays["y_fut"][i]]
+        future_known = [{key: _jsonable(row[key]) for key in row} for row in future_known_rows(grouped[wid])]
         examples.append({
             "id": wid,
             "history": history,
+            "future_known": future_known,
             "actual": by_id[wid]["actual"],
             "actual_path": actual_path,
             "torch_h6": [float(v) for v in softmax(pred["future"][i, 5])],

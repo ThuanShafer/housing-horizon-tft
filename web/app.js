@@ -52,6 +52,7 @@ let selectedId = null;
 let listOpen = false;
 let activeOption = 0;
 let cohortTableBody = null;
+let scoreModel = "tft";
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
@@ -98,6 +99,46 @@ function bundleBase(seed) {
   return Number(seed) === 42 ? "model" : `model/seeds/${seed}`;
 }
 
+function randomForestBlock() {
+  const block = metrics?.random_forest;
+  if (!block?.test_origin?.h6 || !block?.performance_h6) return null;
+  return block;
+}
+
+function hasRandomForestMetrics() {
+  return Boolean(randomForestBlock() && metrics?.performance_h6);
+}
+
+function updateScoreTabs() {
+  const rfTab = document.querySelector("#score-tab-rf");
+  const compareTab = document.querySelector("#score-tab-compare");
+  const tftTab = document.querySelector("#score-tab-tft");
+  const hasRf = hasRandomForestMetrics();
+  rfTab.hidden = !hasRf;
+  compareTab.hidden = !hasRf;
+  if (!hasRf && (scoreModel === "rf" || scoreModel === "compare")) scoreModel = "tft";
+  [compareTab, tftTab, rfTab].forEach((tab) => {
+    const on = tab.dataset.model === scoreModel;
+    tab.setAttribute("aria-selected", on ? "true" : "false");
+    tab.classList.toggle("active", on);
+  });
+}
+
+function setScorePanelMode(compare) {
+  document.querySelector("#score-panel").classList.toggle("compare-mode", compare);
+}
+
+function wireScoreTabs() {
+  document.querySelectorAll(".score-tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      if (tab.hidden) return;
+      scoreModel = tab.dataset.model;
+      updateScoreTabs();
+      renderScore();
+    });
+  });
+}
+
 async function loadBundle(seed) {
   const base = bundleBase(seed);
   const stamp = Date.now();
@@ -112,6 +153,7 @@ async function loadBundle(seed) {
   ]);
   model = loadModel(modelDoc);
   metrics = metricsDoc;
+  scoreModel = hasRandomForestMetrics() ? "compare" : "tft";
   cohort = cohortDoc;
   examples = exampleDoc;
   histories = historyRes.ok ? await historyRes.json() : {};
@@ -121,7 +163,16 @@ async function loadBundle(seed) {
   activeOption = 0;
   whanauSearch.value = "";
   whanauMode.value = "All whānau";
-  renderScore();
+  updateScoreTabs();
+  try {
+    renderScore();
+  } catch (error) {
+    scoreLead.textContent = `Score metrics could not render. ${error.message}`;
+    [scoreStats, scoreViz, scoreRecall, scoreFoot].forEach(clear);
+    clear(matrixBody);
+    scoreModel = "tft";
+    updateScoreTabs();
+  }
   renderDrivers();
   renderCohort();
   renderDictionary();
@@ -227,6 +278,7 @@ function wireFinder() {
 
 async function boot() {
   wireFinder();
+  wireScoreTabs();
   await loadBundle(42);
   seedPick.addEventListener("input", () => {
     seedValue.textContent = seedPick.value;
@@ -238,32 +290,213 @@ async function boot() {
   });
 }
 
+function fmtDelta(tftValue, rfValue) {
+  const tft = Number(tftValue);
+  const rf = Number(rfValue);
+  if (!Number.isFinite(tft) || !Number.isFinite(rf)) return "—";
+  const delta = tft - rf;
+  const sign = delta > 0 ? "+" : "";
+  return `${sign}${delta.toFixed(3)}`;
+}
+
+function deltaCell(tftValue, rfValue, higherIsBetter = true) {
+  const tft = Number(tftValue);
+  const rf = Number(rfValue);
+  const td = el("td", "n");
+  if (!Number.isFinite(tft) || !Number.isFinite(rf)) {
+    td.textContent = "—";
+    return td;
+  }
+  const delta = tft - rf;
+  td.textContent = fmtDelta(tft, rf);
+  if (Math.abs(delta) < 0.0005) td.classList.add("tie");
+  else if (higherIsBetter ? delta > 0 : delta < 0) td.classList.add("tft-win");
+  else td.classList.add("rf-win");
+  return td;
+}
+
+function fmtMetricValue(value) {
+  return value === null || value === undefined ? "—" : fmt(value);
+}
+
+function comparisonTable(headings, rows) {
+  const table = el("table", "compare-table");
+  const head = el("tr");
+  headings.forEach((label, i) => head.append(el("th", i ? "n" : null, label)));
+  table.append(el("thead").appendChild(head).parentNode);
+  const body = el("tbody");
+  rows.forEach((cells) => {
+    const row = el("tr");
+    cells.forEach((text, i) => row.append(el("td", i ? "n" : null, text)));
+    body.append(row);
+  });
+  table.append(body);
+  return table;
+}
+
+function labeledBlock(label, node) {
+  const wrap = el("div", "compare-labeled");
+  wrap.append(el("p", "compare-label", label), node);
+  return wrap;
+}
+
+function setMatrixPanel(title, note) {
+  const panel = document.querySelector(".score-matrix-panel");
+  panel.querySelector("h3").textContent = title;
+  panel.querySelector(".note").textContent = note;
+}
+
+function renderScoreCompare() {
+  setScorePanelMode(true);
+  const base = metrics.baselines_h6;
+  const tft = metrics.test_origin;
+  const rf = randomForestBlock();
+  const rfTest = rf.test_origin;
+  const tftPerf = metrics.performance_h6;
+  const rfPerf = rf.performance_h6;
+  const deltaF1 = tft.h6.macro_f1 - rfTest.h6.macro_f1;
+  const deltaAcc = tft.h6.accuracy - rfTest.h6.accuracy;
+  const leader = Math.abs(deltaF1) < 0.0005 ? "Both models tie on six-month macro-F1." : deltaF1 > 0 ? "TFT leads on six-month macro-F1." : "Random Forest leads on six-month macro-F1.";
+
+  scoreLead.textContent = `Same ${metrics.families.test} held-out whānau and origin ${metrics.headline_origin.label}. At six months, TFT macro-F1 is ${fmt(tft.h6.macro_f1)} (${pct(tft.h6.accuracy)} accuracy) and Random Forest is ${fmt(rfTest.h6.macro_f1)} (${pct(rfTest.h6.accuracy)}). Δ macro-F1 ${fmtDelta(tft.h6.macro_f1, rfTest.h6.macro_f1)}, Δ accuracy ${fmtDelta(tft.h6.accuracy, rfTest.h6.accuracy)}. ${leader} Baselines for context: no-change ${fmt(base.persistence.macro_f1)}, linear with deltas ${fmt(base.last_month_plus_deltas_linear.macro_f1)}.`;
+
+  const stats = el("div", "stats score-headline-stats");
+  [
+    ["TFT macro-F1 @ 6m", tft.h6.macro_f1, "Temporal Fusion Transformer"],
+    ["Forest macro-F1 @ 6m", rfTest.h6.macro_f1, "Random Forest snapshot model"],
+    ["Δ macro-F1 (TFT − RF)", deltaF1, leader.replace(".", "")],
+    ["Δ accuracy (TFT − RF)", deltaAcc, `${pct(tft.h6.accuracy)} vs ${pct(rfTest.h6.accuracy)}`],
+  ].forEach(([label, value, note], index) => {
+    const card = el("div", index === 2 ? "stat mark" : "stat");
+    const shown = index === 2 || index === 3 ? fmtDelta(index === 2 ? tft.h6.macro_f1 : tft.h6.accuracy, index === 2 ? rfTest.h6.macro_f1 : rfTest.h6.accuracy) : fmt(value);
+    card.append(el("span", null, label), el("b", null, shown), el("span", null, note));
+    stats.append(card);
+  });
+  scoreStats.append(stats);
+
+  const viz = el("div", "compare-viz");
+  viz.append(el("h3", null, "Macro-F1 and accuracy by horizon"));
+  viz.append(comparisonTable(
+    ["Horizon", "TFT macro-F1", "Forest macro-F1", "Δ F1", "TFT accuracy", "Forest accuracy", "Δ accuracy"],
+    [
+      ["Latest month", fmt(tft.now.macro_f1), fmt(rfTest.now.macro_f1), fmtDelta(tft.now.macro_f1, rfTest.now.macro_f1), pct(tft.now.accuracy), pct(rfTest.now.accuracy), fmtDelta(tft.now.accuracy, rfTest.now.accuracy)],
+      ["+3 months", fmt(tft.h3.macro_f1), fmt(rfTest.h3.macro_f1), fmtDelta(tft.h3.macro_f1, rfTest.h3.macro_f1), pct(tft.h3.accuracy), pct(rfTest.h3.accuracy), fmtDelta(tft.h3.accuracy, rfTest.h3.accuracy)],
+      ["+6 months", fmt(tft.h6.macro_f1), fmt(rfTest.h6.macro_f1), fmtDelta(tft.h6.macro_f1, rfTest.h6.macro_f1), pct(tft.h6.accuracy), pct(rfTest.h6.accuracy), fmtDelta(tft.h6.accuracy, rfTest.h6.accuracy)],
+      ["+12 months", fmt(tft.h12.macro_f1), fmt(rfTest.h12.macro_f1), fmtDelta(tft.h12.macro_f1, rfTest.h12.macro_f1), pct(tft.h12.accuracy), pct(rfTest.h12.accuracy), fmtDelta(tft.h12.accuracy, rfTest.h12.accuracy)],
+    ],
+  ));
+  viz.append(el("h3", null, "Six-month classification metrics"));
+  const metricRows = [
+    ["Accuracy", tftPerf.accuracy, rfPerf.accuracy],
+    ["Precision (macro)", tftPerf.precision_macro, rfPerf.precision_macro],
+    ["Recall (macro)", tftPerf.recall_macro, rfPerf.recall_macro],
+    ["Specificity (macro)", tftPerf.specificity_macro, rfPerf.specificity_macro],
+    ["F1 (macro)", tftPerf.f1_macro, rfPerf.f1_macro],
+    ["AUC-ROC (macro)", tftPerf.auc_macro, rfPerf.auc_macro],
+  ];
+  const metricTable = el("table", "compare-table");
+  const metricHead = el("tr");
+  ["Metric", "TFT", "Random Forest", "Δ (TFT − RF)"].forEach((label, i) => metricHead.append(el("th", i ? "n" : null, label)));
+  metricTable.append(el("thead").appendChild(metricHead).parentNode);
+  const metricBody = el("tbody");
+  metricRows.forEach(([label, a, b]) => {
+    const row = el("tr");
+    row.append(el("td", null, label), el("td", "n", fmtMetricValue(a)), el("td", "n", fmtMetricValue(b)), deltaCell(a, b));
+    metricBody.append(row);
+  });
+  metricTable.append(metricBody);
+  viz.append(metricTable);
+
+  viz.append(el("h3", null, "ROC at six months"));
+  const rocPair = el("div", "compare-roc-pair");
+  rocPair.append(labeledBlock("TFT", rocSvg(tftPerf.roc)), labeledBlock("Random Forest", rocSvg(rfPerf.roc)));
+  viz.append(rocPair);
+  viz.append(el("p", "section-note", "Macro averages across five tiers. Δ favours TFT when positive. Random Forest uses origin snapshot features; TFT uses the full twelve-month sequence and attention."));
+  scoreViz.append(viz);
+
+  const recallTable = el("table", "compare-table");
+  const recallHead = el("tr");
+  ["Tier", "Support", "TFT recall", "Forest recall", "Δ recall", "TFT F1", "Forest F1", "Δ F1"].forEach((label, i) => recallHead.append(el("th", i ? "n" : null, label)));
+  recallTable.append(el("thead").appendChild(recallHead).parentNode);
+  const recallBody = el("tbody");
+  tft.h6.labels.forEach((label, i) => {
+    const row = el("tr");
+    row.append(
+      el("td", null, label),
+      el("td", "n", String(tft.h6.support[i])),
+      el("td", "n", pct(tft.h6.recall[i])),
+      el("td", "n", pct(rfTest.h6.recall[i])),
+      deltaCell(tft.h6.recall[i], rfTest.h6.recall[i]),
+      el("td", "n", fmt(tft.h6.f1[i])),
+      el("td", "n", fmt(rfTest.h6.f1[i])),
+      deltaCell(tft.h6.f1[i], rfTest.h6.f1[i]),
+    );
+    recallBody.append(row);
+  });
+  recallTable.append(recallBody);
+  scoreRecall.append(el("h3", null, "Recall and F1 by tier at six months"), recallTable);
+
+  setMatrixPanel("Confusion matrices at six months", "Rows are the tier in the data. Columns are the forecast. Left: TFT. Right: Random Forest.");
+  clear(matrixBody);
+  const matrixPair = el("div", "compare-matrix-pair");
+  const labels = ["Severe", "Unstable", "At risk", "Assisted", "Stable"];
+  matrixPair.append(labeledBlock("TFT", matrix(tft.h6.confusion, labels)), labeledBlock("Random Forest", matrix(rfTest.h6.confusion, labels)));
+  matrixBody.append(matrixPair);
+
+  const fit = metrics.families;
+  const through = metrics.headline_origin.forecast_through || metrics.headline_origin.forecast_year;
+  scoreFoot.append(el("p", "section-note", `TFT: seed ${metrics.inner_seed} holds out ${fit.validation} for early stopping on ${fit.fit} windows. Forest: ${rf.note} Seed ${metrics.seed} · ${fit.test} test whānau · window ${metrics.headline_origin.history} through ${through}.`));
+}
+
 function renderScore() {
   clear(scoreStats);
   clear(scoreViz);
   clear(scoreRecall);
   clear(scoreFoot);
-  const test = metrics.test_origin;
+  if (scoreModel === "compare" && hasRandomForestMetrics()) {
+    renderScoreCompare();
+    return;
+  }
+  setScorePanelMode(false);
   const base = metrics.baselines_h6;
+  const tft = metrics.test_origin;
+  const rf = metrics.random_forest;
+  const onRf = scoreModel === "rf" && rf?.test_origin?.h6;
+  const test = onRf ? rf.test_origin : tft;
+  const performance_h6 = onRf ? rf.performance_h6 : metrics.performance_h6;
+
   const stats = el("div", "stats score-headline-stats");
-  [
-    ["Nowcast macro-F1", test.now.macro_f1, `Latest month, ${metrics.headline_origin.label}`],
-    ["Six-month macro-F1", test.h6.macro_f1, "Six months after that snapshot"],
-    ["No-change macro-F1", base.persistence.macro_f1, "Carry the snapshot tier forward"],
-    ["Linear with changes", base.last_month_plus_deltas_linear.macro_f1, "Last month plus 3- and 6-month deltas"],
-  ].forEach(([label, value, note], index) => {
+  const headlineCards = onRf
+    ? [
+        ["Nowcast macro-F1", test.now.macro_f1, `Forest · ${metrics.headline_origin.label}`],
+        ["Six-month macro-F1", test.h6.macro_f1, "Forest on the same snapshot features"],
+        ["Six-month TFT", tft.h6.macro_f1, "Temporal Fusion Transformer"],
+        ["Linear with changes", base.last_month_plus_deltas_linear.macro_f1, "Last month plus 3- and 6-month deltas"],
+      ]
+    : [
+        ["Nowcast macro-F1", test.now.macro_f1, `Latest month, ${metrics.headline_origin.label}`],
+        ["Six-month macro-F1", test.h6.macro_f1, "Six months after that snapshot"],
+        ["No-change macro-F1", base.persistence.macro_f1, "Carry the snapshot tier forward"],
+        ["Linear with changes", base.last_month_plus_deltas_linear.macro_f1, "Last month plus 3- and 6-month deltas"],
+      ];
+  headlineCards.forEach(([label, value, note], index) => {
     const card = el("div", index === 1 ? "stat mark" : "stat");
     card.append(el("span", null, label), el("b", null, fmt(value)), el("span", null, note));
     stats.append(card);
   });
   scoreStats.append(stats);
-  if (metrics.performance_h6) scoreViz.append(metricBlock(metrics.performance_h6));
+  if (performance_h6) scoreViz.append(metricBlock(performance_h6));
 
-  const correct = cohort.filter((row) => row.predicted.h6 === row.actual.h6).length;
-  const unchanged = cohort.filter((row) => row.actual.now === row.actual.h6).length;
-  const changers = cohort.length - unchanged;
-  const caught = cohort.filter((row) => row.actual.now !== row.actual.h6 && row.predicted.h6 === row.actual.h6).length;
-  scoreLead.textContent = `On ${cohort.length} held-out whānau, looking six months past ${metrics.headline_origin.label}, the tier is right for ${correct}. ${unchanged} do not change tier, so carrying that month forward scores ${fmt(base.persistence.macro_f1)} macro-F1 (${pct(base.persistence.accuracy)} accuracy) against the transformer at ${fmt(test.h6.macro_f1)} (${pct(test.h6.accuracy)}). Of the ${changers} who change, the transformer calls ${caught}. A last-month linear model scores ${fmt(base.last_month_linear.macro_f1)}; with 3- and 6-month changes it scores ${fmt(base.last_month_plus_deltas_linear.macro_f1)}.`;
+  if (onRf) {
+    scoreLead.textContent = `On ${metrics.families.test} held-out whānau at ${metrics.headline_origin.label}, a Random Forest trained on the fit split scores ${fmt(test.h6.macro_f1)} macro-F1 (${pct(test.h6.accuracy)} accuracy) six months ahead. The TFT on the same families is ${fmt(tft.h6.macro_f1)} macro-F1 (${pct(tft.h6.accuracy)}). Carrying the latest month forward is ${fmt(base.persistence.macro_f1)}; a linear model with month deltas is ${fmt(base.last_month_plus_deltas_linear.macro_f1)}.`;
+  } else {
+    const correct = cohort.filter((row) => row.predicted.h6 === row.actual.h6).length;
+    const unchanged = cohort.filter((row) => row.actual.now === row.actual.h6).length;
+    const changers = cohort.length - unchanged;
+    const caught = cohort.filter((row) => row.actual.now !== row.actual.h6 && row.predicted.h6 === row.actual.h6).length;
+    const rfLine = rf?.test_origin?.h6 ? ` Random Forest on the same snapshot is ${fmt(rf.test_origin.h6.macro_f1)} macro-F1.` : "";
+    scoreLead.textContent = `On ${cohort.length} held-out whānau, looking six months past ${metrics.headline_origin.label}, the tier is right for ${correct}. ${unchanged} do not change tier, so carrying that month forward scores ${fmt(base.persistence.macro_f1)} macro-F1 (${pct(base.persistence.accuracy)} accuracy) against the transformer at ${fmt(test.h6.macro_f1)} (${pct(test.h6.accuracy)}).${rfLine} Of the ${changers} who change, the transformer calls ${caught}. A last-month linear model scores ${fmt(base.last_month_linear.macro_f1)}; with 3- and 6-month changes it scores ${fmt(base.last_month_plus_deltas_linear.macro_f1)}.`;
+  }
 
   const table = el("table");
   const head = el("tr");
@@ -276,14 +509,18 @@ function renderScore() {
     body.append(row);
   });
   table.append(body);
-  scoreRecall.append(el("h3", null, "Recall by tier at six months"), table);
+  const recallTitle = onRf ? "Recall by tier at six months (Random Forest)" : "Recall by tier at six months";
+  scoreRecall.append(el("h3", null, recallTitle), table);
   scoreRecall.append(el("p", "section-note", `Same 200 whānau: nowcast macro-F1 ${fmt(test.now.macro_f1)}, +3 months ${fmt(test.h3.macro_f1)}, +12 months ${fmt(test.h12.macro_f1)}. Severe deprivation has single-digit support here, so that recall is a small count.`));
+  setMatrixPanel("Confusion matrix", "Rows are the tier in the data. Columns are the forecast.");
   clear(matrixBody);
   matrixBody.append(matrix(test.h6.confusion, ["Severe", "Unstable", "At risk", "Assisted", "Stable"]));
 
   const fit = metrics.families;
   const through = metrics.headline_origin.forecast_through || metrics.headline_origin.forecast_year;
-  const seedText = `Seed ${metrics.seed} · ${fit.train_pool} train / ${fit.test} test · seed ${metrics.inner_seed} holds out ${fit.validation} for early stopping · fit on ${fit.fit}. Window ${metrics.headline_origin.history}, forecast through ${through}.`;
+  const seedText = onRf
+    ? `${rf.note} Seed ${metrics.seed} · ${fit.train_pool} train / ${fit.test} test · fit on ${fit.fit}. Window ${metrics.headline_origin.history}, forecast through ${through}.`
+    : `Seed ${metrics.seed} · ${fit.train_pool} train / ${fit.test} test · seed ${metrics.inner_seed} holds out ${fit.validation} for early stopping · fit on ${fit.fit}. Window ${metrics.headline_origin.history}, forecast through ${through}.`;
   scoreFoot.append(el("p", "section-note", seedText));
 }
 
@@ -308,11 +545,54 @@ function metricBlock(perf) {
   return wrap;
 }
 
+const ROC_X0 = 30;
+const ROC_Y1 = 205;
+const ROC_W = 185;
+const ROC_H = 195;
+
+function rocLineD(points) {
+  return points.map(([fpr, tpr], i) => `${i ? "L" : "M"}${ROC_X0 + fpr * ROC_W} ${ROC_Y1 - tpr * ROC_H}`).join(" ");
+}
+
+function rocAreaD(points) {
+  if (!points.length) return "";
+  const last = points[points.length - 1];
+  const first = points[0];
+  return `${rocLineD(points)} L${ROC_X0 + last[0] * ROC_W} ${ROC_Y1} L${ROC_X0 + first[0] * ROC_W} ${ROC_Y1} Z`;
+}
+
+function rocPlotToRates(x, y) {
+  const fpr = Math.max(0, Math.min(1, (x - ROC_X0) / ROC_W));
+  const tpr = Math.max(0, Math.min(1, (ROC_Y1 - y) / ROC_H));
+  return [fpr, tpr];
+}
+
+function rocEl(tag, className) {
+  const node = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  if (className) node.setAttribute("class", className);
+  return node;
+}
+
+function nearestRocPoint(points, fpr, tpr) {
+  let best = points[0];
+  let bestDist = Infinity;
+  points.forEach((point) => {
+    const dist = (point[0] - fpr) ** 2 + (point[1] - tpr) ** 2;
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = point;
+    }
+  });
+  return best;
+}
+
 function rocSvg(curves) {
+  const wrap = el("div", "roc-wrap roc-interactive");
+  const block = el("div", "roc-block");
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "0 0 240 240");
   svg.setAttribute("class", "roc");
-  svg.setAttribute("role", "img");
+  svg.setAttribute("role", "group");
   svg.setAttribute("aria-label", "ROC curves for the six-month forecast");
   const axis = document.createElementNS("http://www.w3.org/2000/svg", "path");
   axis.setAttribute("d", "M30 10 V205 H215");
@@ -320,56 +600,322 @@ function rocSvg(curves) {
   svg.append(axis);
   const chance = document.createElementNS("http://www.w3.org/2000/svg", "path");
   chance.setAttribute("d", "M30 205 L215 10");
-  chance.setAttribute("class", "chance");
+  chance.setAttribute("class", "chance roc-chance");
+  chance.setAttribute("aria-label", "No-skill reference, AUC 0.5");
   svg.append(chance);
   const tone = getComputedStyle(document.documentElement);
   const colors = ["--severe", "--unstable", "--risk", "--subsidised", "--stable"].map((name) => tone.getPropertyValue(name).trim());
+  const layers = rocEl("g", "roc-layers");
+  const crosshair = rocEl("g", "roc-crosshair");
+  const vGuide = rocEl("line", "roc-guide v");
+  vGuide.setAttribute("y1", "10");
+  vGuide.setAttribute("y2", String(ROC_Y1));
+  const hGuide = rocEl("line", "roc-guide h");
+  hGuide.setAttribute("x1", String(ROC_X0));
+  hGuide.setAttribute("x2", "215");
+  const marker = rocEl("circle", "roc-marker");
+  marker.setAttribute("r", "4.5");
+  crosshair.append(vGuide, hGuide, marker);
+  const curveMeta = [];
   const legend = el("div", "roc-legend");
   curves.forEach((curve, index) => {
     if (!curve.points || !curve.points.length) return;
-    const d = curve.points.map(([fpr, tpr], i) => `${i ? "L" : "M"}${30 + fpr * 185} ${205 - tpr * 195}`).join(" ");
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path.setAttribute("d", d);
-    path.setAttribute("fill", "none");
-    path.setAttribute("stroke", colors[index % colors.length]);
-    path.setAttribute("stroke-width", "1.6");
-    svg.append(path);
-    legend.append(el("span", null, `${curve.name} ${curve.auc === null || curve.auc === undefined ? "n/a" : fmt(curve.auc)}`));
+    const color = colors[index % colors.length];
+    const group = rocEl("g", "roc-tier");
+    group.dataset.index = String(index);
+    const area = rocEl("path", "roc-area");
+    area.setAttribute("d", rocAreaD(curve.points));
+    area.setAttribute("fill", color);
+    const line = rocEl("path", "roc-curve");
+    line.setAttribute("d", rocLineD(curve.points));
+    line.setAttribute("fill", "none");
+    line.setAttribute("stroke", color);
+    line.setAttribute("stroke-width", "2.25");
+    const hit = rocEl("path", "roc-hit");
+    hit.setAttribute("d", rocLineD(curve.points));
+    hit.setAttribute("stroke", color);
+    hit.setAttribute("tabindex", "0");
+    hit.setAttribute("role", "button");
+    hit.setAttribute("aria-label", `${curve.name} ROC curve, AUC ${curve.auc === null || curve.auc === undefined ? "n/a" : fmt(curve.auc)}`);
+    group.append(area, line, hit);
+    layers.append(group);
+    const legendItem = el("button", "roc-legend-btn");
+    legendItem.type = "button";
+    legendItem.dataset.index = String(index);
+    legendItem.append(el("i", "swatch"), document.createTextNode(`${curve.name} ${curve.auc === null || curve.auc === undefined ? "n/a" : fmt(curve.auc)}`));
+    legendItem.querySelector(".swatch").style.background = color;
+    legend.append(legendItem);
+    curveMeta.push(curve);
   });
-  const x = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  svg.append(layers, crosshair);
+  const x = rocEl("text", "tick");
   x.setAttribute("x", "120");
   x.setAttribute("y", "222");
-  x.setAttribute("class", "tick");
   x.textContent = "False positive rate";
-  const y = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  const y = rocEl("text", "tick");
   y.setAttribute("x", "8");
   y.setAttribute("y", "16");
-  y.setAttribute("class", "tick");
   y.textContent = "True positive rate";
   svg.append(x, y);
-  const block = el("div", "roc-block");
-  block.append(svg, legend);
-  return block;
+
+  const key = el("div", "roc-key");
+  [
+    ["metric-recall", "TPR · recall (vertical guide)"],
+    ["metric-precision", "FPR · one minus specificity (horizontal guide)"],
+    ["metric-accuracy", "AUC · shaded area under curve"],
+    ["metric-specificity", "Chance · no skill at 0.5"],
+  ].forEach(([kind, text]) => {
+    const chip = el("span", `roc-key-chip ${kind}`);
+    chip.append(el("i", "swatch"), document.createTextNode(text));
+    key.append(chip);
+  });
+
+  const tip = el("div", "roc-tip");
+  tip.textContent = "Hover a tier curve or legend, then move across the plot to read FPR and TPR at a threshold. The fill is AUC (one-vs-rest).";
+
+  let focusIndex = null;
+
+  function placeCrosshair(fpr, tpr) {
+    const cx = ROC_X0 + fpr * ROC_W;
+    const cy = ROC_Y1 - tpr * ROC_H;
+    vGuide.setAttribute("x1", String(cx));
+    vGuide.setAttribute("x2", String(cx));
+    hGuide.setAttribute("y1", String(cy));
+    hGuide.setAttribute("y2", String(cy));
+    marker.setAttribute("cx", String(cx));
+    marker.setAttribute("cy", String(cy));
+    crosshair.classList.add("show");
+  }
+
+  function hideCrosshair() {
+    crosshair.classList.remove("show");
+  }
+
+  function clearRocFocus() {
+    focusIndex = null;
+    block.classList.remove("roc-active", "roc-chance-focus");
+    layers.querySelectorAll(".roc-tier").forEach((tier) => tier.classList.remove("focus"));
+    legend.querySelectorAll(".roc-legend-btn").forEach((btn) => btn.classList.remove("active"));
+    hideCrosshair();
+    tip.classList.remove("has-focus");
+    tip.textContent = "Hover a tier curve or legend, then move across the plot to read FPR and TPR at a threshold. The fill is AUC (one-vs-rest).";
+  }
+
+  function focusCurve(index) {
+    if (!curveMeta[index]) return;
+    focusIndex = index;
+    const curve = curveMeta[index];
+    block.classList.add("roc-active");
+    block.classList.remove("roc-chance-focus");
+    layers.querySelectorAll(".roc-tier").forEach((tier) => tier.classList.toggle("focus", Number(tier.dataset.index) === index));
+    legend.querySelectorAll(".roc-legend-btn").forEach((btn) => btn.classList.toggle("active", Number(btn.dataset.index) === index));
+    tip.classList.add("has-focus");
+    tip.replaceChildren(
+      el("p", "roc-tip-title", `${curve.name} · one-vs-rest AUC ${curve.auc === null || curve.auc === undefined ? "n/a" : fmt(curve.auc)}`),
+      el("p", "roc-tip-line metric-accuracy", "Shaded area = AUC. A steeper curve hugging the top-left means more true positives before false positives."),
+      el("p", "roc-tip-line metric-recall", "Vertical axis = true positive rate (recall for this tier)."),
+      el("p", "roc-tip-line metric-precision", "Horizontal axis = false positive rate (one minus specificity for this tier)."),
+      el("p", "roc-tip-line", "Move the pointer along the plot to inspect a threshold."),
+    );
+  }
+
+  function focusChance() {
+    focusIndex = null;
+    block.classList.add("roc-active", "roc-chance-focus");
+    layers.querySelectorAll(".roc-tier").forEach((tier) => tier.classList.remove("focus"));
+    legend.querySelectorAll(".roc-legend-btn").forEach((btn) => btn.classList.remove("active"));
+    hideCrosshair();
+    tip.classList.add("has-focus");
+    tip.replaceChildren(
+      el("p", "roc-tip-title", "No-skill reference · AUC 0.5"),
+      el("p", "roc-tip-line metric-specificity", "Random ranking of positives and negatives follows this dashed diagonal."),
+      el("p", "roc-tip-line", "Curves above this line beat chance for that tier at some thresholds."),
+    );
+  }
+
+  function updateCrosshairFromPointer(event) {
+    if (focusIndex === null) return;
+    const point = svg.createSVGPoint();
+    point.x = event.clientX;
+    point.y = event.clientY;
+    const plot = point.matrixTransform(svg.getScreenCTM().inverse());
+    const [fpr, tpr] = rocPlotToRates(plot.x, plot.y);
+    const curve = curveMeta[focusIndex];
+    const [nfpr, ntpr] = nearestRocPoint(curve.points, fpr, tpr);
+    placeCrosshair(nfpr, ntpr);
+    const thresh = tip.querySelector(".roc-threshold");
+    const text = `Threshold readout: FPR ${pct(nfpr)} · TPR ${pct(ntpr)}.`;
+    if (thresh) thresh.textContent = text;
+    else tip.append(el("p", "roc-tip-line roc-threshold metric-recall", text));
+  }
+
+  layers.querySelectorAll(".roc-hit").forEach((hit) => {
+    const index = Number(hit.closest(".roc-tier").dataset.index);
+    hit.addEventListener("mouseenter", () => focusCurve(index));
+    hit.addEventListener("focus", () => focusCurve(index));
+    hit.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") clearRocFocus();
+    });
+  });
+  legend.querySelectorAll(".roc-legend-btn").forEach((btn) => {
+    const index = Number(btn.dataset.index);
+    btn.addEventListener("mouseenter", () => focusCurve(index));
+    btn.addEventListener("focus", () => focusCurve(index));
+    btn.addEventListener("click", () => focusCurve(index));
+  });
+  chance.addEventListener("mouseenter", focusChance);
+  chance.addEventListener("focus", focusChance);
+  chance.setAttribute("tabindex", "0");
+  chance.setAttribute("role", "button");
+  svg.addEventListener("mousemove", updateCrosshairFromPointer);
+  wrap.addEventListener("mouseleave", clearRocFocus);
+  block.append(svg, legend, key, tip);
+  wrap.append(block);
+  return wrap;
+}
+
+function matrixCellColors(count, max) {
+  const share = count / max;
+  const tone = getComputedStyle(document.documentElement);
+  const [r, g, b] = tone.getPropertyValue("--signal").trim().replace("#", "").match(/../g).map((part) => parseInt(part, 16));
+  return {
+    background: `rgba(${r}, ${g}, ${b}, ${0.16 + 0.72 * share})`,
+    color: share > 0.62 ? tone.getPropertyValue("--bg").trim() : tone.getPropertyValue("--ink").trim(),
+  };
+}
+
+function matrixFocusMetrics(confusion, row, col) {
+  const n = confusion.reduce((sum, cells) => sum + cells.reduce((a, b) => a + b, 0), 0);
+  const correct = confusion.reduce((sum, cells, i) => sum + cells[i], 0);
+  const rowSum = confusion[row].reduce((a, b) => a + b, 0);
+  const colSum = confusion.reduce((sum, cells) => sum + cells[col], 0);
+  const tpRecall = confusion[row][row];
+  const tpPrecision = confusion[col][col];
+  let tn = 0;
+  let fp = 0;
+  confusion.forEach((cells, i) => {
+    if (i === row) return;
+    cells.forEach((count, j) => {
+      if (j === row) fp += count;
+      else tn += count;
+    });
+  });
+  return {
+    n,
+    count: confusion[row][col],
+    hit: row === col,
+    accuracy: n ? correct / n : 0,
+    recall: rowSum ? tpRecall / rowSum : 0,
+    precision: colSum ? tpPrecision / colSum : 0,
+    specificity: tn + fp ? tn / (tn + fp) : 0,
+    recallTp: tpRecall,
+    recallFn: rowSum - tpRecall,
+    precisionTp: tpPrecision,
+    precisionFp: colSum - tpPrecision,
+    correct,
+  };
+}
+
+function paintMatrixFocus(wrap, row, col) {
+  wrap.classList.add("matrix-active");
+  wrap.querySelectorAll(".cell").forEach((cell) => {
+    cell.classList.remove("hit-recall", "hit-precision", "hit-accuracy", "hit-specificity-tn", "hit-specificity-fp", "focus");
+    const r = Number(cell.dataset.row);
+    const c = Number(cell.dataset.col);
+    if (r === row) cell.classList.add("hit-recall");
+    if (c === col) cell.classList.add("hit-precision");
+    if (r === c) cell.classList.add("hit-accuracy");
+    if (r !== row) {
+      if (c === row) cell.classList.add("hit-specificity-fp");
+      else cell.classList.add("hit-specificity-tn");
+    }
+    if (r === row && c === col) cell.classList.add("focus");
+  });
+}
+
+function clearMatrixFocus(wrap, tip, defaultText) {
+  wrap.classList.remove("matrix-active");
+  wrap.querySelectorAll(".cell").forEach((cell) => {
+    cell.classList.remove("hit-recall", "hit-precision", "hit-accuracy", "hit-specificity-tn", "hit-specificity-fp", "focus");
+  });
+  tip.textContent = defaultText;
+  tip.classList.remove("has-focus");
+}
+
+function updateMatrixTip(tip, labels, row, col, stats) {
+  const actual = labels[row];
+  const predicted = labels[col];
+  const match = stats.hit ? "Forecast matches actual tier." : "Forecast does not match actual tier.";
+  tip.classList.add("has-focus");
+  tip.replaceChildren(
+    el("p", "matrix-tip-title", `${stats.count} whānau · actual ${actual} · forecast ${predicted}`),
+    el("p", "matrix-tip-line", match),
+    el("p", "matrix-tip-line metric-recall", `Recall (actual ${actual}): ${stats.recallTp} correct on the diagonal of this row, ${stats.recallFn} elsewhere → ${pct(stats.recall)}`),
+    el("p", "matrix-tip-line metric-precision", `Precision (forecast ${predicted}): ${stats.precisionTp} correct in this column, ${stats.precisionFp} elsewhere → ${pct(stats.precision)}`),
+    el("p", "matrix-tip-line metric-accuracy", `Accuracy (all tiers): ${stats.correct} on the diagonal of ${stats.n} → ${pct(stats.accuracy)}`),
+    el("p", "matrix-tip-line metric-specificity", `Specificity (one-vs-rest for ${actual}): true negatives ${stats.tn}, false positives ${stats.fp} → ${pct(stats.specificity)}`),
+  );
 }
 
 function matrix(confusion, labels) {
-  const wrap = el("div", "matrix");
+  const shell = el("div", "matrix-wrap");
+  const grid = el("div", "matrix matrix-interactive");
+  const tip = el("div", "matrix-tip");
+  tip.textContent = "Hover a cell to see how it sits inside recall (row), precision (column), accuracy (diagonal), and specificity (other actual tiers).";
+  const key = el("div", "matrix-key");
+  [
+    ["metric-recall", "Recall · actual tier row"],
+    ["metric-precision", "Precision · forecast column"],
+    ["metric-accuracy", "Accuracy · diagonal"],
+    ["metric-specificity", "Specificity · other actuals"],
+  ].forEach(([kind, text]) => {
+    const chip = el("span", `matrix-key-chip ${kind}`);
+    chip.append(el("i", "swatch"), document.createTextNode(text));
+    key.append(chip);
+  });
   const max = Math.max(...confusion.flat(), 1);
-  wrap.append(el("div", "h", ""));
-  labels.forEach((label) => wrap.append(el("div", "h", label)));
+  grid.append(el("div", "h", ""));
+  labels.forEach((label) => grid.append(el("div", "h", label)));
   confusion.forEach((row, i) => {
-    wrap.append(el("div", "lab", labels[i]));
-    row.forEach((count) => {
-      const cell = el("div", null, String(count));
-      const share = count / max;
-      const tone = getComputedStyle(document.documentElement);
-      const [r, g, b] = tone.getPropertyValue("--signal").trim().replace("#", "").match(/../g).map((part) => parseInt(part, 16));
-      cell.style.background = `rgba(${r}, ${g}, ${b}, ${0.16 + 0.72 * share})`;
-      cell.style.color = share > 0.62 ? tone.getPropertyValue("--bg").trim() : tone.getPropertyValue("--ink").trim();
-      wrap.append(cell);
+    grid.append(el("div", "lab", labels[i]));
+    row.forEach((count, j) => {
+      const cell = el("div", "cell", String(count));
+      cell.dataset.row = String(i);
+      cell.dataset.col = String(j);
+      cell.tabIndex = 0;
+      cell.setAttribute("role", "button");
+      cell.setAttribute("aria-label", `${count} whānau, actual ${labels[i]}, forecast ${labels[j]}`);
+      const colors = matrixCellColors(count, max);
+      cell.style.background = colors.background;
+      cell.style.color = colors.color;
+      cell.addEventListener("focus", () => activateMatrixCell(grid, tip, confusion, labels, i, j));
+      grid.append(cell);
     });
   });
-  return wrap;
+  const idle = "Hover a cell to see how it sits inside recall (row), precision (column), accuracy (diagonal), and specificity (other actual tiers).";
+  grid.addEventListener("mouseover", (event) => {
+    const cell = event.target.closest(".cell");
+    if (!cell || !grid.contains(cell)) return;
+    activateMatrixCell(grid, tip, confusion, labels, Number(cell.dataset.row), Number(cell.dataset.col));
+  });
+  grid.addEventListener("mouseleave", () => clearMatrixFocus(grid, tip, idle));
+  shell.append(grid, key, tip);
+  return shell;
+}
+
+function activateMatrixCell(grid, tip, confusion, labels, row, col) {
+  const stats = matrixFocusMetrics(confusion, row, col);
+  let tn = 0;
+  let fp = 0;
+  confusion.forEach((cells, ri) => {
+    if (ri === row) return;
+    cells.forEach((value, ci) => {
+      if (ci === row) fp += value;
+      else tn += value;
+    });
+  });
+  paintMatrixFocus(grid, row, col);
+  updateMatrixTip(tip, labels, row, col, { ...stats, tn, fp });
 }
 
 function renderDrivers(output) {
@@ -444,9 +990,15 @@ function matchingRows() {
   });
 }
 
-function familyHistory(id) {
-  if (histories && histories[id]) return histories[id];
-  return exampleById.get(id)?.history || null;
+function familyPayload(id) {
+  const loaded = histories && histories[id];
+  if (Array.isArray(loaded)) return { history: loaded };
+  if (loaded && loaded.history) return loaded;
+  const row = exampleById.get(id);
+  if (!row) return null;
+  const payload = { history: row.history };
+  if (row.future_known) payload.future_known = row.future_known;
+  return payload;
 }
 
 function tierMark(id, tone) {
@@ -540,13 +1092,13 @@ function selectFamily(row, opts = {}) {
     activeOption = 0;
   }
   if (!passesMode(row, whanauMode.value)) whanauMode.value = "All whānau";
-  const history = familyHistory(row.id);
+  const payload = familyPayload(row.id);
   const example = exampleById.get(row.id);
   formError.textContent = "";
-  if (history) {
-    activeExample = example || { id: row.id, history, actual: row.actual };
-    jsonBox.value = JSON.stringify({ history }, null, 2);
-    paintResult(classify(model, { history }), activeExample);
+  if (payload) {
+    activeExample = example || { id: row.id, ...payload, actual: row.actual };
+    jsonBox.value = JSON.stringify(payload, null, 2);
+    paintResult(classify(model, payload), activeExample);
   } else {
     activeExample = { id: row.id, actual: row.actual };
     jsonBox.value = JSON.stringify(row, null, 2);

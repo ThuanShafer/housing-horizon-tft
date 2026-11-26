@@ -31,7 +31,9 @@ if (fs.existsSync(examplesPath)) {
   const examples = JSON.parse(fs.readFileSync(examplesPath, "utf8"));
   let worst = 0;
   for (const example of examples) {
-    const result = classify(model, { history: example.history });
+    const payload = { history: example.history };
+    if (example.future_known) payload.future_known = example.future_known;
+    const result = classify(model, payload);
     const probs = result.classification.probabilities.map((row) => row.probability);
     for (let i = 0; i < probs.length; i++) worst = Math.max(worst, Math.abs(probs[i] - example.torch_h6[i]));
   }

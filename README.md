@@ -2,9 +2,9 @@
 
 A Temporal Fusion Transformer that forecasts one of five housing-stability tiers for a whānau. The portal loads the fitted weights in the browser and classifies an uploaded JSON file.
 
-This is a research prototype on a **synthetic** Auckland panel of 500 whānau × 60 months (January 2021–December 2025). It is not a determination of homelessness, eligibility, or who should receive support.
+This is a research prototype on an Auckland panel of 500 whānau × 60 observed months (January 2022–December 2026) in `data/panel.xlsx` (sheet **Panel**; **Forecast** rows are dropped). It is not a determination of homelessness, eligibility, or who should receive support.
 
-The linked spreadsheet returned HTTP 401, so the panel was generated to the same 50-feature schema (`PYTHONPATH=src python -m housing_tft.simulate`, seed 42). To train on another extract, replace `data/panel.csv` with columns `whanau_id`, `time_idx`, `stability_tier` (1–5) and the 50 feature names, then rerun training.
+To train on another extract, replace that workbook (same 50-feature schema) or regenerate a compatible panel with `PYTHONPATH=src python -m housing_tft.simulate`, then rerun training.
 
 ## Tiers
 
@@ -20,7 +20,7 @@ The linked spreadsheet returned HTTP 401, so the panel was generated to the same
 
 Seed **42** assigns 300 whānau to the training pool and 200 to the test. Seed **43** holds 60 of the 300 for early stopping, so weights are fit on 240. No whānau appears in more than one group. The seed slider in the dashboard refits that same cut for any integer from 0 to 100.
 
-The headline window is history January–December 2024 (`time_idx` 36–47) and a forecast through December 2025. The loss emphasises the 3-, 6- and 12-month steps.
+The headline window is history January–December 2025 (`time_idx` 37–48) and a forecast through December 2026. The loss emphasises the 3-, 6- and 12-month steps.
 
 Known-future lease months count down from the origin. A later renewal is not shown to the model, because that would leak the housing outcome.
 
@@ -42,7 +42,7 @@ node tests/parity.mjs
 
 ## JSON
 
-One month, a list of months, or `{"history":[...]}`. Each month needs the 50 feature names. Include `time_idx` (0 = January 2021) when you have it, so the published calendar and support-place path can be rebuilt. Twelve monthly rows are the encoder length the model was trained on. A shorter history is repeated to fill that length, and the page says so.
+One month, a list of months, or `{"history":[...]}`. Each month needs the 50 feature names. Include `time_idx` (1 = January 2022 in the current panel) when you have it, so the published calendar and support-place path can be rebuilt. Twelve monthly rows are the encoder length the model was trained on. A shorter history is repeated to fill that length, and the page says so.
 
 ## Model
 
